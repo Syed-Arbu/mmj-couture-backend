@@ -1,0 +1,1960 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MM Javeed Couture — Bespoke Billing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Jost:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#F7F2E9;
+  --cream-dark:#EEE4CF;
+  --ink:#18140F;
+  --ink-soft:#41392E;
+  --gold:#C9A15C;
+  --gold-deep:#8B6B2E;
+  --gold-light:#E8CE9C;
+  --line: rgba(139,107,46,0.28);
+  --danger:#A3402F;
+  --good:#3E6B4F;
+  --shadow: 0 20px 50px -20px rgba(24,20,15,0.35);
+  --radius: 14px;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:
+    radial-gradient(1200px 600px at 10% -10%, rgba(201,161,92,0.10), transparent 60%),
+    radial-gradient(1000px 500px at 110% 10%, rgba(201,161,92,0.08), transparent 60%),
+    var(--cream);
+  color:var(--ink);
+  font-family:'Jost',sans-serif;
+  min-height:100vh;
+}
+h1,h2,h3,.display{font-family:'Playfair Display',serif;}
+.mono{font-family:'IBM Plex Mono',monospace;}
+[hidden]{display:none !important;}
+a{color:inherit;}
+::selection{background:var(--gold-light);}
+
+.dot-divider{display:flex;align-items:center;gap:10px;margin:18px 0;}
+.dot-divider::before,.dot-divider::after{content:"";flex:1;height:1px;background:repeating-linear-gradient(90deg, var(--gold-deep) 0 6px, transparent 6px 12px);opacity:.55;}
+.dot-divider .diamond{width:7px;height:7px;background:var(--gold);transform:rotate(45deg);}
+
+button{font-family:'Jost',sans-serif;cursor:pointer;}
+.btn{padding:13px 26px;border-radius:8px;border:1.5px solid var(--ink);background:var(--ink);color:var(--cream);font-weight:600;letter-spacing:.04em;font-size:14px;transition:all .18s ease;}
+.btn:hover{background:#000;transform:translateY(-1px);box-shadow:0 8px 20px -8px rgba(0,0,0,.5);}
+.btn:active{transform:translateY(0);}
+.btn.gold{background:linear-gradient(135deg,var(--gold-light),var(--gold) 55%,var(--gold-deep));color:#241a08;border-color:var(--gold-deep);}
+.btn.gold:hover{filter:brightness(1.05);}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line);}
+.btn.ghost:hover{border-color:var(--gold-deep);background:rgba(201,161,92,.08);}
+.btn.small{padding:8px 14px;font-size:12.5px;border-radius:6px;}
+.btn.danger{background:transparent;border-color:var(--danger);color:var(--danger);}
+.btn.danger:hover{background:rgba(163,64,47,.08);}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none;}
+
+/* ================= LOGIN ================= */
+#loginScreen,#forgotScreen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:30px;position:relative;overflow:hidden;}
+.login-bg-art{position:absolute;inset:0;pointer-events:none;opacity:.06;background-image:radial-gradient(circle at 20% 30%, var(--gold-deep) 0, transparent 2px),radial-gradient(circle at 80% 70%, var(--gold-deep) 0, transparent 2px);background-size:26px 26px;}
+.login-card{position:relative;z-index:2;width:100%;max-width:960px;background:#FFFDF8;border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);overflow:hidden;display:grid;grid-template-columns:1.05fr 1fr;animation:riseIn .7s cubic-bezier(.16,1,.3,1);}
+@keyframes riseIn{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+.login-brand{background:linear-gradient(160deg, #171310 0%, #221b12 55%, #171310 100%);color:var(--cream-dark);padding:56px 44px;display:flex;flex-direction:column;justify-content:center;position:relative;}
+.login-brand::after{content:"";position:absolute;inset:14px;border:1px solid rgba(201,161,92,.35);border-radius:12px;pointer-events:none;}
+.mm-badge{width:74px;height:74px;border-radius:50%;background:radial-gradient(circle at 35% 30%, var(--gold-light), var(--gold) 55%, var(--gold-deep));display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700;font-size:26px;color:#241a08;box-shadow:0 10px 24px -8px rgba(201,161,92,.6), inset 0 2px 3px rgba(255,255,255,.5);margin-bottom:26px;}
+.login-brand h1{font-size:34px;margin:0 0 2px;letter-spacing:.03em;color:#FBF6EA;}
+.login-brand .couture{color:var(--gold);letter-spacing:.42em;font-size:12px;font-weight:600;margin-bottom:16px;}
+.login-brand .tagline{font-family:'Playfair Display',serif;font-style:italic;color:var(--gold-light);font-size:17px;margin-bottom:26px;}
+.login-brand p.blurb{font-size:14.5px;line-height:1.75;color:#D8CDB8;max-width:380px;}
+.login-brand .estd{margin-top:auto;padding-top:30px;font-size:11.5px;letter-spacing:.15em;color:#9A8A68;display:flex;align-items:center;gap:8px;}
+.login-brand .estd::before{content:"";width:24px;height:1px;background:#9A8A68;}
+
+.login-form-wrap{padding:56px 48px;display:flex;flex-direction:column;justify-content:center;}
+.login-form-wrap h2{font-size:24px;margin:0 0 6px;}
+.login-form-wrap .sub{color:var(--ink-soft);font-size:13.5px;margin-bottom:28px;}
+.field{margin-bottom:20px;}
+.field label{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold-deep);font-weight:600;margin-bottom:7px;}
+.field input, .field select, .field textarea{width:100%;padding:12.5px 14px;border-radius:8px;border:1.5px solid var(--line);background:#FBF8F1;font-family:'Jost',sans-serif;font-size:14.5px;color:var(--ink);transition:border-color .15s, box-shadow .15s;}
+.field input:focus, .field select:focus, .field textarea:focus{outline:none;border-color:var(--gold-deep);box-shadow:0 0 0 3px rgba(201,161,92,.18);}
+.field .otp-hint{font-size:12px;color:var(--good);margin-top:6px;}
+.field-error{color:var(--danger);font-size:12.5px;margin-top:6px;display:none;}
+.forgot-link{font-size:13px;color:var(--gold-deep);text-decoration:none;font-weight:600;border:none;background:none;padding:0;}
+.forgot-link:hover{text-decoration:underline;}
+.forgot-link:disabled{opacity:.4;text-decoration:none;cursor:not-allowed;}
+.attempts-note{font-size:12.5px;color:var(--danger);margin-top:14px;background:rgba(163,64,47,.07);border:1px solid rgba(163,64,47,.25);padding:10px 12px;border-radius:8px;display:none;}
+.back-to-login{font-size:13px;color:var(--ink-soft);text-decoration:none;display:inline-flex;align-items:center;gap:6px;margin-bottom:22px;cursor:pointer;}
+.back-to-login:hover{color:var(--gold-deep);}
+.step-dots{display:flex;gap:6px;margin-bottom:22px;}
+.step-dots span{width:26px;height:4px;border-radius:2px;background:var(--cream-dark);}
+.step-dots span.active{background:var(--gold);}
+.role-hint{font-size:11.5px;color:#9a8f76;margin-top:-10px;margin-bottom:18px;}
+@media(max-width:760px){.login-card{grid-template-columns:1fr;}.login-brand{padding:38px 30px;}.login-form-wrap{padding:38px 30px;}}
+
+/* ================= MAIN APP ================= */
+#mainApp{min-height:100vh;}
+.topbar{background:linear-gradient(180deg,#18140F,#211a12);color:var(--cream-dark);padding:0 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;box-shadow:0 6px 20px -10px rgba(0,0,0,.5);}
+.topbar-left{display:flex;align-items:center;gap:14px;padding:12px 0;}
+.mm-badge.small{width:40px;height:40px;font-size:15px;margin:0;}
+.topbar-title{line-height:1.1;}
+.topbar-title .name{font-family:'Playfair Display',serif;font-size:17px;color:#FBF6EA;}
+.topbar-title .sub{font-size:10px;letter-spacing:.25em;color:var(--gold);}
+.topbar-right{display:flex;align-items:center;gap:16px;}
+.user-chip{display:flex;align-items:center;gap:9px;font-size:13px;color:#D8CDB8;}
+.user-chip .avatar{width:30px;height:30px;border-radius:50%;background:var(--gold-deep);display:flex;align-items:center;justify-content:center;font-weight:600;color:#fff;font-size:11px;}
+.role-badge{font-size:10px;letter-spacing:.08em;padding:3px 9px;border-radius:20px;font-weight:700;text-transform:uppercase;}
+.role-badge.admin{background:rgba(201,161,92,.22);color:var(--gold-light);border:1px solid rgba(201,161,92,.4);}
+.role-badge.staff{background:rgba(255,255,255,.08);color:#D8CDB8;border:1px solid rgba(255,255,255,.15);}
+.logout-btn{background:transparent;border:1px solid rgba(201,161,92,.4);color:var(--gold-light);padding:7px 14px;border-radius:7px;font-size:12.5px;}
+.logout-btn:hover{background:rgba(201,161,92,.12);}
+
+.navbar{background:#FBF6EA;border-bottom:1px solid var(--line);padding:0 28px;display:flex;gap:6px;position:sticky;top:65px;z-index:40;overflow-x:auto;}
+.nav-tab{padding:15px 20px;font-size:13.5px;font-weight:600;letter-spacing:.03em;color:var(--ink-soft);border:none;background:none;position:relative;white-space:nowrap;}
+.nav-tab::after{content:"";position:absolute;left:14px;right:14px;bottom:0;height:2.5px;background:var(--gold);transform:scaleX(0);transition:transform .18s;}
+.nav-tab.active{color:var(--ink);}
+.nav-tab.active::after{transform:scaleX(1);}
+.nav-tab:hover{color:var(--ink);}
+.nav-tab.admin-tab{color:var(--gold-deep);}
+
+.view{padding:30px 28px 70px;max-width:1300px;margin:0 auto;}
+.view-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:22px;flex-wrap:wrap;gap:10px;}
+.view-header h1{font-size:26px;margin:0;}
+.view-header .eyebrow{font-size:11px;letter-spacing:.28em;color:var(--gold-deep);text-transform:uppercase;font-weight:600;}
+
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:34px;}
+.stat-card{background:#FFFDF8;border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:0 12px 30px -22px rgba(24,20,15,.4);}
+.stat-card .label{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:10px;}
+.stat-card .value{font-family:'Playfair Display',serif;font-size:30px;color:var(--ink);}
+.stat-card .value.gold-text{color:var(--gold-deep);}
+.stat-card .foot{font-size:11.5px;color:#7a715c;margin-top:6px;}
+@media(max-width:980px){.stat-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:560px){.stat-grid{grid-template-columns:1fr;}}
+
+.panel{background:#FFFDF8;border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 12px 30px -22px rgba(24,20,15,.4);}
+.panel-head{padding:18px 22px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+.panel-head h3{margin:0;font-size:17px;}
+.panel-body{padding:20px 22px;}
+
+table{width:100%;border-collapse:collapse;}
+table th{text-align:left;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold-deep);padding:11px 12px;border-bottom:1.5px solid var(--line);background:#FBF6EA;}
+table td{padding:13px 12px;border-bottom:1px solid var(--line);font-size:14px;}
+table tbody tr:hover{background:rgba(201,161,92,.06);}
+table tbody tr:last-child td{border-bottom:none;}
+.pill{display:inline-block;padding:4px 11px;border-radius:20px;font-size:11.5px;font-weight:600;letter-spacing:.02em;}
+.pill.paid{background:rgba(62,107,79,.12);color:var(--good);}
+.pill.partial{background:rgba(201,161,92,.18);color:var(--gold-deep);}
+.pill.unpaid{background:rgba(163,64,47,.12);color:var(--danger);}
+.row-link{color:var(--gold-deep);font-weight:600;text-decoration:none;cursor:pointer;}
+.row-link:hover{text-decoration:underline;}
+.empty-note{padding:34px;text-align:center;color:#9a8f76;font-size:13.5px;}
+
+.analytics-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+@media(max-width:820px){.analytics-grid{grid-template-columns:1fr;}}
+.analytics-card{border:1px solid var(--line);border-radius:12px;padding:16px 18px;background:#FCFAF3;}
+.analytics-card h4{margin:0 0 14px;font-size:13.5px;font-family:'Playfair Display',serif;color:var(--ink);}
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.bar-row .bar-label{width:92px;flex:none;font-size:12px;color:var(--ink-soft);text-align:right;}
+.bar-row .bar-track{flex:1;height:16px;background:var(--cream-dark);border-radius:5px;overflow:hidden;position:relative;}
+.bar-row .bar-fill{height:100%;background:linear-gradient(90deg,var(--gold-deep),var(--gold));border-radius:5px 0 0 5px;transition:width .4s ease;}
+.bar-row .bar-value{width:78px;flex:none;font-size:12px;font-family:'IBM Plex Mono',monospace;color:var(--ink);}
+.status-legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:12px;font-size:12px;color:var(--ink-soft);}
+.status-legend span{display:inline-flex;align-items:center;gap:6px;}
+.status-legend .dot{width:9px;height:9px;border-radius:50%;display:inline-block;}
+
+.form-grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.form-grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+@media(max-width:820px){.form-grid3,.form-grid2{grid-template-columns:1fr;}}
+.section-stack{display:flex;flex-direction:column;gap:22px;}
+
+.garment-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px;}
+@media(max-width:900px){.garment-grid{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:560px){.garment-grid{grid-template-columns:repeat(2,1fr);}}
+.garment-chip{border:1.5px solid var(--line);border-radius:10px;padding:12px 10px;text-align:center;font-size:13px;font-weight:600;background:#FBF8F1;transition:.15s;}
+.garment-chip:hover{border-color:var(--gold-deep);}
+.garment-chip.selected{background:linear-gradient(135deg,var(--gold-light),var(--gold));border-color:var(--gold-deep);color:#241a08;}
+
+.item-add-row{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;}
+.item-add-row .field{margin-bottom:0;flex:1;min-width:160px;}
+.items-table-wrap{margin-top:18px;}
+.remove-x{color:var(--danger);border:none;background:none;font-size:16px;cursor:pointer;font-weight:700;}
+
+.measure-block{border:1px solid var(--line);border-radius:12px;padding:18px;background:#FCFAF3;margin-bottom:14px;}
+.measure-block h4{margin:0 0 4px;font-size:14.5px;font-family:'Playfair Display',serif;}
+.measure-block .sub{font-size:12px;color:var(--ink-soft);margin-bottom:14px;}
+.measure-fields{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+@media(max-width:900px){.measure-fields{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:520px){.measure-fields{grid-template-columns:1fr;}}
+.measure-fields .field{margin-bottom:0;}
+.measure-fields label{display:flex;justify-content:space-between;}
+.measure-fields label .unit{color:#9a8f76;text-transform:none;font-weight:400;}
+.custom-measure-row{display:flex;gap:10px;align-items:center;margin-top:10px;}
+.custom-measure-row input{flex:1;}
+.custom-measure-row input.val{max-width:110px;flex:none;}
+
+.notes-box{width:100%;min-height:130px;padding:14px 16px;border-radius:8px;border:1.5px solid var(--line);background:#FBF8F1;font-family:'IBM Plex Mono',monospace;font-size:13.5px;line-height:1.8;resize:vertical;}
+.notes-box:focus{outline:none;border-color:var(--gold-deep);box-shadow:0 0 0 3px rgba(201,161,92,.18);}
+
+.billing-table input{width:100%;padding:8px 9px;border:1.5px solid var(--line);border-radius:6px;font-size:13.5px;background:#fff;font-family:'IBM Plex Mono',monospace;}
+.billing-table td{vertical-align:middle;}
+.amount-cell{font-family:'IBM Plex Mono',monospace;font-weight:600;}
+.totals-box{margin-top:18px;margin-left:auto;max-width:380px;background:#FBF6EA;border:1px solid var(--line);border-radius:10px;padding:16px 18px;}
+.totals-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;font-size:13.5px;}
+.totals-row.auto span.mono{color:var(--gold-deep);font-weight:600;}
+.totals-row.grand{border-top:1.5px dashed var(--gold-deep);margin-top:6px;padding-top:12px;font-size:17px;font-family:'Playfair Display',serif;font-weight:700;}
+.totals-row input{width:90px;padding:6px 8px;border:1.5px solid var(--line);border-radius:6px;font-family:'IBM Plex Mono',monospace;text-align:right;}
+.totals-hint{font-size:11px;color:#9a8f76;margin-top:2px;margin-bottom:6px;}
+
+.payment-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+@media(max-width:820px){.payment-grid{grid-template-columns:1fr;}}
+.balance-display{font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:600;}
+.balance-display.zero{color:var(--good);}
+.balance-display.due{color:var(--danger);}
+
+.qr-box{margin-top:18px;border:1.5px dashed var(--gold-deep);border-radius:12px;padding:20px;background:#FCFAF3;display:flex;align-items:center;gap:18px;flex-wrap:wrap;}
+.qr-box img{width:130px;height:130px;object-fit:contain;background:#fff;border-radius:8px;border:1px solid var(--line);padding:6px;}
+.qr-box .qr-info h4{margin:0 0 4px;font-size:14.5px;}
+.qr-box .qr-info p{margin:0;font-size:12.5px;color:var(--ink-soft);}
+
+.bill-footer-actions{display:flex;gap:12px;justify-content:flex-end;margin-top:26px;flex-wrap:wrap;}
+.search-bar{display:flex;align-items:center;gap:10px;background:#FBF8F1;border:1.5px solid var(--line);border-radius:9px;padding:9px 14px;max-width:420px;}
+.search-bar input{border:none;background:none;outline:none;font-size:14px;width:100%;font-family:'Jost',sans-serif;}
+
+/* Admin panel */
+.tag-list{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
+.tag-chip{display:flex;align-items:center;gap:8px;background:#FBF6EA;border:1.5px solid var(--line);padding:7px 8px 7px 14px;border-radius:20px;font-size:13px;font-weight:600;}
+.tag-chip button{border:none;background:none;color:var(--danger);font-weight:700;cursor:pointer;font-size:14px;}
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--line);}
+.toggle-row:last-child{border-bottom:none;}
+.toggle-row .t-label{font-size:14px;font-weight:600;}
+.toggle-row .t-desc{font-size:12px;color:var(--ink-soft);margin-top:2px;}
+.switch{position:relative;width:46px;height:26px;flex:none;}
+.switch input{opacity:0;width:0;height:0;}
+.switch .slider{position:absolute;inset:0;background:var(--cream-dark);border-radius:26px;cursor:pointer;transition:.2s;border:1px solid var(--line);}
+.switch .slider::before{content:"";position:absolute;width:20px;height:20px;left:2px;top:2px;background:#fff;border-radius:50%;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.3);}
+.switch input:checked + .slider{background:linear-gradient(135deg,var(--gold-light),var(--gold));}
+.switch input:checked + .slider::before{transform:translateX(20px);}
+.qr-admin-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:14px;margin-top:16px;}
+.qr-admin-card{border:1.5px solid var(--line);border-radius:12px;padding:14px;text-align:center;background:#FCFAF3;position:relative;}
+.qr-admin-card.active{border-color:var(--gold-deep);box-shadow:0 0 0 3px rgba(201,161,92,.18);}
+.qr-admin-card img{width:100%;aspect-ratio:1;object-fit:contain;background:#fff;border-radius:8px;margin-bottom:10px;}
+.qr-admin-card .qname{font-size:12.5px;font-weight:600;margin-bottom:8px;}
+.active-badge{position:absolute;top:8px;right:8px;background:var(--good);color:#fff;font-size:9.5px;font-weight:700;padding:3px 8px;border-radius:20px;letter-spacing:.05em;}
+.qr-admin-card .qactions{display:flex;gap:6px;justify-content:center;}
+.upload-drop{border:1.5px dashed var(--gold-deep);border-radius:12px;padding:26px;text-align:center;background:#FBF6EA;cursor:pointer;}
+.upload-drop:hover{background:rgba(201,161,92,.1);}
+.upload-drop input{display:none;}
+
+.modal-overlay{position:fixed;inset:0;background:rgba(20,16,10,.55);display:flex;align-items:center;justify-content:center;z-index:200;padding:20px;}
+.modal-box{background:#FFFDF8;border-radius:16px;max-width:640px;width:100%;box-shadow:var(--shadow);max-height:88vh;overflow:auto;}
+.modal-box .m-head{padding:20px 24px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;}
+.modal-box .m-head h3{margin:0;font-size:18px;}
+.modal-close{border:none;background:none;font-size:20px;cursor:pointer;color:var(--ink-soft);}
+.modal-box .m-body{padding:22px 24px;}
+.modal-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;}
+
+.toast{position:fixed;bottom:26px;right:26px;background:var(--ink);color:var(--cream);padding:14px 20px;border-radius:10px;font-size:13.5px;box-shadow:var(--shadow);z-index:400;max-width:320px;border-left:4px solid var(--gold);animation:slideUp .3s ease;}
+@keyframes slideUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+
+#printArea{display:none;}
+.pbill{width:800px;margin:0 auto;background:#fff;color:#18140F;font-family:'Jost',sans-serif;padding:30px;border:1px solid #ddd;}
+.pbill h1,.pbill h2,.pbill h3{font-family:'Playfair Display',serif;}
+.pbill-head{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:2px solid #C9A15C;padding-bottom:16px;margin-bottom:16px;}
+.pbill-head .biz h1{margin:0;font-size:26px;letter-spacing:.02em;}
+.pbill-head .biz .couture{color:#8B6B2E;letter-spacing:.3em;font-size:10px;font-weight:600;}
+.pbill-head .biz .tagline{font-style:italic;color:#8B6B2E;font-size:12px;}
+.pbill-head .meta{text-align:right;font-size:12.5px;}
+.pbill-section-title{background:#18140F;color:#E8CE9C;padding:6px 12px;font-size:12px;letter-spacing:.15em;font-weight:600;margin:18px 0 10px;}
+.pbill table{width:100%;border-collapse:collapse;margin-bottom:8px;}
+.pbill th{background:#C9A15C;color:#241a08;font-size:11px;text-align:left;padding:7px 9px;}
+.pbill td{padding:7px 9px;border-bottom:1px solid #e6ddc8;font-size:12.5px;}
+.pbill .two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.pbill .totals{margin-left:auto;width:300px;font-size:13px;}
+.pbill .totals div{display:flex;justify-content:space-between;padding:4px 0;}
+.pbill .totals .grand{border-top:2px solid #18140F;margin-top:6px;padding-top:8px;font-weight:700;font-size:16px;}
+.pbill .thankyou{text-align:center;margin-top:24px;font-family:'Playfair Display',serif;font-style:italic;color:#8B6B2E;font-size:15px;}
+.pbill .qr-print{display:flex;align-items:center;gap:16px;margin-top:16px;border:1px dashed #C9A15C;border-radius:10px;padding:14px;}
+.pbill .qr-print img{width:110px;height:110px;object-fit:contain;background:#fff;border:1px solid #eee;padding:4px;}
+.pbill table tr{page-break-inside:avoid;}
+.pbill .totals{page-break-inside:avoid;}
+.pbill .pbill-section-title{page-break-after:avoid;}
+@media print{
+  body.printing #app{display:none;}
+  body.printing #printArea{display:block;}
+  body.printing .modal-overlay{display:none !important;}
+  #printArea{position:absolute;top:0;left:0;}
+}
+</style>
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ======================= LOGIN ======================= -->
+  <div id="loginScreen">
+    <div class="login-bg-art"></div>
+    <div class="login-card">
+      <div class="login-brand">
+        <div class="mm-badge">MM</div>
+        <h1>MM Javeed</h1>
+        <div class="couture">C O U T U R E</div>
+        <div class="tagline">Bespoke. Crafted for You.</div>
+        <p class="blurb">For over a decade, MM Javeed Couture has dressed Bangalore's most discerning gentlemen in
+        hand-finished shervanis, bandis and tailored suits — where every stitch is measured twice and cut once.
+        This is the atelier's private billing suite.</p>
+        <div class="estd">BANGALORE, KARNATAKA</div>
+      </div>
+
+      <div class="login-form-wrap" id="loginStepForm">
+        <h2>Atelier Sign In</h2>
+        <div class="sub">Enter your studio credentials to continue.</div>
+
+        <div class="field">
+          <label>User ID</label>
+          <input type="text" id="loginId" placeholder="e.g. mmjbr@123" autocomplete="username">
+        </div>
+        <div class="field">
+          <label>Password</label>
+          <input type="password" id="loginPass" placeholder="••••••••" autocomplete="current-password">
+          <div class="field-error" id="loginError">Incorrect User ID or Password.</div>
+        </div>
+
+        <div class="attempts-note" id="attemptsNote"></div>
+
+        <div style="display:flex;">
+          <button class="btn gold" id="loginBtn" style="flex:1;">Sign In</button>
+        </div>
+        <div style="text-align:center;margin-top:16px;">
+          <button class="forgot-link" id="forgotBtn" disabled>Forgot Password?</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================= FORGOT PASSWORD FLOW ======================= -->
+  <div id="forgotScreen" hidden>
+    <div class="login-bg-art"></div>
+    <div class="login-card" style="grid-template-columns:1fr;max-width:520px;">
+      <div class="login-form-wrap">
+        <span class="back-to-login" id="backToLogin1">&larr; Back to Sign In</span>
+        <div class="step-dots"><span id="dot1" class="active"></span><span id="dot2"></span><span id="dot3"></span></div>
+
+        <div id="fpStepPhone">
+          <h2>Reset Password</h2>
+          <div class="sub">Resetting password for <span class="mono" id="resetTargetIdDisplay"></span></div>
+          <div class="field">
+            <label>Registered Phone Number</label>
+            <input type="tel" id="fpPhone" placeholder="+91 XXXXXXXXXX">
+            <div class="field-error" id="fpPhoneError">Please enter a valid 10-digit phone number.</div>
+          </div>
+          <button class="btn gold" id="sendOtpBtn" style="width:100%;">Send OTP</button>
+        </div>
+
+        <div id="fpStepOtp" hidden>
+          <h2>Verify OTP</h2>
+          <div class="sub">Enter the 6-digit code sent to <span id="otpPhoneDisplay" class="mono"></span></div>
+          <div class="field">
+            <label>One-Time Password</label>
+            <input type="text" id="otpInput" maxlength="6" placeholder="6-digit code">
+            <div class="otp-hint" id="otpDemoHint"></div>
+            <div class="field-error" id="otpError">Incorrect OTP. Please try again.</div>
+          </div>
+          <button class="btn gold" id="verifyOtpBtn" style="width:100%;">Verify Code</button>
+          <div style="text-align:center;margin-top:14px;"><button class="forgot-link" id="resendOtpBtn">Resend OTP</button></div>
+        </div>
+
+        <div id="fpStepReset" hidden>
+          <h2>Set New Password</h2>
+          <div class="sub">Choose a new password for your account.</div>
+          <div class="field"><label>New Password</label><input type="password" id="newPass1" placeholder="Minimum 6 characters"></div>
+          <div class="field"><label>Re-enter New Password</label><input type="password" id="newPass2" placeholder="Re-enter password">
+            <div class="field-error" id="resetError">Passwords do not match or are too short.</div>
+          </div>
+          <button class="btn gold" id="savePassBtn" style="width:100%;">Save New Password</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================= MAIN APP ======================= -->
+  <div id="mainApp" hidden>
+    <div class="topbar">
+      <div class="topbar-left">
+        <div class="mm-badge small">MM</div>
+        <div class="topbar-title"><div class="name">MM Javeed Couture</div><div class="sub">BESPOKE BILLING SUITE</div></div>
+      </div>
+      <div class="topbar-right">
+        <div class="user-chip"><div class="avatar" id="userAvatar">BR</div><span id="userChipId">—</span><span class="role-badge" id="roleBadge">—</span></div>
+        <button class="logout-btn" id="logoutBtn">Log Out</button>
+      </div>
+    </div>
+    <div class="navbar" id="navbar">
+      <button class="nav-tab active" data-view="dashboard">Dashboard</button>
+      <button class="nav-tab" data-view="newbill">New Bill</button>
+      <button class="nav-tab" data-view="orders">Orders</button>
+      <button class="nav-tab admin-tab" data-view="admin" id="adminNavTab" hidden>⚙ Admin</button>
+    </div>
+
+    <!-- ---------------- DASHBOARD ---------------- -->
+    <div class="view" id="view-dashboard">
+      <div class="view-header"><div><div class="eyebrow">Overview</div><h1>Dashboard</h1></div></div>
+      <div class="stat-grid">
+        <div class="stat-card"><div class="label">Total Bills</div><div class="value" id="statTotalBills">0</div><div class="foot">All-time invoices raised</div></div>
+        <div class="stat-card"><div class="label">Total Sales</div><div class="value gold-text" id="statTotalSales">₹0</div><div class="foot">Gross billed value</div></div>
+        <div class="stat-card"><div class="label">Customers</div><div class="value" id="statCustomers">0</div><div class="foot">Unique clients served</div></div>
+        <div class="stat-card"><div class="label">Pending Balance</div><div class="value" id="statPending" style="color:var(--danger);">₹0</div><div class="foot">Yet to be collected</div></div>
+      </div>
+
+      <div class="panel" style="margin-bottom:24px;">
+        <div class="panel-head"><h3>Analytics</h3><span class="mono" style="font-size:11px;color:#9a8f76;">live, from your saved bills</span></div>
+        <div class="panel-body">
+          <div class="empty-note" id="analyticsEmpty">No data yet — analytics will appear here once you save your first bill.</div>
+          <div id="analyticsContent" hidden>
+            <div class="analytics-grid">
+              <div class="analytics-card"><h4>Sales Trend</h4><div id="salesTrendChart"></div></div>
+              <div class="analytics-card"><h4>Top Garments</h4><div id="topGarmentsChart"></div></div>
+            </div>
+            <div class="analytics-card" style="margin-top:16px;"><h4>Payment Status</h4><div id="paymentStatusChart"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head"><h3>Recent Orders</h3><button class="btn ghost small" data-goto="orders">View All →</button></div>
+        <div class="panel-body" style="padding:0;">
+          <div style="overflow-x:auto;">
+          <table><thead><tr><th>Order No.</th><th>Date</th><th>Customer</th><th>Items</th><th>Total</th><th>Status</th></tr></thead><tbody id="recentOrdersBody"></tbody></table>
+          </div>
+          <div class="empty-note" id="recentOrdersEmpty" hidden>No orders yet — create your first bill from “New Bill”.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ---------------- NEW BILL ---------------- -->
+    <div class="view" id="view-newbill" hidden>
+      <div class="view-header">
+        <div><div class="eyebrow" id="billModeLabel">Create</div><h1 id="billModeTitle">New Bill</h1></div>
+        <div class="mono" style="font-size:13px;color:var(--ink-soft);">Order No. <span id="orderNoDisplay">—</span></div>
+      </div>
+
+      <div class="section-stack">
+        <div class="panel"><div class="panel-head"><h3>Client Details</h3></div>
+          <div class="panel-body">
+            <div class="form-grid3">
+              <div class="field"><label>Client Name</label><input type="text" id="clientName" placeholder="Full name"></div>
+              <div class="field"><label>Contact Number</label><input type="tel" id="clientContact" placeholder="+91 XXXXXXXXXX"></div>
+              <div class="field"><label>Address</label><input type="text" id="clientAddress" placeholder="City / Area"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel"><div class="panel-head"><h3>Order Items</h3></div>
+          <div class="panel-body">
+            <div class="garment-grid" id="garmentGrid"></div>
+            <div class="item-add-row">
+              <div class="field"><label>Selected Garment</label><input type="text" id="selectedGarmentDisplay" readonly placeholder="Tap a garment above"></div>
+              <div class="field" style="max-width:140px;"><label>Quantity</label>
+                <select id="itemQty">
+                  <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+                  <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
+                </select>
+              </div>
+              <button class="btn gold" id="addItemBtn" style="height:47px;">+ Add Item</button>
+            </div>
+            <div class="items-table-wrap">
+              <table id="itemsTable"><thead><tr><th>#</th><th>Garment</th><th>Quantity</th><th></th></tr></thead><tbody id="itemsTableBody"></tbody></table>
+              <div class="empty-note" id="itemsEmptyNote">No garments added yet. Select a garment and click “Add Item”.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel"><div class="panel-head"><h3>Measurements</h3><span class="mono" style="font-size:11.5px;color:#9a8f76;">all values in inches</span></div>
+          <div class="panel-body">
+            <div class="measure-block" id="bodyMeasureBlock">
+              <h4>Body Measurement</h4>
+              <div class="sub">Standard measurements captured for every garment.</div>
+              <div class="measure-fields" id="bodyMeasureFields"></div>
+              <div id="customMeasureRows"></div>
+              <button class="btn ghost small" id="addCustomMeasureBtn" style="margin-top:12px;">+ Add Custom Measurement</button>
+            </div>
+            <div id="garmentMeasureBlocks"></div>
+          </div>
+        </div>
+
+        <div class="panel"><div class="panel-head"><h3>Garment Material</h3><span class="mono" style="font-size:11.5px;color:#9a8f76;">what fabric, and how much</span></div>
+          <div class="panel-body">
+            <table id="materialTable" class="billing-table">
+              <thead><tr><th>Garment</th><th>Material Name</th><th>Meters Used</th></tr></thead>
+              <tbody id="materialTableBody"></tbody>
+            </table>
+            <div class="empty-note" id="materialEmptyNote">Add garments in “Order Items” to log material used.</div>
+          </div>
+        </div>
+
+        <div class="panel"><div class="panel-head"><h3>Trial, Delivery &amp; Notes</h3></div>
+          <div class="panel-body">
+            <div class="form-grid3">
+              <div class="field"><label>Trial Date</label><input type="date" id="trialDate"></div>
+              <div class="field"><label>Delivery Date</label><input type="date" id="deliveryDate"></div>
+              <div class="field"><label>Tailor Name</label><input type="text" id="tailorName" placeholder="Assigned tailor"></div>
+            </div>
+            <div class="field" style="margin-top:6px;">
+              <label>Notes</label>
+              <textarea class="notes-box" id="notesBox" placeholder="1. Type a note and press Enter for the next point…"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel"><div class="panel-head"><h3>Billing</h3></div>
+          <div class="panel-body">
+            <div style="overflow-x:auto;">
+            <table class="billing-table" id="billingTable">
+              <thead><tr><th>Garment</th><th>Qty</th><th>Unit Price (₹)</th><th>Discount (₹)</th><th>Amount (₹)</th></tr></thead>
+              <tbody id="billingTableBody"></tbody>
+            </table>
+            </div>
+            <div class="empty-note" id="billingEmptyNote">Add garments in “Order Items” to begin billing.</div>
+
+            <div class="totals-box">
+              <div class="totals-row"><span>Subtotal</span><span class="mono" id="subtotalDisplay">₹0.00</span></div>
+              <div class="totals-row auto"><span>Item Discount (auto)</span><span class="mono" id="itemDiscountDisplay">₹0.00</span></div>
+              <div class="totals-hint">Sum of the discounts entered per garment above — updates automatically.</div>
+              <div class="totals-row"><span>Additional Discount (₹)</span><input type="number" id="overallDiscount" min="0" value="0"></div>
+              <div class="totals-row"><span>GST (%)</span><input type="number" id="gstPercent" min="0" value="0"></div>
+              <div class="totals-row grand"><span>Grand Total</span><span class="mono" id="grandTotalDisplay">₹0.00</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel"><div class="panel-head"><h3>Payment</h3></div>
+          <div class="panel-body">
+            <div class="payment-grid">
+              <div class="field"><label>Payment Received (₹)</label><input type="number" id="paymentReceived" min="0" value="0"></div>
+              <div class="field"><label>Payment Mode</label>
+                <select id="paymentMode">
+                  <option>Cash</option><option>UPI</option><option>Card</option><option>Bank Transfer</option>
+                </select>
+              </div>
+              <div class="field"><label>Balance Amount</label><div class="balance-display zero" id="balanceDisplay">₹0.00</div></div>
+            </div>
+            <div class="qr-box" id="upiQrBox" hidden>
+              <img id="upiQrImage" src="" alt="UPI QR Code">
+              <div class="qr-info">
+                <h4 id="upiQrName">Scan to Pay</h4>
+                <p>Ask the customer to scan this code in any UPI app to complete payment.</p>
+              </div>
+            </div>
+            <div class="empty-note" id="upiQrEmptyNote" hidden style="padding:16px;">No UPI QR uploaded yet. Sign in as Admin to add one from the Admin panel.</div>
+          </div>
+        </div>
+
+        <div class="bill-footer-actions">
+          <button class="btn ghost" id="cancelBillBtn">Cancel</button>
+          <button class="btn gold" id="saveAndPrintBtn">💾 Save Bill</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ---------------- ORDERS ---------------- -->
+    <div class="view" id="view-orders" hidden>
+      <div class="view-header">
+        <div><div class="eyebrow">All Records</div><h1>Orders</h1></div>
+        <button class="btn gold small" data-goto="newbill">+ New Bill</button>
+      </div>
+      <div class="search-bar" style="margin-bottom:20px;">
+        <span class="mono">🔍</span>
+        <input type="text" id="orderSearch" placeholder="Search by customer name, phone number or Order ID…">
+      </div>
+      <div class="panel">
+        <div class="panel-body" style="padding:0;">
+          <div style="overflow-x:auto;">
+          <table><thead><tr><th>Order No.</th><th>Date</th><th>Customer</th><th>Contact</th><th>Items</th><th>Billed By</th><th>Total</th><th>Paid</th><th>Balance</th></tr></thead><tbody id="ordersTableBody"></tbody></table>
+          </div>
+          <div class="empty-note" id="ordersEmptyNote" hidden>No orders found.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ---------------- ADMIN (owner only) ---------------- -->
+    <div class="view" id="view-admin" hidden>
+      <div class="view-header"><div><div class="eyebrow">Owner Access</div><h1>Admin Panel</h1></div></div>
+      <div class="section-stack">
+
+        <div class="panel"><div class="panel-head"><h3>My Admin Credentials</h3></div>
+          <div class="panel-body">
+            <p style="font-size:13px;color:var(--ink-soft);margin-top:0;">Change your own login ID and/or password. Your current password is required to confirm the change.</p>
+            <div class="form-grid3">
+              <div class="field"><label>Current Password</label><input type="password" id="adminCurrentPass" placeholder="Required to confirm"></div>
+              <div class="field"><label>New Login ID</label><input type="text" id="adminNewId" placeholder="Leave blank to keep current"></div>
+              <div class="field"><label>New Password</label><input type="password" id="adminNewPass" placeholder="Leave blank to keep current"></div>
+            </div>
+            <button class="btn gold small" id="saveAdminCredsBtn">Update My Credentials</button>
+          </div>
+        </div>
+
+        <div class="panel"><div class="panel-head"><h3>Manage Staff</h3></div>
+          <div class="panel-body">
+            <p style="font-size:13px;color:var(--ink-soft);margin-top:0;">Add a staff login here and hand the ID/password to that person directly. You set and can change their password any time — staff don't self-reset.</p>
+            <table>
+              <thead><tr><th>Name</th><th>Login ID</th><th>New Password</th><th></th></tr></thead>
+              <tbody id="staffTableBody"></tbody>
+            </table>
+            <div class="empty-note" id="staffEmptyNote">No staff accounts yet — add one below.</div>
+            <div class="item-add-row" style="margin-top:16px;">
+              <div class="field"><label>Staff Name</label><input type="text" id="newStaffName" placeholder="e.g. Amjad"></div>
+              <div class="field"><label>Login ID</label><input type="text" id="newStaffId" placeholder="e.g. amjad@mmj"></div>
+              <div class="field"><label>Password</label><input type="password" id="newStaffPass" placeholder="Min 6 characters"></div>
+              <button class="btn gold" id="addStaffBtn" style="height:47px;">+ Add Staff</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel"><div class="panel-head"><h3>Company Details</h3></div>
+          <div class="panel-body">
+            <p style="font-size:13px;color:var(--ink-soft);margin-top:0;">These details print on the letterhead of every Store Bill and Client Bill.</p>
+            <div class="form-grid3">
+              <div class="field"><label>Company Name</label><input type="text" id="companyName" placeholder="MM Javeed Couture"></div>
+              <div class="field"><label>Tagline</label><input type="text" id="companyTagline" placeholder="Bespoke. Crafted for You."></div>
+              <div class="field"><label>GST Number</label><input type="text" id="companyGst" placeholder="29ABCDE1234F1Z5"></div>
+            </div>
+            <div class="form-grid2">
+              <div class="field"><label>Company Address</label><input type="text" id="companyAddress" placeholder="Shop address"></div>
+              <div class="field"><label>Phone Number</label><input type="text" id="companyPhone" placeholder="+91 XXXXXXXXXX"></div>
+            </div>
+            <div id="companyExtraRows"></div>
+            <button class="btn ghost small" id="addCompanySectionBtn" style="margin-top:6px;">+ Add Section</button>
+            <div style="margin-top:18px;"><button class="btn gold small" id="saveCompanyInfoBtn">Save Company Details</button></div>
+          </div>
+        </div>
+
+        <div class="panel"><div class="panel-head"><h3>Manage Sections</h3></div>
+          <div class="panel-body" id="sectionTogglesWrap"></div>
+        </div>
+
+        <div class="panel"><div class="panel-head"><h3>Manage Garment Types</h3></div>
+          <div class="panel-body">
+            <div class="tag-list" id="garmentTagList"></div>
+            <div class="item-add-row">
+              <div class="field"><label>New Garment Name</label><input type="text" id="newGarmentInput" placeholder="e.g. WAISTCOAT"></div>
+              <button class="btn gold" id="addGarmentBtn" style="height:47px;">+ Add Garment</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel"><div class="panel-head"><h3>UPI QR Codes</h3></div>
+          <div class="panel-body">
+            <p style="font-size:13px;color:var(--ink-soft);margin-top:0;">Upload your UPI QR code below. It appears automatically in New Bill whenever a customer's payment mode is set to UPI. If your daily collection limit is reached, upload a new QR and set it active — the billing screen switches instantly.</p>
+            <label class="upload-drop" for="qrUploadInput">
+              <div style="font-size:14px;font-weight:600;">📤 Click to upload a QR code image</div>
+              <div style="font-size:12px;color:var(--ink-soft);margin-top:4px;">PNG or JPG, ideally square</div>
+              <input type="file" id="qrUploadInput" accept="image/*">
+            </label>
+            <div class="qr-admin-grid" id="qrAdminGrid"></div>
+            <div class="empty-note" id="qrAdminEmpty">No QR codes uploaded yet.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Order action modal -->
+<div class="modal-overlay" id="orderModal" hidden>
+  <div class="modal-box">
+    <div class="m-head"><h3 id="orderModalTitle">Order</h3><button class="modal-close" id="orderModalClose">✕</button></div>
+    <div class="m-body">
+      <div id="orderModalSummary" style="font-size:14px;line-height:1.9;margin-bottom:18px;"></div>
+      <div class="modal-actions">
+        <button class="btn gold small" id="modalPrintStoreBtn">🖨 Print Store Bill</button>
+        <button class="btn gold small" id="modalPrintClientBtn">🧾 Print Client Bill</button>
+        <button class="btn ghost small" id="modalViewBtn">👁 View</button>
+        <button class="btn ghost small" id="modalEditBtn">✎ Edit</button>
+        <button class="btn danger small" id="modalDeleteBtn">🗑 Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Post-save action modal -->
+<div class="modal-overlay" id="postSaveModal" hidden>
+  <div class="modal-box" style="max-width:480px;">
+    <div class="m-head"><h3>Bill Saved ✓</h3><button class="modal-close" id="postSaveClose">✕</button></div>
+    <div class="m-body">
+      <div style="font-size:14px;color:var(--ink-soft);margin-bottom:16px;">Order <span class="mono" id="postSaveOrderId"></span> has been saved. What would you like to do next?</div>
+      <div class="modal-actions" style="flex-direction:column;align-items:stretch;">
+        <button class="btn gold" id="postSavePrintStoreBtn">🖨 Print Store Bill</button>
+        <button class="btn gold" id="postSavePrintClientBtn">🧾 Print Client Bill</button>
+        <button class="btn ghost" id="postSaveDoneBtn">Done — Go to Orders</button>
+        <button class="btn danger" id="postSaveDeleteBtn">🗑 Delete This Bill</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="viewBillModal" hidden>
+  <div class="modal-box" style="max-width:720px;">
+    <div class="m-head"><h3>Bill Preview</h3><button class="modal-close" id="viewBillClose">✕</button></div>
+    <div class="m-body" id="viewBillBody"></div>
+  </div>
+</div>
+
+<div id="printArea"></div>
+
+<script>
+/* ================= API HELPER ================= */
+const API_BASE = ''; // same-origin: the backend serves this page, so relative paths just work
+async function api(path, opts={}){
+  const res = await fetch(API_BASE + path, {
+    credentials: 'include',
+    headers: { 'Content-Type': 'application/json' },
+    ...opts
+  });
+  if(res.status === 204) return null;
+  let data = null;
+  try{ data = await res.json(); }catch(e){ /* empty body */ }
+  if(!res.ok){ throw new Error((data && data.error) || res.statusText || 'Request failed'); }
+  return data;
+}
+
+/* ================= ROLES & SESSION ================= */
+let currentRole = null; // 'admin' | 'staff' — set by the server on login, never trusted from the client alone
+let currentUserId = null;
+let wrongAttempts = 0;
+
+/* ================= CORE DATA (loaded from the backend after login) ================= */
+let GARMENTS = [];
+const BODY_FIELDS = ["Chest","Waist","Hip","Shoulder","Sleeve","Collar"];
+let GARMENT_EXTRA_FIELDS = {};
+let sectionVisibility = { dashboard:true, newbill:true, orders:true };
+let qrCodes = []; // {id, name, dataUrl, active}
+let companyInfo = {
+  name: "MM Javeed Couture",
+  tagline: "Bespoke. Crafted for You.",
+  address: "Bangalore, Karnataka",
+  phone: "+91 XXXXXXXXXX",
+  gst: "",
+  extra: []
+};
+
+let selectedGarment = null;
+let orderItems = [];
+let editingOrderId = null;
+let orders = []; // pulled fresh from the backend on login and after every save/delete
+
+function sanitizeForFilename(str){
+  return (str||'').trim().replace(/[^a-zA-Z0-9]+/g,'_').replace(/^_+|_+$/g,'') || 'Customer';
+}
+
+/* ================= UTIL ================= */
+function fmtMoney(n){ n = isFinite(n)? n : 0; return "₹" + n.toLocaleString('en-IN', {minimumFractionDigits:2, maximumFractionDigits:2}); }
+function toast(msg){
+  const t = document.createElement('div');
+  t.className = 'toast'; t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(()=>{ t.style.opacity='0'; t.style.transition='opacity .4s'; setTimeout(()=>t.remove(),400); }, 3200);
+}
+function todayISO(){ return new Date().toISOString().slice(0,10); }
+function fmtDate(iso){ if(!iso) return "—"; const d=new Date(iso+"T00:00:00"); return d.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}); }
+function uid(){ return Math.random().toString(36).slice(2,9); }
+
+/* ================= LOGIN LOGIC ================= */
+const loginId = document.getElementById('loginId');
+const loginPass = document.getElementById('loginPass');
+const loginBtn = document.getElementById('loginBtn');
+const loginError = document.getElementById('loginError');
+const attemptsNote = document.getElementById('attemptsNote');
+const forgotBtn = document.getElementById('forgotBtn');
+
+loginBtn.addEventListener('click', doLogin);
+[loginId, loginPass].forEach(el=> el.addEventListener('keydown', e=>{ if(e.key==='Enter') doLogin(); }));
+
+async function doLogin(){
+  const idVal = loginId.value.trim();
+  const passVal = loginPass.value;
+  loginBtn.disabled = true;
+  try{
+    const user = await api('/api/auth/login', { method:'POST', body: JSON.stringify({ id: idVal, pass: passVal }) });
+    loginError.style.display='none';
+    wrongAttempts = 0;
+    currentRole = user.role;
+    currentUserId = user.id;
+    await enterApp(user.id);
+  } catch(err){
+    wrongAttempts++;
+    loginError.style.display='block';
+    loginPass.value='';
+    if(wrongAttempts >= 3){
+      forgotBtn.disabled = false;
+      attemptsNote.style.display='block';
+      attemptsNote.textContent = "You've entered the wrong password 3 times. You can reset it using “Forgot Password?” below.";
+    } else {
+      attemptsNote.style.display='block';
+      attemptsNote.textContent = `Incorrect credentials. ${3-wrongAttempts} attempt(s) remaining before password reset unlocks.`;
+    }
+  } finally {
+    loginBtn.disabled = false;
+  }
+}
+
+forgotBtn.addEventListener('click', ()=>{
+  const idVal = loginId.value.trim() || 'mmjbr@123';
+  document.getElementById('resetTargetIdDisplay').textContent = idVal;
+  document.getElementById('loginScreen').hidden = true;
+  document.getElementById('forgotScreen').hidden = false;
+  goFpStep(1);
+});
+document.getElementById('backToLogin1').addEventListener('click', ()=>{
+  document.getElementById('forgotScreen').hidden = true;
+  document.getElementById('loginScreen').hidden = false;
+});
+
+function goFpStep(step){
+  document.getElementById('fpStepPhone').hidden = step!==1;
+  document.getElementById('fpStepOtp').hidden = step!==2;
+  document.getElementById('fpStepReset').hidden = step!==3;
+  document.getElementById('dot1').classList.toggle('active', step>=1);
+  document.getElementById('dot2').classList.toggle('active', step>=2);
+  document.getElementById('dot3').classList.toggle('active', step>=3);
+}
+
+document.getElementById('sendOtpBtn').addEventListener('click', async ()=>{
+  const phone = document.getElementById('fpPhone').value.trim();
+  const digits = phone.replace(/\D/g,'');
+  if(digits.length < 10){ document.getElementById('fpPhoneError').style.display='block'; return; }
+  document.getElementById('fpPhoneError').style.display='none';
+  await sendOtp(phone);
+  goFpStep(2);
+});
+
+async function sendOtp(phone){
+  const targetId = document.getElementById('resetTargetIdDisplay').textContent;
+  try{
+    const res = await api('/api/auth/forgot/send-otp', { method:'POST', body: JSON.stringify({ id: targetId, phone }) });
+    document.getElementById('otpPhoneDisplay').textContent = phone || res.phone || '';
+    document.getElementById('otpInput').value='';
+    document.getElementById('otpError').style.display='none';
+    document.getElementById('otpDemoHint').textContent = `Demo mode — your OTP is ${res.devOtp}`;
+    toast(`OTP sent to ${phone}`);
+  } catch(err){
+    toast(err.message);
+  }
+}
+document.getElementById('resendOtpBtn').addEventListener('click', ()=> sendOtp(document.getElementById('fpPhone').value.trim()));
+
+document.getElementById('verifyOtpBtn').addEventListener('click', async ()=>{
+  const val = document.getElementById('otpInput').value.trim();
+  try{
+    await api('/api/auth/forgot/verify-otp', { method:'POST', body: JSON.stringify({ otp: val }) });
+    document.getElementById('otpError').style.display='none';
+    goFpStep(3);
+  } catch(err){
+    document.getElementById('otpError').style.display='block';
+  }
+});
+
+document.getElementById('savePassBtn').addEventListener('click', async ()=>{
+  const p1 = document.getElementById('newPass1').value;
+  const p2 = document.getElementById('newPass2').value;
+  const err = document.getElementById('resetError');
+  if(p1.length < 6 || p1 !== p2){ err.style.display='block'; return; }
+  try{
+    await api('/api/auth/forgot/reset', { method:'POST', body: JSON.stringify({ newPassword: p1 }) });
+    err.style.display='none';
+    wrongAttempts = 0;
+    forgotBtn.disabled = true;
+    attemptsNote.style.display='none';
+    toast('Password updated successfully. Please sign in.');
+    document.getElementById('forgotScreen').hidden = true;
+    document.getElementById('loginScreen').hidden = false;
+    document.getElementById('loginId').value = document.getElementById('resetTargetIdDisplay').textContent;
+    document.getElementById('loginPass').value = '';
+  } catch(e){
+    err.style.display='block';
+    err.textContent = e.message || 'Could not reset password.';
+  }
+});
+
+/* ================= APP ENTRY ================= */
+async function enterApp(idVal){
+  document.getElementById('loginScreen').hidden = true;
+  document.getElementById('mainApp').hidden = false;
+
+  document.getElementById('userChipId').textContent = idVal;
+  document.getElementById('userAvatar').textContent = currentRole==='admin' ? 'AD' : 'BR';
+  const roleBadge = document.getElementById('roleBadge');
+  roleBadge.textContent = currentRole === 'admin' ? 'Admin' : 'Staff';
+  roleBadge.className = 'role-badge ' + currentRole;
+  document.getElementById('adminNavTab').hidden = currentRole !== 'admin';
+
+  await loadAppData();
+
+  buildGarmentGrid();
+  renderBodyMeasureFields();
+  renderNavForRole();
+  refreshDashboard();
+  renderOrdersTable();
+  if(currentRole==='admin'){ renderSectionToggles(); renderGarmentTags(); renderQrAdminGrid(); loadCompanyInfoForm(); loadStaffList(); }
+  switchView('dashboard');
+}
+
+async function loadAppData(){
+  try{
+    const [garmentData, sections, company, qrs, orderList] = await Promise.all([
+      api('/api/garments'),
+      api('/api/sections'),
+      api('/api/company'),
+      api('/api/qr'),
+      api('/api/orders')
+    ]);
+    GARMENTS = garmentData.garments;
+    GARMENT_EXTRA_FIELDS = garmentData.extraFields;
+    sectionVisibility = sections;
+    companyInfo = company;
+    qrCodes = qrs;
+    orders = orderList;
+  } catch(err){
+    toast('Could not load data from the server: ' + err.message);
+  }
+}
+
+document.getElementById('logoutBtn').addEventListener('click', async ()=>{
+  try{ await api('/api/auth/logout', { method:'POST' }); }catch(e){}
+  document.getElementById('mainApp').hidden = true;
+  document.getElementById('loginScreen').hidden = false;
+  loginId.value=''; loginPass.value='';
+  currentRole = null; currentUserId = null;
+});
+
+/* ================= NAV ================= */
+document.querySelectorAll('.nav-tab').forEach(btn=>{
+  btn.addEventListener('click', ()=> switchView(btn.dataset.view));
+});
+document.querySelectorAll('[data-goto]').forEach(btn=>{
+  btn.addEventListener('click', ()=> switchView(btn.dataset.goto));
+});
+
+function renderNavForRole(){
+  document.querySelectorAll('.nav-tab').forEach(tab=>{
+    const v = tab.dataset.view;
+    if(v==='admin'){ tab.hidden = currentRole!=='admin'; return; }
+    if(currentRole==='admin'){ tab.hidden = false; return; }
+    tab.hidden = !sectionVisibility[v];
+  });
+}
+
+function switchView(name){
+  ['dashboard','newbill','orders','admin'].forEach(v=>{
+    const el = document.getElementById('view-'+v);
+    if(el) el.hidden = (v!==name);
+  });
+  document.querySelectorAll('.nav-tab').forEach(t=> t.classList.toggle('active', t.dataset.view===name));
+  if(name==='orders'){ renderOrdersTable(); }
+  if(name==='dashboard'){ refreshDashboard(); }
+  if(name==='admin'){ renderSectionToggles(); renderGarmentTags(); renderQrAdminGrid(); loadCompanyInfoForm(); loadStaffList(); }
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+/* ================= DASHBOARD ================= */
+function refreshDashboard(){
+  document.getElementById('statTotalBills').textContent = orders.length;
+  const totalSales = orders.reduce((s,o)=> s+o.grandTotal, 0);
+  document.getElementById('statTotalSales').textContent = fmtMoney(totalSales);
+  const customers = new Set(orders.map(o=>o.client.contact)).size;
+  document.getElementById('statCustomers').textContent = customers;
+  const pending = orders.reduce((s,o)=> s+Math.max(o.balance,0), 0);
+  document.getElementById('statPending').textContent = fmtMoney(pending);
+
+  const body = document.getElementById('recentOrdersBody');
+  const recent = [...orders].sort((a,b)=> b.date.localeCompare(a.date)).slice(0,6);
+  body.innerHTML = recent.map(o=>{
+    const status = o.balance<=0 ? '<span class="pill paid">Paid</span>' : (o.paymentReceived>0 ? '<span class="pill partial">Partial</span>' : '<span class="pill unpaid">Unpaid</span>');
+    return `<tr>
+      <td><a class="row-link" onclick="openOrderModal('${o.id}')">${o.id}</a></td>
+      <td>${fmtDate(o.date)}</td>
+      <td>${o.client.name}</td>
+      <td>${o.items.map(i=>i.garment).join(', ')}</td>
+      <td class="mono">${fmtMoney(o.grandTotal)}</td>
+      <td>${status}</td>
+    </tr>`;
+  }).join('');
+  document.getElementById('recentOrdersEmpty').hidden = orders.length>0;
+
+  renderAnalytics();
+}
+
+function renderAnalytics(){
+  const empty = document.getElementById('analyticsEmpty');
+  const content = document.getElementById('analyticsContent');
+  if(orders.length===0){ empty.hidden=false; content.hidden=true; return; }
+  empty.hidden = true; content.hidden = false;
+
+  const byDate = {};
+  orders.forEach(o=>{ byDate[o.date] = (byDate[o.date]||0) + o.grandTotal; });
+  const dateEntries = Object.entries(byDate).sort((a,b)=> a[0].localeCompare(b[0])).slice(-8);
+  const maxSales = Math.max(...dateEntries.map(e=>e[1]), 1);
+  document.getElementById('salesTrendChart').innerHTML = dateEntries.map(([d,v])=>`
+    <div class="bar-row"><div class="bar-label">${fmtDate(d)}</div><div class="bar-track"><div class="bar-fill" style="width:${(v/maxSales*100).toFixed(1)}%"></div></div><div class="bar-value">${fmtMoney(v)}</div></div>`).join('');
+
+  const garmentCounts = {};
+  orders.forEach(o=> o.items.forEach(it=>{ garmentCounts[it.garment] = (garmentCounts[it.garment]||0) + it.qty; }));
+  const garmentEntries = Object.entries(garmentCounts).sort((a,b)=> b[1]-a[1]).slice(0,6);
+  const maxQty = Math.max(...garmentEntries.map(e=>e[1]), 1);
+  document.getElementById('topGarmentsChart').innerHTML = garmentEntries.length ? garmentEntries.map(([g,q])=>`
+    <div class="bar-row"><div class="bar-label">${g}</div><div class="bar-track"><div class="bar-fill" style="width:${(q/maxQty*100).toFixed(1)}%"></div></div><div class="bar-value">${q} pcs</div></div>`).join('') : '<div style="font-size:12.5px;color:#9a8f76;">No items yet.</div>';
+
+  let paidCount=0, partialCount=0, unpaidCount=0;
+  orders.forEach(o=>{ if(o.balance<=0) paidCount++; else if(o.paymentReceived>0) partialCount++; else unpaidCount++; });
+  const total = orders.length || 1;
+  const collected = orders.reduce((s,o)=> s + Math.min(o.paymentReceived, o.grandTotal), 0);
+  const pending = orders.reduce((s,o)=> s + Math.max(o.balance,0), 0);
+  document.getElementById('paymentStatusChart').innerHTML = `
+    <div class="bar-row"><div class="bar-label">Paid</div><div class="bar-track"><div class="bar-fill" style="width:${(paidCount/total*100).toFixed(1)}%;background:linear-gradient(90deg,#3E6B4F,#5b9270);"></div></div><div class="bar-value">${paidCount} order(s)</div></div>
+    <div class="bar-row"><div class="bar-label">Partial</div><div class="bar-track"><div class="bar-fill" style="width:${(partialCount/total*100).toFixed(1)}%;"></div></div><div class="bar-value">${partialCount} order(s)</div></div>
+    <div class="bar-row"><div class="bar-label">Unpaid</div><div class="bar-track"><div class="bar-fill" style="width:${(unpaidCount/total*100).toFixed(1)}%;background:linear-gradient(90deg,#A3402F,#c9614c);"></div></div><div class="bar-value">${unpaidCount} order(s)</div></div>
+    <div class="status-legend"><span><span class="dot" style="background:#3E6B4F;"></span>Collected: ${fmtMoney(collected)}</span><span><span class="dot" style="background:#A3402F;"></span>Pending: ${fmtMoney(pending)}</span></div>`;
+}
+
+/* ================= NEW BILL: GARMENTS ================= */
+function buildGarmentGrid(){
+  const grid = document.getElementById('garmentGrid');
+  grid.innerHTML = GARMENTS.map(g=>`<button type="button" class="garment-chip" data-g="${g}">${g}</button>`).join('');
+  grid.querySelectorAll('.garment-chip').forEach(chip=>{
+    chip.addEventListener('click', ()=>{
+      grid.querySelectorAll('.garment-chip').forEach(c=>c.classList.remove('selected'));
+      chip.classList.add('selected');
+      selectedGarment = chip.dataset.g;
+      document.getElementById('selectedGarmentDisplay').value = selectedGarment;
+    });
+  });
+}
+
+document.getElementById('addItemBtn').addEventListener('click', ()=>{
+  if(!selectedGarment){ toast('Please select a garment first.'); return; }
+  const qty = parseInt(document.getElementById('itemQty').value,10);
+  const existing = orderItems.find(i=>i.garment===selectedGarment);
+  if(existing){ existing.qty = qty; } else { orderItems.push({garment:selectedGarment, qty}); }
+  renderItemsTable();
+  renderGarmentMeasureBlocks();
+  renderBillingTable();
+  renderMaterialTable();
+});
+
+function renderItemsTable(){
+  const body = document.getElementById('itemsTableBody');
+  body.innerHTML = orderItems.map((it,idx)=>`
+    <tr><td>${idx+1}</td><td>${it.garment}</td><td>${it.qty}</td><td><button class="remove-x" onclick="removeItem(${idx})">✕</button></td></tr>`).join('');
+  document.getElementById('itemsEmptyNote').hidden = orderItems.length>0;
+}
+function removeItem(idx){
+  orderItems.splice(idx,1);
+  renderItemsTable();
+  renderGarmentMeasureBlocks();
+  renderBillingTable();
+  renderMaterialTable();
+}
+
+/* ================= MATERIAL USED ================= */
+function renderMaterialTable(){
+  const body = document.getElementById('materialTableBody');
+  const existing = {};
+  body.querySelectorAll('tr').forEach(tr=>{
+    existing[tr.dataset.garment] = {
+      material: tr.querySelector('.material-input')?.value || '',
+      meters: tr.querySelector('.meters-input')?.value || ''
+    };
+  });
+  body.innerHTML = orderItems.map(it=>{
+    const prev = existing[it.garment] || {material:'', meters:''};
+    return `<tr data-garment="${it.garment}">
+      <td>${it.garment}</td>
+      <td><input type="text" class="material-input" placeholder="e.g. Cotton Blend" value="${prev.material}"></td>
+      <td><input type="number" step="0.1" min="0" class="meters-input" placeholder="0.0" value="${prev.meters}"></td>
+    </tr>`;
+  }).join('');
+  document.getElementById('materialEmptyNote').hidden = orderItems.length>0;
+}
+
+/* ================= MEASUREMENTS ================= */
+function renderBodyMeasureFields(){
+  const wrap = document.getElementById('bodyMeasureFields');
+  wrap.innerHTML = BODY_FIELDS.map(f=>`
+    <div class="field"><label>${f} <span class="unit">in</span></label><input type="number" step="0.1" class="body-measure-input" data-field="${f}" placeholder="0.0"></div>`).join('');
+}
+
+document.getElementById('addCustomMeasureBtn').addEventListener('click', ()=>{
+  addCustomMeasureRow(document.getElementById('customMeasureRows'));
+});
+
+function addCustomMeasureRow(container, label, value){
+  const row = document.createElement('div');
+  row.className = 'custom-measure-row';
+  row.innerHTML = `<input type="text" class="custom-label" placeholder="Measurement name (e.g. Cuff)" value="${label||''}">
+    <input type="number" step="0.1" class="custom-val" placeholder="in" value="${value||''}">
+    <button class="remove-x" type="button">✕</button>`;
+  row.querySelector('.remove-x').addEventListener('click', ()=> row.remove());
+  container.appendChild(row);
+  return row;
+}
+
+function renderGarmentMeasureBlocks(){
+  const wrap = document.getElementById('garmentMeasureBlocks');
+  const uniqueGarments = [...new Set(orderItems.map(i=>i.garment))];
+  wrap.innerHTML = '';
+  uniqueGarments.forEach(g=>{
+    const extras = GARMENT_EXTRA_FIELDS[g] || [];
+    const block = document.createElement('div');
+    block.className = 'measure-block';
+    block.dataset.garment = g;
+    block.innerHTML = `<h4>${g} Measurements</h4><div class="sub">Auto-added based on garment selected in Order Items.</div>
+      <div class="measure-fields">
+      ${extras.map(f=>`<div class="field"><label>${f} <span class="unit">in</span></label><input type="number" step="0.1" class="garment-measure-input" data-garment="${g}" data-field="${f}" placeholder="0.0"></div>`).join('')}
+      </div>
+      <div class="custom-measure-container" data-garment-custom="${g}"></div>
+      <button class="btn ghost small add-garment-custom-btn" type="button" data-garment="${g}" style="margin-top:12px;">+ Add Custom Measurement</button>`;
+    wrap.appendChild(block);
+    block.querySelector('.add-garment-custom-btn').addEventListener('click', ()=> addCustomMeasureRow(block.querySelector(`[data-garment-custom="${g}"]`)));
+  });
+}
+
+/* ================= NOTES AUTO-NUMBER ================= */
+const notesBox = document.getElementById('notesBox');
+notesBox.value = "1. ";
+notesBox.addEventListener('keydown', function(e){
+  if(e.key === 'Enter'){
+    e.preventDefault();
+    const val = this.value;
+    const lines = val.split('\n');
+    const nextNum = lines.length + 1;
+    const cursorPos = this.selectionStart;
+    const before = val.slice(0, cursorPos);
+    const after = val.slice(cursorPos);
+    const insertion = `\n${nextNum}. `;
+    this.value = before + insertion + after;
+    const newPos = cursorPos + insertion.length;
+    this.selectionStart = this.selectionEnd = newPos;
+  }
+});
+
+/* ================= BILLING ================= */
+function renderBillingTable(){
+  const body = document.getElementById('billingTableBody');
+  const existingPrices = {};
+  body.querySelectorAll('tr').forEach(tr=>{
+    const g = tr.dataset.garment;
+    existingPrices[g] = { unit: tr.querySelector('.unit-price-input')?.value || '', disc: tr.querySelector('.discount-input')?.value || '' };
+  });
+  body.innerHTML = orderItems.map(it=>{
+    const prev = existingPrices[it.garment] || {unit:'',disc:''};
+    return `<tr data-garment="${it.garment}">
+      <td>${it.garment}</td>
+      <td class="qty-cell mono">${it.qty}</td>
+      <td><input type="number" min="0" class="unit-price-input" value="${prev.unit}" placeholder="0"></td>
+      <td><input type="number" min="0" class="discount-input" value="${prev.disc}" placeholder="0"></td>
+      <td class="amount-cell mono" data-amount>₹0.00</td>
+    </tr>`;
+  }).join('');
+  document.getElementById('billingEmptyNote').hidden = orderItems.length>0;
+  body.querySelectorAll('.unit-price-input,.discount-input').forEach(inp=>{ inp.addEventListener('input', computeTotals); });
+  computeTotals();
+}
+
+document.getElementById('overallDiscount').addEventListener('input', computeTotals);
+document.getElementById('gstPercent').addEventListener('input', computeTotals);
+document.getElementById('paymentReceived').addEventListener('input', computeTotals);
+
+function computeTotals(){
+  const body = document.getElementById('billingTableBody');
+  let subtotalGross = 0;
+  let itemDiscountTotal = 0;
+  body.querySelectorAll('tr').forEach(tr=>{
+    const qty = parseFloat(tr.querySelector('.qty-cell').textContent) || 0;
+    const unit = parseFloat(tr.querySelector('.unit-price-input').value) || 0;
+    const disc = parseFloat(tr.querySelector('.discount-input').value) || 0;
+    const rowNet = Math.max((unit*qty) - disc, 0);
+    tr.querySelector('[data-amount]').textContent = fmtMoney(rowNet);
+    subtotalGross += unit*qty;
+    itemDiscountTotal += disc;
+  });
+  document.getElementById('subtotalDisplay').textContent = fmtMoney(subtotalGross);
+  document.getElementById('itemDiscountDisplay').textContent = fmtMoney(itemDiscountTotal);
+
+  const additionalDisc = parseFloat(document.getElementById('overallDiscount').value) || 0;
+  const gstPct = parseFloat(document.getElementById('gstPercent').value) || 0;
+  const afterDisc = Math.max(subtotalGross - itemDiscountTotal - additionalDisc, 0);
+  const gstAmt = afterDisc * (gstPct/100);
+  const grandTotal = afterDisc + gstAmt;
+  document.getElementById('grandTotalDisplay').textContent = fmtMoney(grandTotal);
+
+  const received = parseFloat(document.getElementById('paymentReceived').value) || 0;
+  const balance = grandTotal - received;
+  const balEl = document.getElementById('balanceDisplay');
+  balEl.textContent = fmtMoney(Math.max(balance,0));
+  balEl.classList.toggle('zero', balance<=0);
+  balEl.classList.toggle('due', balance>0);
+
+  return {subtotalGross, itemDiscountTotal, additionalDisc, gstPct, grandTotal, received, balance};
+}
+
+/* ================= UPI QR DISPLAY IN NEW BILL ================= */
+document.getElementById('paymentMode').addEventListener('change', updateUpiQrDisplay);
+function updateUpiQrDisplay(){
+  const mode = document.getElementById('paymentMode').value;
+  const box = document.getElementById('upiQrBox');
+  const emptyNote = document.getElementById('upiQrEmptyNote');
+  if(mode !== 'UPI'){ box.hidden = true; emptyNote.hidden = true; return; }
+  const active = qrCodes.find(q=>q.active);
+  if(active){
+    box.hidden = false; emptyNote.hidden = true;
+    document.getElementById('upiQrImage').src = active.dataUrl;
+    document.getElementById('upiQrName').textContent = active.name || 'Scan to Pay';
+  } else {
+    box.hidden = true; emptyNote.hidden = false;
+  }
+}
+
+/* ================= SAVE & PRINT ================= */
+function resetBillForm(){
+  editingOrderId = null;
+  document.getElementById('billModeLabel').textContent = 'Create';
+  document.getElementById('billModeTitle').textContent = 'New Bill';
+  document.getElementById('orderNoDisplay').textContent = 'Assigned on save';
+  document.getElementById('clientName').value='';
+  document.getElementById('clientContact').value='';
+  document.getElementById('clientAddress').value='';
+  selectedGarment = null;
+  orderItems = [];
+  document.getElementById('selectedGarmentDisplay').value='';
+  document.querySelectorAll('.garment-chip').forEach(c=>c.classList.remove('selected'));
+  renderItemsTable();
+  renderGarmentMeasureBlocks();
+  renderBodyMeasureFields();
+  document.getElementById('customMeasureRows').innerHTML='';
+  document.getElementById('trialDate').value='';
+  document.getElementById('deliveryDate').value='';
+  document.getElementById('tailorName').value='';
+  notesBox.value = "1. ";
+  renderBillingTable();
+  renderMaterialTable();
+  document.getElementById('overallDiscount').value = 0;
+  document.getElementById('gstPercent').value = 0;
+  document.getElementById('paymentReceived').value = 0;
+  document.getElementById('paymentMode').value = 'Cash';
+  updateUpiQrDisplay();
+  computeTotals();
+}
+resetBillForm();
+document.getElementById('cancelBillBtn').addEventListener('click', ()=>{ resetBillForm(); switchView('dashboard'); });
+
+function collectBillData(){
+  const totals = computeTotals();
+  const body = {};
+  document.querySelectorAll('.body-measure-input').forEach(inp=>{ body[inp.dataset.field] = inp.value || ''; });
+
+  const extra = {};
+  document.querySelectorAll('.garment-measure-input').forEach(inp=>{
+    const g = inp.dataset.garment;
+    if(!extra[g]) extra[g] = {};
+    extra[g][inp.dataset.field] = inp.value || '';
+  });
+
+  const custom = [];
+  document.querySelectorAll('#customMeasureRows .custom-measure-row').forEach(row=>{
+    const label = row.querySelector('.custom-label').value.trim();
+    const val = row.querySelector('.custom-val').value;
+    if(label) custom.push({label, value: val||''});
+  });
+
+  const garmentCustom = {};
+  document.querySelectorAll('.custom-measure-container[data-garment-custom]').forEach(container=>{
+    const g = container.dataset.garmentCustom;
+    const rows = [];
+    container.querySelectorAll('.custom-measure-row').forEach(row=>{
+      const label = row.querySelector('.custom-label').value.trim();
+      const val = row.querySelector('.custom-val').value;
+      if(label) rows.push({label, value: val||''});
+    });
+    if(rows.length) garmentCustom[g] = rows;
+  });
+
+  const items = [];
+  document.querySelectorAll('#billingTableBody tr').forEach(tr=>{
+    items.push({
+      garment: tr.dataset.garment,
+      qty: parseFloat(tr.querySelector('.qty-cell').textContent)||0,
+      unitPrice: parseFloat(tr.querySelector('.unit-price-input').value)||0,
+      discount: parseFloat(tr.querySelector('.discount-input').value)||0
+    });
+  });
+
+  const materials = [];
+  document.querySelectorAll('#materialTableBody tr').forEach(tr=>{
+    materials.push({
+      garment: tr.dataset.garment,
+      material: tr.querySelector('.material-input').value.trim(),
+      meters: tr.querySelector('.meters-input').value || ''
+    });
+  });
+
+  return {
+    client: {
+      name: document.getElementById('clientName').value.trim() || 'Walk-in Customer',
+      contact: document.getElementById('clientContact').value.trim(),
+      address: document.getElementById('clientAddress').value.trim()
+    },
+    items,
+    materials,
+    measurements: {body, extra, custom, garmentCustom},
+    trialDate: document.getElementById('trialDate').value,
+    deliveryDate: document.getElementById('deliveryDate').value,
+    tailorName: document.getElementById('tailorName').value.trim(),
+    notes: notesBox.value,
+    subtotal: totals.subtotalGross,
+    itemDiscount: totals.itemDiscountTotal,
+    overallDiscount: totals.additionalDisc,
+    gst: totals.gstPct,
+    grandTotal: totals.grandTotal,
+    paymentReceived: totals.received,
+    paymentMode: document.getElementById('paymentMode').value,
+    balance: totals.balance
+  };
+}
+
+document.getElementById('saveAndPrintBtn').addEventListener('click', async ()=>{
+  if(orderItems.length===0){ toast('Please add at least one garment before saving.'); return; }
+  const data = collectBillData();
+  const btn = document.getElementById('saveAndPrintBtn');
+  btn.disabled = true;
+  try{
+    let order;
+    if(editingOrderId){
+      order = await api('/api/orders/' + encodeURIComponent(editingOrderId), { method:'PUT', body: JSON.stringify(data) });
+    } else {
+      order = await api('/api/orders', { method:'POST', body: JSON.stringify(data) });
+    }
+    toast('Bill saved successfully.');
+    orders = await api('/api/orders');
+    refreshDashboard();
+    renderOrdersTable();
+    openPostSaveModal(order.id);
+  } catch(err){
+    toast('Could not save the bill: ' + err.message);
+  } finally {
+    btn.disabled = false;
+  }
+});
+
+function openPostSaveModal(id){
+  document.getElementById('postSaveOrderId').textContent = id;
+  document.getElementById('postSaveModal').hidden = false;
+  document.getElementById('postSaveModal').dataset.orderId = id;
+}
+document.getElementById('postSaveClose').addEventListener('click', ()=>{ document.getElementById('postSaveModal').hidden = true; resetBillForm(); switchView('orders'); });
+document.getElementById('postSaveDoneBtn').addEventListener('click', ()=>{ document.getElementById('postSaveModal').hidden = true; resetBillForm(); switchView('orders'); });
+document.getElementById('postSavePrintStoreBtn').addEventListener('click', ()=>{
+  const o = orders.find(x=>x.id===document.getElementById('postSaveModal').dataset.orderId);
+  if(o) printOrder(o,'store');
+});
+document.getElementById('postSavePrintClientBtn').addEventListener('click', ()=>{
+  const o = orders.find(x=>x.id===document.getElementById('postSaveModal').dataset.orderId);
+  if(o) printOrder(o,'client');
+});
+document.getElementById('postSaveDeleteBtn').addEventListener('click', async ()=>{
+  const id = document.getElementById('postSaveModal').dataset.orderId;
+  const ok = await deleteOrder(id);
+  if(ok){
+    document.getElementById('postSaveModal').hidden = true;
+    resetBillForm();
+    switchView('orders');
+  }
+});
+
+/* ================= PRINT ================= */
+function pbillHeader(o, copyLabel){
+  const extraLines = (companyInfo.extra||[]).map(e=>`<div><b>${e.label}:</b> ${e.value}</div>`).join('');
+  return `
+    <div class="pbill-head">
+      <div class="biz">
+        <div class="couture">MM</div>
+        <h1>${(companyInfo.name||'MM Javeed Couture').toUpperCase()}</h1>
+        <div class="tagline">${companyInfo.tagline||''}</div>
+        <div style="font-size:11px;color:#41392E;margin-top:6px;line-height:1.6;">
+          ${companyInfo.address?`<div>${companyInfo.address}</div>`:''}
+          ${companyInfo.phone?`<div>Ph: ${companyInfo.phone}</div>`:''}
+          ${companyInfo.gst?`<div>GSTIN: ${companyInfo.gst}</div>`:''}
+          ${extraLines}
+        </div>
+      </div>
+      <div class="meta">
+        <div style="display:inline-block;background:#18140F;color:#E8CE9C;padding:3px 10px;border-radius:4px;font-size:10.5px;letter-spacing:.12em;margin-bottom:8px;">${copyLabel}</div>
+        <div><b>Order No.:</b> ${o.id}</div>
+        <div><b>Date:</b> ${fmtDate(o.date)}</div>
+      </div>
+    </div>`;
+}
+
+function buildStoreBillHtml(o){
+  const itemsRows = o.items.map(it=>{
+    const amt = Math.max(it.unitPrice*it.qty - it.discount, 0);
+    return `<tr><td>${it.garment}</td><td>${it.qty}</td><td>₹${it.unitPrice}</td><td>₹${it.discount}</td><td>₹${amt.toFixed(2)}</td></tr>`;
+  }).join('');
+  const bodyRows = Object.entries(o.measurements.body||{}).filter(([k,v])=>v!=='').map(([k,v])=>`<tr><td>${k}</td><td>${v}"</td></tr>`).join('');
+  const bodyCustomRows = (o.measurements.custom||[]).map(c=>`<tr><td>${c.label}</td><td>${c.value}"</td></tr>`).join('');
+  let extraRows = '';
+  Object.entries(o.measurements.extra||{}).forEach(([garment, fields])=>{
+    Object.entries(fields||{}).filter(([k,v])=>v!=='').forEach(([k,v])=>{ extraRows += `<tr><td>${garment} — ${k}</td><td>${v}"</td></tr>`; });
+  });
+  Object.entries(o.measurements.garmentCustom||{}).forEach(([garment, list])=>{
+    (list||[]).forEach(c=>{ extraRows += `<tr><td>${garment} — ${c.label}</td><td>${c.value}"</td></tr>`; });
+  });
+  const materialRows = (o.materials||[]).filter(m=>m.material||m.meters).map(m=>`<tr><td>${m.garment}</td><td>${m.material||'—'}</td><td>${m.meters?m.meters+' m':'—'}</td></tr>`).join('');
+  const notesHtml = (o.notes||'').split('\n').filter(l=>l.trim()).map(l=>`<div>${l}</div>`).join('');
+  const itemDiscount = o.itemDiscount || 0;
+  const overallDiscount = o.overallDiscount || 0;
+  const afterDisc = Math.max(o.subtotal - itemDiscount - overallDiscount, 0);
+  const gstAmt = afterDisc*(o.gst/100);
+
+  let qrHtml = '';
+  if(o.paymentMode === 'UPI'){
+    const active = qrCodes.find(q=>q.active);
+    if(active){
+      qrHtml = `<div class="qr-print"><img src="${active.dataUrl}" alt="UPI QR"><div><b>${active.name||'Scan to Pay'}</b><div style="font-size:11.5px;color:#8B6B2E;">Scan with any UPI app to pay the balance amount.</div></div></div>`;
+    }
+  }
+
+  return `
+  <div class="pbill">
+    ${pbillHeader(o,'STORE COPY — INTERNAL')}
+    <div class="two-col">
+      <div>
+        <div><b>Client Name:</b> ${o.client.name}</div>
+        <div><b>Customer ID:</b> ${o.customerId||'—'}</div>
+        <div><b>Contact No.:</b> ${o.client.contact||'—'}</div>
+        <div><b>Address:</b> ${o.client.address||'—'}</div>
+      </div>
+      <div>
+        <div><b>Trial Date:</b> ${fmtDate(o.trialDate)}</div>
+        <div><b>Delivery Date:</b> ${fmtDate(o.deliveryDate)}</div>
+        <div><b>Tailor Name:</b> ${o.tailorName||'—'}</div>
+        <div><b>Billed By:</b> ${o.createdBy||'—'}</div>
+        <div><b>Payment Mode:</b> ${o.paymentMode}</div>
+      </div>
+    </div>
+
+    <div class="pbill-section-title">ORDER ITEMS</div>
+    <table><thead><tr><th>Garment</th><th>Qty</th><th>Unit Price</th><th>Discount</th><th>Amount</th></tr></thead><tbody>${itemsRows}</tbody></table>
+
+    <div class="pbill-section-title">MEASUREMENTS (inches)</div>
+    <div class="two-col">
+      <table><thead><tr><th colspan="2">Body Measurement</th></tr></thead><tbody>${(bodyRows+bodyCustomRows)||'<tr><td colspan="2">—</td></tr>'}</tbody></table>
+      <table><thead><tr><th colspan="2">Garment Specific</th></tr></thead><tbody>${extraRows||'<tr><td colspan="2">—</td></tr>'}</tbody></table>
+    </div>
+
+    <div class="pbill-section-title">MATERIAL USED</div>
+    <table><thead><tr><th>Garment</th><th>Material</th><th>Meters</th></tr></thead><tbody>${materialRows||'<tr><td colspan="3">—</td></tr>'}</tbody></table>
+
+    <div class="pbill-section-title">NOTES</div>
+    <div style="font-size:12.5px;line-height:1.8;">${notesHtml||'—'}</div>
+
+    <div class="totals">
+      <div><span>Subtotal</span><span>₹${o.subtotal.toFixed(2)}</span></div>
+      <div><span>Item Discount</span><span>−₹${itemDiscount.toFixed(2)}</span></div>
+      <div><span>Additional Discount</span><span>−₹${overallDiscount.toFixed(2)}</span></div>
+      <div><span>GST (${o.gst}%)</span><span>+₹${gstAmt.toFixed(2)}</span></div>
+      <div class="grand"><span>Grand Total</span><span>₹${o.grandTotal.toFixed(2)}</span></div>
+      <div><span>Payment Received</span><span>₹${o.paymentReceived.toFixed(2)}</span></div>
+      <div><span>Balance Due</span><span>₹${Math.max(o.balance,0).toFixed(2)}</span></div>
+    </div>
+    ${qrHtml}
+    <div class="thankyou">Store copy — for internal use only.</div>
+  </div>`;
+}
+
+function buildClientBillHtml(o){
+  const itemsRows = o.items.map(it=>{
+    const amt = Math.max(it.unitPrice*it.qty - it.discount, 0);
+    return `<tr><td>${it.garment}</td><td>${it.qty}</td><td>₹${it.unitPrice}</td><td>₹${amt.toFixed(2)}</td></tr>`;
+  }).join('');
+  const itemDiscount = o.itemDiscount || 0;
+  const overallDiscount = o.overallDiscount || 0;
+  const afterDisc = Math.max(o.subtotal - itemDiscount - overallDiscount, 0);
+  const gstAmt = afterDisc*(o.gst/100);
+
+  let qrHtml = '';
+  if(o.paymentMode === 'UPI'){
+    const active = qrCodes.find(q=>q.active);
+    if(active){
+      qrHtml = `<div class="qr-print"><img src="${active.dataUrl}" alt="UPI QR"><div><b>${active.name||'Scan to Pay'}</b><div style="font-size:11.5px;color:#8B6B2E;">Scan with any UPI app to pay the balance amount.</div></div></div>`;
+    }
+  }
+
+  return `
+  <div class="pbill">
+    ${pbillHeader(o,'CUSTOMER COPY')}
+    <div class="two-col">
+      <div>
+        <div><b>Client Name:</b> ${o.client.name}</div>
+        <div><b>Customer ID:</b> ${o.customerId||'—'}</div>
+        <div><b>Contact No.:</b> ${o.client.contact||'—'}</div>
+        <div><b>Address:</b> ${o.client.address||'—'}</div>
+      </div>
+      <div>
+        <div><b>Trial Date:</b> ${fmtDate(o.trialDate)}</div>
+        <div><b>Delivery Date:</b> ${fmtDate(o.deliveryDate)}</div>
+        <div><b>Payment Mode:</b> ${o.paymentMode}</div>
+      </div>
+    </div>
+
+    <div class="pbill-section-title">ORDER ITEMS</div>
+    <table><thead><tr><th>Garment</th><th>Qty</th><th>Unit Price</th><th>Amount</th></tr></thead><tbody>${itemsRows}</tbody></table>
+
+    <div class="totals">
+      <div><span>Subtotal</span><span>₹${o.subtotal.toFixed(2)}</span></div>
+      <div><span>Discount</span><span>−₹${(itemDiscount+overallDiscount).toFixed(2)}</span></div>
+      <div><span>GST (${o.gst}%)</span><span>+₹${gstAmt.toFixed(2)}</span></div>
+      <div class="grand"><span>Grand Total</span><span>₹${o.grandTotal.toFixed(2)}</span></div>
+      <div><span>Payment Received (${o.paymentMode})</span><span>₹${o.paymentReceived.toFixed(2)}</span></div>
+      <div><span>Balance Due</span><span>₹${Math.max(o.balance,0).toFixed(2)}</span></div>
+    </div>
+    ${qrHtml}
+    <div class="thankyou">Thank you for choosing ${companyInfo.name||'MM Javeed Couture'} — Where Tradition Meets Perfection.</div>
+  </div>`;
+}
+
+function printOrder(o, type){
+  const area = document.getElementById('printArea');
+  area.innerHTML = (type==='client') ? buildClientBillHtml(o) : buildStoreBillHtml(o);
+  // temporarily hide any open popups so they never get captured into the print/PDF output,
+  // then restore them once printing is done so the user can still pick the other bill type
+  const openModals = Array.from(document.querySelectorAll('.modal-overlay')).filter(m=>!m.hidden);
+  openModals.forEach(m=> m.hidden = true);
+
+  // Set the document title to "CustomerName_MMJBRxxx_Store/Client" so the browser's
+  // "Save as PDF" dialog suggests that as the filename instead of the page's generic title.
+  const custId = o.customerId || 'MMJBR—';
+  const copyTag = type==='client' ? 'ClientBill' : 'StoreBill';
+  const previousTitle = document.title;
+  document.title = `${sanitizeForFilename(o.client.name)}_${custId}_${copyTag}`;
+
+  document.body.classList.add('printing');
+  setTimeout(()=>{
+    window.print();
+    setTimeout(()=>{
+      document.body.classList.remove('printing');
+      openModals.forEach(m=> m.hidden = false);
+      document.title = previousTitle;
+    }, 400);
+  }, 150);
+}
+
+async function deleteOrder(id){
+  if(!confirm('Delete this bill permanently? This cannot be undone.')) return false;
+  try{
+    await api('/api/orders/' + encodeURIComponent(id), { method:'DELETE' });
+    orders = orders.filter(o=>o.id!==id);
+    refreshDashboard();
+    renderOrdersTable();
+    toast('Bill deleted.');
+    return true;
+  } catch(err){
+    toast('Could not delete the bill: ' + err.message);
+    return false;
+  }
+}
+
+/* ================= ORDERS TABLE / SEARCH ================= */
+function renderOrdersTable(filter){
+  const body = document.getElementById('ordersTableBody');
+  const q = (filter!==undefined ? filter : document.getElementById('orderSearch').value).trim().toLowerCase();
+  let list = [...orders].sort((a,b)=> b.date.localeCompare(a.date));
+  if(q){
+    list = list.filter(o=> o.client.name.toLowerCase().includes(q) || (o.client.contact||'').toLowerCase().includes(q) || o.id.toLowerCase().includes(q));
+  }
+  body.innerHTML = list.map(o=>{
+    const paid = o.grandTotal - Math.max(o.balance,0);
+    return `<tr>
+      <td><a class="row-link" onclick="openOrderModal('${o.id}')">${o.id}</a></td>
+      <td>${fmtDate(o.date)}</td>
+      <td>${o.client.name}</td>
+      <td>${o.client.contact||'—'}</td>
+      <td>${o.items.map(i=>i.garment).join(', ')}</td>
+      <td class="mono">${o.createdBy||'—'}</td>
+      <td class="mono">${fmtMoney(o.grandTotal)}</td>
+      <td class="mono">${fmtMoney(paid)}</td>
+      <td class="mono" style="color:${o.balance>0?'var(--danger)':'var(--good)'}">${fmtMoney(Math.max(o.balance,0))}</td>
+    </tr>`;
+  }).join('');
+  document.getElementById('ordersEmptyNote').hidden = list.length>0;
+}
+document.getElementById('orderSearch').addEventListener('input', e=> renderOrdersTable(e.target.value));
+
+/* ================= ORDER MODAL ================= */
+let modalOrderId = null;
+function openOrderModal(id){
+  modalOrderId = id;
+  const o = orders.find(x=>x.id===id);
+  document.getElementById('orderModalTitle').textContent = `Order ${o.id}`;
+  document.getElementById('orderModalSummary').innerHTML = `
+    <div><b>Customer:</b> ${o.client.name} &nbsp;•&nbsp; ${o.client.contact||'—'}</div>
+    <div><b>Customer ID:</b> <span class="mono">${o.customerId||'—'}</span></div>
+    <div><b>Date:</b> ${fmtDate(o.date)}</div>
+    <div><b>Items:</b> ${o.items.map(i=>`${i.garment} ×${i.qty}`).join(', ')}</div>
+    <div><b>Billed By:</b> ${o.createdBy||'—'}</div>
+    <div><b>Grand Total:</b> ${fmtMoney(o.grandTotal)} &nbsp;|&nbsp; <b>Balance:</b> ${fmtMoney(Math.max(o.balance,0))}</div>`;
+  document.getElementById('orderModal').hidden = false;
+}
+document.getElementById('orderModalClose').addEventListener('click', ()=> document.getElementById('orderModal').hidden = true);
+document.getElementById('orderModal').addEventListener('click', e=>{ if(e.target.id==='orderModal') e.target.hidden = true; });
+
+document.getElementById('modalPrintStoreBtn').addEventListener('click', ()=>{
+  const o = orders.find(x=>x.id===modalOrderId);
+  printOrder(o,'store');
+  document.getElementById('orderModal').hidden = true;
+});
+document.getElementById('modalPrintClientBtn').addEventListener('click', ()=>{
+  const o = orders.find(x=>x.id===modalOrderId);
+  printOrder(o,'client');
+  document.getElementById('orderModal').hidden = true;
+});
+document.getElementById('modalDeleteBtn').addEventListener('click', ()=>{
+  deleteOrder(modalOrderId);
+  document.getElementById('orderModal').hidden = true;
+});
+
+document.getElementById('modalViewBtn').addEventListener('click', ()=>{
+  const o = orders.find(x=>x.id===modalOrderId);
+  document.getElementById('viewBillBody').innerHTML = buildStoreBillHtml(o);
+  document.getElementById('orderModal').hidden = true;
+  document.getElementById('viewBillModal').hidden = false;
+});
+document.getElementById('viewBillClose').addEventListener('click', ()=> document.getElementById('viewBillModal').hidden = true);
+document.getElementById('viewBillModal').addEventListener('click', e=>{ if(e.target.id==='viewBillModal') e.target.hidden = true; });
+
+document.getElementById('modalEditBtn').addEventListener('click', ()=>{
+  const o = orders.find(x=>x.id===modalOrderId);
+  loadOrderIntoForm(o);
+  document.getElementById('orderModal').hidden = true;
+  switchView('newbill');
+});
+
+function loadOrderIntoForm(o){
+  editingOrderId = o.id;
+  document.getElementById('billModeLabel').textContent = 'Editing';
+  document.getElementById('billModeTitle').textContent = 'Edit Bill';
+  document.getElementById('orderNoDisplay').textContent = o.id;
+
+  document.getElementById('clientName').value = o.client.name;
+  document.getElementById('clientContact').value = o.client.contact;
+  document.getElementById('clientAddress').value = o.client.address;
+
+  orderItems = o.items.map(i=>({garment:i.garment, qty:i.qty}));
+  renderItemsTable();
+  renderGarmentMeasureBlocks();
+  renderBodyMeasureFields();
+
+  Object.entries(o.measurements.body||{}).forEach(([k,v])=>{
+    const inp = document.querySelector(`.body-measure-input[data-field="${k}"]`);
+    if(inp) inp.value = v;
+  });
+  Object.entries(o.measurements.extra||{}).forEach(([garment, fields])=>{
+    Object.entries(fields||{}).forEach(([k,v])=>{
+      const inp = document.querySelector(`.garment-measure-input[data-garment="${garment}"][data-field="${k}"]`);
+      if(inp) inp.value = v;
+    });
+  });
+
+  document.getElementById('customMeasureRows').innerHTML='';
+  (o.measurements.custom||[]).forEach(c=>{ addCustomMeasureRow(document.getElementById('customMeasureRows'), c.label, c.value); });
+
+  Object.entries(o.measurements.garmentCustom||{}).forEach(([garment, list])=>{
+    const container = document.querySelector(`.custom-measure-container[data-garment-custom="${garment}"]`);
+    if(!container) return;
+    (list||[]).forEach(c=> addCustomMeasureRow(container, c.label, c.value));
+  });
+
+  document.getElementById('trialDate').value = o.trialDate||'';
+  document.getElementById('deliveryDate').value = o.deliveryDate||'';
+  document.getElementById('tailorName').value = o.tailorName||'';
+  notesBox.value = o.notes || "1. ";
+
+  renderBillingTable();
+  o.items.forEach(it=>{
+    const tr = document.querySelector(`#billingTableBody tr[data-garment="${it.garment}"]`);
+    if(tr){ tr.querySelector('.unit-price-input').value = it.unitPrice; tr.querySelector('.discount-input').value = it.discount; }
+  });
+
+  renderMaterialTable();
+  (o.materials||[]).forEach(m=>{
+    const tr = document.querySelector(`#materialTableBody tr[data-garment="${m.garment}"]`);
+    if(tr){ tr.querySelector('.material-input').value = m.material||''; tr.querySelector('.meters-input').value = m.meters||''; }
+  });
+
+  document.getElementById('overallDiscount').value = o.overallDiscount;
+  document.getElementById('gstPercent').value = o.gst;
+  document.getElementById('paymentReceived').value = o.paymentReceived;
+  document.getElementById('paymentMode').value = o.paymentMode;
+  updateUpiQrDisplay();
+  computeTotals();
+}
+
+/* ================= ADMIN: COMPANY DETAILS ================= */
+/* ================= ADMIN: MY CREDENTIALS ================= */
+document.getElementById('saveAdminCredsBtn').addEventListener('click', async ()=>{
+  const currentPassword = document.getElementById('adminCurrentPass').value;
+  const newLoginId = document.getElementById('adminNewId').value.trim();
+  const newPassword = document.getElementById('adminNewPass').value;
+  if(!currentPassword){ toast('Enter your current password to confirm the change.'); return; }
+  try{
+    const res = await api('/api/auth/credentials', { method:'PUT', body: JSON.stringify({ currentPassword, newLoginId, newPassword }) });
+    currentUserId = res.id;
+    document.getElementById('userChipId').textContent = res.id;
+    document.getElementById('adminCurrentPass').value = '';
+    document.getElementById('adminNewId').value = '';
+    document.getElementById('adminNewPass').value = '';
+    toast('Your credentials have been updated.');
+  } catch(err){
+    toast('Could not update credentials: ' + err.message);
+  }
+});
+
+/* ================= ADMIN: MANAGE STAFF ================= */
+let staffList = [];
+async function loadStaffList(){
+  try{
+    staffList = await api('/api/staff');
+    renderStaffTable();
+  } catch(err){
+    toast('Could not load staff list: ' + err.message);
+  }
+}
+function renderStaffTable(){
+  const body = document.getElementById('staffTableBody');
+  document.getElementById('staffEmptyNote').hidden = staffList.length>0;
+  body.innerHTML = staffList.map(s=>`
+    <tr data-id="${s.id}">
+      <td><input type="text" class="staff-name" value="${s.name||''}"></td>
+      <td><input type="text" class="staff-loginid" value="${s.loginId||''}"></td>
+      <td><input type="password" class="staff-newpass" placeholder="leave blank to keep"></td>
+      <td style="white-space:nowrap;">
+        <button class="btn ghost small save-staff">Save</button>
+        <button class="btn danger small remove-staff">Remove</button>
+      </td>
+    </tr>`).join('');
+  body.querySelectorAll('.save-staff').forEach(btn=>{
+    btn.addEventListener('click', async ()=>{
+      const tr = btn.closest('tr');
+      const id = tr.dataset.id;
+      const name = tr.querySelector('.staff-name').value.trim();
+      const loginId = tr.querySelector('.staff-loginid').value.trim();
+      const password = tr.querySelector('.staff-newpass').value;
+      try{
+        staffList = await api('/api/staff/' + id, { method:'PUT', body: JSON.stringify({ name, loginId, password }) });
+        renderStaffTable();
+        toast('Staff account updated.');
+      } catch(err){
+        toast('Could not update staff: ' + err.message);
+      }
+    });
+  });
+  body.querySelectorAll('.remove-staff').forEach(btn=>{
+    btn.addEventListener('click', async ()=>{
+      const tr = btn.closest('tr');
+      const id = tr.dataset.id;
+      if(!confirm('Remove this staff login? They will no longer be able to sign in.')) return;
+      try{
+        staffList = await api('/api/staff/' + id, { method:'DELETE' });
+        renderStaffTable();
+        toast('Staff account removed.');
+      } catch(err){
+        toast('Could not remove staff: ' + err.message);
+      }
+    });
+  });
+}
+document.getElementById('addStaffBtn').addEventListener('click', async ()=>{
+  const name = document.getElementById('newStaffName').value.trim();
+  const loginId = document.getElementById('newStaffId').value.trim();
+  const password = document.getElementById('newStaffPass').value;
+  if(!name || !loginId || !password){ toast('Please fill in name, login ID and password.'); return; }
+  try{
+    staffList = await api('/api/staff', { method:'POST', body: JSON.stringify({ name, loginId, password }) });
+    document.getElementById('newStaffName').value = '';
+    document.getElementById('newStaffId').value = '';
+    document.getElementById('newStaffPass').value = '';
+    renderStaffTable();
+    toast(`Added staff login for ${name}. Share the ID and password with them directly.`);
+  } catch(err){
+    toast('Could not add staff: ' + err.message);
+  }
+});
+
+function loadCompanyInfoForm(){
+  document.getElementById('companyName').value = companyInfo.name || '';
+  document.getElementById('companyTagline').value = companyInfo.tagline || '';
+  document.getElementById('companyGst').value = companyInfo.gst || '';
+  document.getElementById('companyAddress').value = companyInfo.address || '';
+  document.getElementById('companyPhone').value = companyInfo.phone || '';
+  const wrap = document.getElementById('companyExtraRows');
+  wrap.innerHTML = '';
+  (companyInfo.extra||[]).forEach(e=> addCompanyExtraRow(e.label, e.value));
+}
+function addCompanyExtraRow(label, value){
+  const wrap = document.getElementById('companyExtraRows');
+  const row = document.createElement('div');
+  row.className = 'custom-measure-row';
+  row.innerHTML = `<input type="text" class="ce-label" placeholder="Section name (e.g. Website)" value="${label||''}">
+    <input type="text" class="ce-val" placeholder="Value" value="${value||''}" style="max-width:220px;">
+    <button class="remove-x" type="button">✕</button>`;
+  row.querySelector('.remove-x').addEventListener('click', ()=> row.remove());
+  wrap.appendChild(row);
+}
+document.getElementById('addCompanySectionBtn').addEventListener('click', ()=> addCompanyExtraRow());
+document.getElementById('saveCompanyInfoBtn').addEventListener('click', async ()=>{
+  const payload = {
+    name: document.getElementById('companyName').value.trim() || 'MM Javeed Couture',
+    tagline: document.getElementById('companyTagline').value.trim(),
+    gst: document.getElementById('companyGst').value.trim(),
+    address: document.getElementById('companyAddress').value.trim(),
+    phone: document.getElementById('companyPhone').value.trim(),
+    extra: []
+  };
+  document.querySelectorAll('#companyExtraRows .custom-measure-row').forEach(row=>{
+    const label = row.querySelector('.ce-label').value.trim();
+    const value = row.querySelector('.ce-val').value.trim();
+    if(label) payload.extra.push({label, value});
+  });
+  try{
+    companyInfo = await api('/api/company', { method:'PUT', body: JSON.stringify(payload) });
+    toast('Company details saved. They will appear on every Store and Client bill.');
+  } catch(err){
+    toast('Could not save company details: ' + err.message);
+  }
+});
+
+/* ================= ADMIN: MANAGE SECTIONS ================= */
+function renderSectionToggles(){
+  const wrap = document.getElementById('sectionTogglesWrap');
+  const defs = [
+    {key:'dashboard', label:'Dashboard', desc:'Overview stats, analytics and recent orders.'},
+    {key:'newbill', label:'New Bill', desc:'The billing form staff use to create orders.'},
+    {key:'orders', label:'Orders', desc:'Full order history with search.'}
+  ];
+  wrap.innerHTML = defs.map(d=>`
+    <div class="toggle-row">
+      <div><div class="t-label">${d.label}</div><div class="t-desc">${d.desc} — visible to staff logins when on.</div></div>
+      <label class="switch"><input type="checkbox" data-section="${d.key}" ${sectionVisibility[d.key]?'checked':''}><span class="slider"></span></label>
+    </div>`).join('');
+  wrap.querySelectorAll('input[type=checkbox]').forEach(cb=>{
+    cb.addEventListener('change', async ()=>{
+      try{
+        sectionVisibility = await api('/api/sections', { method:'PUT', body: JSON.stringify({ key: cb.dataset.section, value: cb.checked }) });
+        renderNavForRole();
+        toast(`"${cb.dataset.section}" is now ${cb.checked?'visible':'hidden'} for staff.`);
+      } catch(err){
+        cb.checked = !cb.checked;
+        toast('Could not update: ' + err.message);
+      }
+    });
+  });
+}
+
+/* ================= ADMIN: MANAGE GARMENTS ================= */
+function renderGarmentTags(){
+  const wrap = document.getElementById('garmentTagList');
+  wrap.innerHTML = GARMENTS.map(g=>`<div class="tag-chip">${g}<button data-remove="${g}">✕</button></div>`).join('');
+  wrap.querySelectorAll('button[data-remove]').forEach(btn=>{
+    btn.addEventListener('click', async ()=>{
+      const g = btn.dataset.remove;
+      try{
+        const data = await api('/api/garments/' + encodeURIComponent(g), { method:'DELETE' });
+        GARMENTS = data.garments;
+        GARMENT_EXTRA_FIELDS = data.extraFields;
+        renderGarmentTags();
+        buildGarmentGrid();
+        toast(`Removed "${g}" from garment types.`);
+      } catch(err){
+        toast('Could not remove garment: ' + err.message);
+      }
+    });
+  });
+}
+document.getElementById('addGarmentBtn').addEventListener('click', async ()=>{
+  const inp = document.getElementById('newGarmentInput');
+  const name = inp.value.trim().toUpperCase();
+  if(!name){ toast('Please enter a garment name.'); return; }
+  if(GARMENTS.includes(name)){ toast('That garment already exists.'); return; }
+  try{
+    const data = await api('/api/garments', { method:'POST', body: JSON.stringify({ name }) });
+    GARMENTS = data.garments;
+    GARMENT_EXTRA_FIELDS = data.extraFields;
+    inp.value = '';
+    renderGarmentTags();
+    buildGarmentGrid();
+    toast(`Added "${name}" to garment types.`);
+  } catch(err){
+    toast('Could not add garment: ' + err.message);
+  }
+});
+
+/* ================= ADMIN: UPI QR CODES ================= */
+document.getElementById('qrUploadInput').addEventListener('change', (e)=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  if(!file.type.startsWith('image/')){ toast('Please upload an image file.'); return; }
+  const reader = new FileReader();
+  reader.onload = async ()=>{
+    try{
+      qrCodes = await api('/api/qr', { method:'POST', body: JSON.stringify({ dataUrl: reader.result }) });
+      renderQrAdminGrid();
+      updateUpiQrDisplay();
+      toast('QR code uploaded and set as active.');
+    } catch(err){
+      toast('Could not upload QR: ' + err.message);
+    }
+  };
+  reader.readAsDataURL(file);
+  e.target.value = '';
+});
+
+function renderQrAdminGrid(){
+  const wrap = document.getElementById('qrAdminGrid');
+  const empty = document.getElementById('qrAdminEmpty');
+  empty.hidden = qrCodes.length>0;
+  wrap.innerHTML = qrCodes.map(q=>`
+    <div class="qr-admin-card ${q.active?'active':''}">
+      ${q.active?'<div class="active-badge">ACTIVE</div>':''}
+      <img src="${q.dataUrl}" alt="${q.name}">
+      <div class="qname">${q.name}</div>
+      <div class="qactions">
+        ${q.active ? '' : `<button class="btn ghost small" data-setactive="${q.id}">Set Active</button>`}
+        <button class="btn danger small" data-removeqr="${q.id}">Remove</button>
+      </div>
+    </div>`).join('');
+  wrap.querySelectorAll('button[data-setactive]').forEach(btn=>{
+    btn.addEventListener('click', async ()=>{
+      try{
+        qrCodes = await api('/api/qr/' + encodeURIComponent(btn.dataset.setactive) + '/activate', { method:'PUT' });
+        renderQrAdminGrid();
+        updateUpiQrDisplay();
+        toast('Active QR updated — New Bill will now show this code for UPI payments.');
+      } catch(err){
+        toast('Could not update QR: ' + err.message);
+      }
+    });
+  });
+  wrap.querySelectorAll('button[data-removeqr]').forEach(btn=>{
+    btn.addEventListener('click', async ()=>{
+      try{
+        qrCodes = await api('/api/qr/' + encodeURIComponent(btn.dataset.removeqr), { method:'DELETE' });
+        renderQrAdminGrid();
+        updateUpiQrDisplay();
+        toast('QR code removed.');
+      } catch(err){
+        toast('Could not remove QR: ' + err.message);
+      }
+    });
+  });
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+node_modules/
+.env
+mmj.db
+mmj.db-journal
+mmj.db-wal
+mmj.db-shm
