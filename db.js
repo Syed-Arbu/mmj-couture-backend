@@ -80,6 +80,15 @@ async function initDb() {
       active INTEGER DEFAULT 0
     );
 
+    CREATE TABLE IF NOT EXISTS archived_orders (
+      id SERIAL PRIMARY KEY,
+      order_no TEXT UNIQUE NOT NULL,
+      order_date TEXT,
+      snapshot_json TEXT NOT NULL,
+      archived_at TIMESTAMPTZ DEFAULT NOW(),
+      archived_by TEXT
+    );
+
     CREATE TABLE IF NOT EXISTS meta (
       key TEXT PRIMARY KEY,
       value TEXT
