@@ -53,6 +53,16 @@ async function initDb() {
       updated_at TIMESTAMPTZ DEFAULT NOW()
     );
 
+
+    CREATE TABLE IF NOT EXISTS archived_orders (
+      id SERIAL PRIMARY KEY,
+      original_order_id INTEGER,
+      order_no TEXT,
+      order_date TEXT,
+      payload JSONB NOT NULL,
+      archived_at TIMESTAMPTZ DEFAULT NOW()
+    );
+
     CREATE TABLE IF NOT EXISTS company_info (
       id INTEGER PRIMARY KEY CHECK (id = 1),
       name TEXT,
@@ -78,15 +88,6 @@ async function initDb() {
       name TEXT,
       data_url TEXT,
       active INTEGER DEFAULT 0
-    );
-
-    CREATE TABLE IF NOT EXISTS archived_orders (
-      id SERIAL PRIMARY KEY,
-      order_no TEXT UNIQUE NOT NULL,
-      order_date TEXT,
-      snapshot_json TEXT NOT NULL,
-      archived_at TIMESTAMPTZ DEFAULT NOW(),
-      archived_by TEXT
     );
 
     CREATE TABLE IF NOT EXISTS meta (

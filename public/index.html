@@ -644,28 +644,6 @@ table tbody tr:last-child td{border-bottom:none;}
           </div>
         </div>
 
-        <div class="panel" id="databaseStoragePanel"><div class="panel-head"><h3>Database &amp; Storage</h3><button class="btn ghost small" id="refreshStorageBtn" type="button">↻ Refresh</button></div>
-          <div class="panel-body">
-            <p style="font-size:13px;color:var(--ink-soft);margin-top:0;">Admin-only storage control. Archive old bills first, download a backup, then permanently delete the archive only when you are sure it is no longer needed.</p>
-            <div class="form-grid3" style="margin-bottom:14px;">
-              <div class="analytics-card"><h4>Database Used</h4><div style="font-size:24px;font-weight:700;" id="dbUsedText">—</div><div style="font-size:11px;color:var(--ink-soft);" id="dbLimitText">of 1 GB</div></div>
-              <div class="analytics-card"><h4>Live Data</h4><div style="font-size:15px;line-height:1.9;"><b id="dbOrdersCount">—</b> orders<br><b id="dbCustomersCount">—</b> customers<br><b id="dbStaffCount">—</b> staff</div></div>
-              <div class="analytics-card"><h4>Archived</h4><div style="font-size:24px;font-weight:700;" id="dbArchivedCount">—</div><div style="font-size:11px;color:var(--ink-soft);">old orders</div></div>
-            </div>
-            <div style="height:10px;background:#eee8da;border-radius:999px;overflow:hidden;margin-bottom:8px;"><div id="dbStorageBar" style="height:100%;width:0%;background:var(--gold-deep);transition:width .25s;"></div></div>
-            <div id="dbStorageHint" style="font-size:12px;color:var(--ink-soft);margin-bottom:18px;">Loading storage…</div>
-            <div class="form-grid2">
-              <div class="field"><label>Archive orders older than</label><input type="date" id="archiveBeforeDate"></div>
-              <div style="display:flex;align-items:end;gap:8px;flex-wrap:wrap;"><button class="btn gold small" id="archiveOldOrdersBtn" type="button">Archive Old Orders</button><button class="btn ghost small" id="downloadArchiveBtn" type="button">Download Archive</button></div>
-            </div>
-            <div style="margin-top:16px;padding:14px;border:1px solid #e7c8c8;border-radius:10px;background:#fff8f8;">
-              <b style="font-size:13px;">Permanent delete</b>
-              <div style="font-size:12px;color:var(--ink-soft);margin:5px 0 10px;">Download the archive first. Deleting archived orders cannot be undone. PostgreSQL can reuse freed space, although the displayed database size may not drop immediately.</div>
-              <button class="btn danger small" id="deleteArchiveBtn" type="button">Permanently Delete Archived Orders</button>
-            </div>
-          </div>
-        </div>
-
         <div class="panel"><div class="panel-head"><h3>UPI QR Codes</h3></div>
           <div class="panel-body">
             <p style="font-size:13px;color:var(--ink-soft);margin-top:0;">Upload your UPI QR code below. It appears automatically in New Bill whenever a customer's payment mode is set to UPI. If your daily collection limit is reached, upload a new QR and set it active — the billing screen switches instantly.</p>
@@ -677,6 +655,61 @@ table tbody tr:last-child td{border-bottom:none;}
             <div class="qr-admin-grid" id="qrAdminGrid"></div>
             <div class="empty-note" id="qrAdminEmpty">No QR codes uploaded yet.</div>
           </div>
+
+        <div class="panel" id="databaseStoragePanel">
+          <div class="panel-head">
+            <h3>Database &amp; Storage</h3>
+            <button class="btn ghost small" id="refreshStorageBtn" type="button">↻ Refresh</button>
+          </div>
+          <div class="panel-body">
+            <p style="font-size:13px;color:var(--ink-soft);margin-top:0;">
+              Admin-only database overview. Archive old orders before deleting them permanently.
+            </p>
+
+            <div class="stat-grid" style="margin-bottom:20px;">
+              <div class="stat-card"><div class="label">Physical DB Size</div><div class="value gold-text" id="dbStorageUsed">—</div><div class="foot" id="dbStorageLimit">of 1 GB</div></div>
+              <div class="stat-card"><div class="label">Storage Status</div><div class="value" id="dbStorageStatus">Safe</div><div class="foot" id="dbStoragePercent">0% used</div></div>
+              <div class="stat-card"><div class="label">Reusable / Deleted Rows</div><div class="value" id="dbReusableRows">0</div><div class="foot">Approx. rows PostgreSQL can reuse</div></div>
+              <div class="stat-card"><div class="label">Active Orders</div><div class="value" id="dbOrderCount">0</div><div class="foot">Current billing records</div></div>
+            </div>
+
+            <div class="stat-grid" style="margin-bottom:20px;">
+              <div class="stat-card"><div class="label">Customers</div><div class="value" id="dbCustomerCount">0</div><div class="foot">Saved customer records</div></div>
+              <div class="stat-card"><div class="label">Archived Orders</div><div class="value" id="dbArchivedCount">0</div><div class="foot">Kept as archive</div></div>
+              <div class="stat-card"><div class="label">Staff</div><div class="value" id="dbStaffCount">0</div><div class="foot">Staff login accounts</div></div>
+              <div class="stat-card"><div class="label">How deletion works</div><div class="value" style="font-size:18px;">Reusable Space</div><div class="foot">DB size may not shrink, but deleted space can be reused.</div></div>
+            </div>
+
+            <div style="height:12px;background:var(--cream-dark);border-radius:20px;overflow:hidden;margin-bottom:20px;">
+              <div id="dbStorageBar" style="height:100%;width:0%;background:linear-gradient(90deg,var(--gold-deep),var(--gold));transition:width .3s ease;"></div>
+            </div>
+            <div id="dbStorageExplain" style="font-size:12.5px;color:var(--ink-soft);padding:10px 12px;border:1px solid var(--line);border-radius:9px;background:#FBF8F1;margin-bottom:20px;">
+              PostgreSQL may keep deleted space reserved for reuse, so the physical database size may stay the same after deletion. This is normal.
+            </div>
+
+            <div class="panel" style="box-shadow:none;margin-bottom:16px;">
+              <div class="panel-head"><h3 style="font-size:15px;">Archive Old Orders</h3></div>
+              <div class="panel-body">
+                <div class="item-add-row">
+                  <div class="field" style="max-width:260px;">
+                    <label>Archive orders before</label>
+                    <input type="date" id="archiveBeforeDate">
+                  </div>
+                  <button class="btn gold" id="archiveOrdersBtn" type="button" style="height:47px;">Archive Old Orders</button>
+                  <button class="btn ghost" id="downloadArchiveBtn" type="button" style="height:47px;">Download Archive</button>
+                </div>
+                <p style="font-size:12px;color:var(--ink-soft);margin-bottom:0;">Archiving keeps the records. It does not free database space until archived records are permanently deleted.</p>
+              </div>
+            </div>
+
+            <div style="border:1.5px solid rgba(163,64,47,.35);border-radius:12px;padding:18px;background:rgba(163,64,47,.05);">
+              <h3 style="font-size:15px;color:var(--danger);margin:0 0 8px;">Danger Zone</h3>
+              <p style="font-size:12.5px;color:var(--ink-soft);margin:0 0 14px;">Permanently delete archived orders only after downloading a backup. This cannot be undone.</p>
+              <button class="btn danger small" id="deleteArchivedBtn" type="button">🗑 Permanently Delete Archived Orders</button>
+            </div>
+          </div>
+        </div>
+
         </div>
 
       </div>
@@ -901,53 +934,6 @@ document.getElementById('savePassBtn').addEventListener('click', async ()=>{
   }
 });
 
-/* ================= ADMIN DATABASE & STORAGE ================= */
-function formatBytes(bytes){
-  const n=Number(bytes||0); if(n<1024) return n+' B';
-  const units=['KB','MB','GB','TB']; let v=n/1024,i=0;
-  while(v>=1024 && i<units.length-1){v/=1024;i++;}
-  return v.toFixed(v>=100?0:v>=10?1:2)+' '+units[i];
-}
-async function loadStorageStats(){
-  if(currentRole!=='admin') return;
-  try{
-    const d=await api('/api/storage/stats');
-    document.getElementById('dbUsedText').textContent=formatBytes(d.usedBytes);
-    document.getElementById('dbLimitText').textContent='of '+formatBytes(d.limitBytes)+' free-plan allowance';
-    document.getElementById('dbOrdersCount').textContent=d.orders;
-    document.getElementById('dbCustomersCount').textContent=d.customers;
-    document.getElementById('dbStaffCount').textContent=d.staff;
-    document.getElementById('dbArchivedCount').textContent=d.archived;
-    const pct=Math.max(0,Math.min(100,Number(d.percent||0)));
-    document.getElementById('dbStorageBar').style.width=pct+'%';
-    document.getElementById('dbStorageHint').textContent=pct.toFixed(2)+'% used. Archive old orders for backup; permanently delete the archive when you need PostgreSQL to reuse that space.';
-  }catch(e){ document.getElementById('dbStorageHint').textContent='Could not load storage: '+e.message; }
-}
-document.getElementById('refreshStorageBtn').addEventListener('click',loadStorageStats);
-document.getElementById('archiveOldOrdersBtn').addEventListener('click',async()=>{
-  const before=document.getElementById('archiveBeforeDate').value;
-  if(!before){toast('Choose a date first.');return;}
-  if(!confirm('Archive all orders older than '+before+'? They will leave the normal Orders list but stay safely in the archive.')) return;
-  try{
-    const r=await api('/api/storage/archive',{method:'POST',body:JSON.stringify({before})});
-    toast(r.archived+' old order(s) archived.');
-    orders=await api('/api/orders'); renderOrdersTable(); refreshDashboard(); await loadStorageStats();
-  }catch(e){toast(e.message);}
-});
-document.getElementById('downloadArchiveBtn').addEventListener('click',()=>{
-  window.location.href='/api/storage/archive/download';
-});
-document.getElementById('deleteArchiveBtn').addEventListener('click',async()=>{
-  if(!confirm('PERMANENTLY delete ALL archived orders? Download the archive first. This cannot be undone.')) return;
-  const typed=prompt('Type DELETE to confirm permanent deletion:');
-  if(typed!=='DELETE'){toast('Delete cancelled.');return;}
-  try{
-    const r=await api('/api/storage/archive',{method:'DELETE'});
-    toast(r.deleted+' archived order(s) permanently deleted.');
-    await loadStorageStats();
-  }catch(e){toast(e.message);}
-});
-
 /* ================= APP ENTRY ================= */
 async function enterApp(idVal){
   document.getElementById('loginScreen').hidden = true;
@@ -968,7 +954,7 @@ async function enterApp(idVal){
   renderNavForRole();
   refreshDashboard();
   renderOrdersTable();
-  if(currentRole==='admin'){ renderSectionToggles(); renderGarmentTags(); renderQrAdminGrid(); loadCompanyInfoForm(); loadStaffList(); loadStorageStats(); }
+  if(currentRole==='admin'){ renderSectionToggles(); renderGarmentTags(); renderQrAdminGrid(); loadCompanyInfoForm(); loadStaffList(); loadDatabaseStorage(); }
   switchView('dashboard');
 }
 
@@ -1025,7 +1011,7 @@ function switchView(name){
   document.querySelectorAll('.nav-tab').forEach(t=> t.classList.toggle('active', t.dataset.view===name));
   if(name==='orders'){ renderOrdersTable(); }
   if(name==='dashboard'){ refreshDashboard(); }
-  if(name==='admin'){ renderSectionToggles(); renderGarmentTags(); renderQrAdminGrid(); loadCompanyInfoForm(); loadStaffList(); loadStorageStats(); }
+  if(name==='admin'){ renderSectionToggles(); renderGarmentTags(); renderQrAdminGrid(); loadCompanyInfoForm(); loadStaffList(); loadDatabaseStorage(); }
   window.scrollTo({top:0, behavior:'smooth'});
 }
 
@@ -2109,6 +2095,80 @@ function renderQrAdminGrid(){
     });
   });
 }
+
+/* ================= ADMIN DATABASE & STORAGE ================= */
+async function loadDatabaseStorage(){
+  if(currentRole !== 'admin') return;
+  try{
+    const s = await api('/api/storage/stats');
+    const used = Number(s.usedBytes || 0);
+    const limit = Number(s.limitBytes || 1073741824);
+    const pct = limit > 0 ? Math.min(100, (used / limit) * 100) : 0;
+    const formatBytes = b => {
+      if(!b) return '0 MB';
+      const mb = b / (1024*1024);
+      return mb >= 1024 ? (mb/1024).toFixed(2)+' GB' : mb.toFixed(2)+' MB';
+    };
+    document.getElementById('dbStorageUsed').textContent = formatBytes(used);
+    document.getElementById('dbStorageLimit').textContent = 'of ' + formatBytes(limit);
+    document.getElementById('dbStorageStatus').textContent = s.status || 'Safe';
+    document.getElementById('dbStoragePercent').textContent = (s.usagePercent ?? pct).toFixed(2) + '% used';
+    document.getElementById('dbReusableRows').textContent = s.reusableRowsApprox ?? 0;
+    document.getElementById('dbCustomerCount').textContent = s.customers ?? 0;
+    document.getElementById('dbOrderCount').textContent = s.orders ?? 0;
+    document.getElementById('dbArchivedCount').textContent = s.archivedOrders ?? 0;
+    document.getElementById('dbStaffCount').textContent = s.staff ?? 0;
+    document.getElementById('dbStorageBar').style.width = (s.usagePercent ?? pct).toFixed(2)+'%';
+
+    const statusEl = document.getElementById('dbStorageStatus');
+    if((s.status||'') === 'Critical') statusEl.style.color = 'var(--danger)';
+    else if((s.status||'') === 'Getting Full') statusEl.style.color = 'var(--gold-deep)';
+    else statusEl.style.color = 'var(--good)';
+  }catch(e){
+    console.error(e);
+    toast('Could not load database storage information.');
+  }
+}
+
+document.getElementById('refreshStorageBtn')?.addEventListener('click', loadDatabaseStorage);
+
+document.getElementById('archiveOrdersBtn')?.addEventListener('click', async ()=>{
+  const before = document.getElementById('archiveBeforeDate').value;
+  if(!before){ toast('Select a date first.'); return; }
+  if(!confirm('Archive all orders before '+before+'?')) return;
+  try{
+    const r = await api('/api/storage/archive', {method:'POST', body:JSON.stringify({before})});
+    toast((r.archived || 0)+' order(s) archived.');
+    await loadDatabaseStorage();
+    if(typeof loadOrders === 'function') await loadOrders();
+  }catch(e){ toast(e.message || 'Could not archive orders.'); }
+});
+
+document.getElementById('downloadArchiveBtn')?.addEventListener('click', async ()=>{
+  try{
+    const data = await api('/api/storage/archive');
+    const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'MMJ_Order_Archive_'+todayISO()+'.json';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(()=>URL.revokeObjectURL(a.href), 1000);
+  }catch(e){ toast(e.message || 'Could not download archive.'); }
+});
+
+document.getElementById('deleteArchivedBtn')?.addEventListener('click', async ()=>{
+  const first = confirm('WARNING: Permanently delete ALL archived orders? Download the archive first. This cannot be undone.');
+  if(!first) return;
+  const typed = prompt('Type DELETE to confirm permanent deletion:');
+  if(typed !== 'DELETE'){ toast('Deletion cancelled.'); return; }
+  try{
+    const r = await api('/api/storage/archive', {method:'DELETE', body:JSON.stringify({confirm:'DELETE'})});
+    toast((r.deleted || 0)+' archived order(s) permanently deleted.');
+    await loadDatabaseStorage();
+  }catch(e){ toast(e.message || 'Could not delete archived orders.'); }
+});
+
+
 </script>
 </body>
 </html>
