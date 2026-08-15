@@ -12,6 +12,16 @@ async function query(text, params = []) {
 
 async function initDb() {
   await query(`
+
+    CREATE TABLE IF NOT EXISTS user_sessions (
+      sid TEXT PRIMARY KEY,
+      sess JSONB NOT NULL,
+      expire TIMESTAMPTZ NOT NULL
+    );
+
+    CREATE INDEX IF NOT EXISTS idx_user_sessions_expire
+      ON user_sessions (expire);
+
     CREATE TABLE IF NOT EXISTS users (
       id SERIAL PRIMARY KEY,
       login_id TEXT UNIQUE NOT NULL,
