@@ -450,6 +450,10 @@ table tbody tr:last-child td{border-bottom:none;}
         <div class="panel"><div class="panel-head"><h3>Order Items</h3></div>
           <div class="panel-body">
             <div class="garment-grid" id="garmentGrid"></div>
+            <div class="item-add-row" id="adminQuickGarmentRow" hidden style="margin-bottom:14px;padding:12px;border:1.5px dashed var(--gold-deep);border-radius:10px;background:#FCFAF3;">
+              <div class="field"><label>Admin: Add Custom Garment</label><input type="text" id="quickGarmentInput" placeholder="e.g. SHERWANI / WAISTCOAT"></div>
+              <button class="btn gold" id="quickAddGarmentBtn" type="button" style="height:47px;">+ Add Custom Garment</button>
+            </div>
             <div class="item-add-row">
               <div class="field"><label>Selected Garment</label><input type="text" id="selectedGarmentDisplay" readonly placeholder="Tap a garment above"></div>
               <div class="field" style="max-width:140px;"><label>Quantity</label>
@@ -886,6 +890,7 @@ async function enterApp(idVal){
   roleBadge.textContent = currentRole === 'admin' ? 'Admin' : 'Staff';
   roleBadge.className = 'role-badge ' + currentRole;
   document.getElementById('adminNavTab').hidden = currentRole !== 'admin';
+  document.getElementById('adminQuickGarmentRow').hidden = currentRole !== 'admin';
 
   await loadAppData();
 
@@ -1858,6 +1863,61 @@ function renderSectionToggles(){
   });
 }
 
+/* ================= NEW BILL: ARROW KEY NAVIGATION ================= */
+// Up/Down always move between bill fields. Left/Right move between fields
+// when the caret is already at the start/end, so normal text editing still works.
+function getBillFocusableFields(){
+  return Array.from(document.querySelectorAll('#view-newbill input:not([type="hidden"]), #view-newbill select, #view-newbill textarea, #view-newbill button'))
+    .filter(el=>!el.disabled && !el.hidden && el.offsetParent!==null && !el.hasAttribute('readonly'));
+}
+function moveBillFocus(current, step){
+  const fields = getBillFocusableFields();
+  const idx = fields.indexOf(current);
+  if(idx < 0 || !fields.length) return;
+  const next = fields[idx + step];
+  if(next){
+    next.focus();
+    if(typeof next.select === 'function' && next.tagName === 'INPUT' && !['date','number'].includes(next.type)){
+      try{ next.select(); }catch(e){}
+    }
+    next.scrollIntoView({block:'nearest', behavior:'smooth'});
+  }
+}
+
+document.getElementById('view-newbill').addEventListener('keydown', e=>{
+  if(!['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.key)) return;
+  if(e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
+  const el = e.target;
+  if(!el.matches('input,select,textarea,button')) return;
+
+  let step = 0;
+  if(e.key === 'ArrowDown') step = 1;
+  if(e.key === 'ArrowUp') step = -1;
+
+  if(e.key === 'ArrowRight'){
+    if(el.tagName === 'INPUT' && ['text','tel','password'].includes(el.type)){
+      try{ if(el.selectionEnd < el.value.length) return; }catch(err){}
+    } else if(el.tagName === 'TEXTAREA'){
+      if(el.selectionEnd < el.value.length) return;
+    }
+    step = 1;
+  }
+
+  if(e.key === 'ArrowLeft'){
+    if(el.tagName === 'INPUT' && ['text','tel','password'].includes(el.type)){
+      try{ if(el.selectionStart > 0) return; }catch(err){}
+    } else if(el.tagName === 'TEXTAREA'){
+      if(el.selectionStart > 0) return;
+    }
+    step = -1;
+  }
+
+  if(step){
+    e.preventDefault();
+    moveBillFocus(el, step);
+  }
+});
+
 /* ================= ADMIN: MANAGE GARMENTS ================= */
 function renderGarmentTags(){
   const wrap = document.getElementById('garmentTagList');
@@ -1878,22 +1938,47 @@ function renderGarmentTags(){
     });
   });
 }
-document.getElementById('addGarmentBtn').addEventListener('click', async ()=>{
-  const inp = document.getElementById('newGarmentInput');
-  const name = inp.value.trim().toUpperCase();
+async function addGarmentByName(rawName, inputEl){
+  if(currentRole !== 'admin'){ toast('Only Admin can add garment types.'); return; }
+  const name = (rawName || '').trim().toUpperCase();
   if(!name){ toast('Please enter a garment name.'); return; }
-  if(GARMENTS.includes(name)){ toast('That garment already exists.'); return; }
+  if(GARMENTS.includes(name)){
+    selectedGarment = name;
+    buildGarmentGrid();
+    const chip = document.querySelector(`#garmentGrid .garment-chip[data-g="${CSS.escape(name)}"]`);
+    if(chip){ chip.classList.add('selected'); }
+    document.getElementById('selectedGarmentDisplay').value = name;
+    toast('That garment already exists — it is selected now.');
+    return;
+  }
   try{
     const data = await api('/api/garments', { method:'POST', body: JSON.stringify({ name }) });
     GARMENTS = data.garments;
     GARMENT_EXTRA_FIELDS = data.extraFields;
-    inp.value = '';
+    if(inputEl) inputEl.value = '';
     renderGarmentTags();
     buildGarmentGrid();
-    toast(`Added "${name}" to garment types.`);
+    selectedGarment = name;
+    document.getElementById('selectedGarmentDisplay').value = name;
+    const chip = Array.from(document.querySelectorAll('#garmentGrid .garment-chip')).find(c=>c.dataset.g===name);
+    if(chip) chip.classList.add('selected');
+    toast(`Added "${name}". Staff can use it immediately.`);
   } catch(err){
     toast('Could not add garment: ' + err.message);
   }
+}
+
+document.getElementById('addGarmentBtn').addEventListener('click', ()=>{
+  const inp = document.getElementById('newGarmentInput');
+  addGarmentByName(inp.value, inp);
+});
+
+document.getElementById('quickAddGarmentBtn').addEventListener('click', ()=>{
+  const inp = document.getElementById('quickGarmentInput');
+  addGarmentByName(inp.value, inp);
+});
+document.getElementById('quickGarmentInput').addEventListener('keydown', e=>{
+  if(e.key==='Enter'){ e.preventDefault(); document.getElementById('quickAddGarmentBtn').click(); }
 });
 
 /* ================= ADMIN: UPI QR CODES ================= */
