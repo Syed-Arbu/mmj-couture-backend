@@ -841,6 +841,20 @@ const forgotBtn = document.getElementById('forgotBtn');
 loginBtn.addEventListener('click', doLogin);
 [loginId, loginPass].forEach(el=> el.addEventListener('keydown', e=>{ if(e.key==='Enter') doLogin(); }));
 
+// Restore an existing server session after page refresh or Render restart.
+(async function restoreExistingSession(){
+  try{
+    const user = await api('/api/auth/me');
+    if(user && user.id && user.role){
+      currentRole = user.role;
+      currentUserId = user.id;
+      await enterApp(user.id);
+    }
+  } catch(e){
+    // No valid saved session: stay on the normal login screen.
+  }
+})();
+
 async function doLogin(){
   const idVal = loginId.value.trim();
   const passVal = loginPass.value;
