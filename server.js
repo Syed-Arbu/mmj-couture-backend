@@ -13,6 +13,7 @@ const qrRoutes = require('./routes/qr');
 const staffRoutes = require('./routes/staff');
 
 const app = express();
+app.set('trust proxy', 1);
 
 app.use(express.json({ limit: '8mb' })); // QR images travel as base64, so allow a generous body size
 app.use(cors({ origin: process.env.CORS_ORIGIN || true, credentials: true }));
