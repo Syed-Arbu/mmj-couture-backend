@@ -688,6 +688,19 @@ table tbody tr:last-child td{border-bottom:none;}
             </div>
 
             <div class="panel" style="box-shadow:none;margin-bottom:16px;">
+              <div class="panel-head"><h3 style="font-size:15px;">📊 Export Data to Excel</h3></div>
+              <div class="panel-body">
+                <div class="item-add-row" style="align-items:end;">
+                  <div class="field" style="max-width:220px;"><label>Export Range</label><select id="excelExportMode"><option value="all">All Data</option><option value="month">This Month</option><option value="custom">Custom Date Range</option></select></div>
+                  <div class="field" id="excelFromWrap" style="max-width:180px;display:none;"><label>From</label><input type="date" id="excelFromDate"></div>
+                  <div class="field" id="excelToWrap" style="max-width:180px;display:none;"><label>To</label><input type="date" id="excelToDate"></div>
+                  <button class="btn gold" id="exportExcelBtn" type="button" style="height:47px;">⬇ Export Excel</button>
+                </div>
+                <p style="font-size:12px;color:var(--ink-soft);margin-bottom:0;">Downloads one Excel workbook with Summary, Orders, Customers, Garment Items, Measurements and Payments. Passwords are never included.</p>
+              </div>
+            </div>
+
+            <div class="panel" style="box-shadow:none;margin-bottom:16px;">
               <div class="panel-head"><h3 style="font-size:15px;">Archive Old Orders</h3></div>
               <div class="panel-body">
                 <div class="item-add-row">
@@ -2095,6 +2108,29 @@ function renderQrAdminGrid(){
     });
   });
 }
+
+/* ================= ADMIN: EXCEL EXPORT ================= */
+document.getElementById('excelExportMode')?.addEventListener('change', e=>{
+  const show=e.target.value==='custom';
+  document.getElementById('excelFromWrap').style.display=show?'block':'none';
+  document.getElementById('excelToWrap').style.display=show?'block':'none';
+});
+document.getElementById('exportExcelBtn')?.addEventListener('click', async ()=>{
+  const mode=document.getElementById('excelExportMode').value;
+  const from=document.getElementById('excelFromDate').value;
+  const to=document.getElementById('excelToDate').value;
+  if(mode==='custom' && (!from || !to)){ toast('Select From and To dates.'); return; }
+  if(mode==='custom' && from>to){ toast('From date cannot be after To date.'); return; }
+  const qs=new URLSearchParams({mode}); if(mode==='custom'){qs.set('from',from);qs.set('to',to);}
+  try{
+    const res=await fetch('/api/export/excel?'+qs.toString(),{credentials:'include'});
+    if(!res.ok){let d={};try{d=await res.json()}catch{};throw new Error(d.error||'Export failed');}
+    const blob=await res.blob(); const a=document.createElement('a');
+    a.href=URL.createObjectURL(blob); a.download='MMJ_Data_Export_'+todayISO()+'.xlsx';
+    document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+    toast('Excel file downloaded successfully.');
+  }catch(e){toast(e.message||'Could not export Excel data.');}
+});
 
 /* ================= ADMIN DATABASE & STORAGE ================= */
 async function loadDatabaseStorage(){
