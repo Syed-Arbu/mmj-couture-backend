@@ -196,6 +196,10 @@ table tbody tr:last-child td{border-bottom:none;}
 
 .billing-table input{width:100%;padding:8px 9px;border:1.5px solid var(--line);border-radius:6px;font-size:13.5px;background:#fff;font-family:'IBM Plex Mono',monospace;}
 .billing-table td{vertical-align:middle;}
+
+.billing-garment-name{font-family:'Jost',sans-serif;font-size:14px;color:var(--ink);font-weight:400;cursor:text;}
+.billing-garment-name[contenteditable="true"]{outline:1.5px solid var(--gold-deep);outline-offset:-3px;background:#FFFDF8;}
+
 .amount-cell{font-family:'IBM Plex Mono',monospace;font-weight:600;}
 .totals-box{margin-top:18px;margin-left:auto;max-width:380px;background:#FBF6EA;border:1px solid var(--line);border-radius:10px;padding:16px 18px;}
 .totals-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;font-size:13.5px;}
@@ -283,11 +287,49 @@ table tbody tr:last-child td{border-bottom:none;}
   body.printing .modal-overlay{display:none !important;}
   #printArea{position:absolute;top:0;left:0;}
 }
+
+/* ================= OWNER-REQUESTED DEMO ADDITIONS ================= */
+.permission-note{font-size:12.5px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:#FBF8F1;color:var(--ink-soft);margin:10px 0;}
+.permission-note.locked{border-color:rgba(163,64,47,.35);background:rgba(163,64,47,.06);color:var(--danger);}
+.permission-note.approved{border-color:rgba(62,107,79,.35);background:rgba(62,107,79,.07);color:var(--good);}
+.request-card,.message-card,.history-card{border:1px solid var(--line);border-radius:10px;padding:14px;background:#FCFAF3;margin-bottom:10px;}
+.request-meta,.message-meta,.history-meta{font-size:11.5px;color:var(--gold-deep);font-weight:600;margin-bottom:6px;}
+.snapshot-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:12px;}
+.snapshot-box{border:1px solid var(--line);border-radius:9px;padding:12px;background:#fff;}
+.snapshot-box h4{margin:0 0 8px;font-size:13px;}
+.snapshot-box pre{white-space:pre-wrap;word-break:break-word;font:11px/1.55 'IBM Plex Mono',monospace;max-height:300px;overflow:auto;margin:0;}
+.custom-bill-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:12px;}
+.admin-custom-list{margin-top:14px;display:flex;flex-direction:column;gap:8px;}
+.admin-custom-row{display:flex;align-items:center;justify-content:space-between;gap:10px;border:1px solid var(--line);border-radius:8px;padding:9px 11px;background:#FCFAF3;}
+.admin-custom-row .meta{font-size:11px;color:var(--gold-deep);text-transform:uppercase;letter-spacing:.06em;}
+.demo-banner{background:#2a2116;color:var(--gold-light);padding:8px 14px;text-align:center;font-size:12px;letter-spacing:.03em;border-bottom:1px solid rgba(201,161,92,.3);}
+@media(max-width:820px){.snapshot-grid,.custom-bill-grid{grid-template-columns:1fr;}}
+@media(max-width:680px){
+  .topbar{padding:0 12px}.navbar{padding:0 8px;top:64px}.view{padding:20px 12px 60px}
+  .topbar-right{gap:8px}.user-chip span#userChipId{display:none}
+  .bill-footer-actions .btn{flex:1;min-width:130px}
+}
+\n/* ================= STAFF ↔ ADMIN CHAT ================= */\n.chat-shell{display:grid;grid-template-columns:260px 1fr;gap:16px;min-height:560px}.chat-sidebar{border:1px solid var(--line);border-radius:12px;background:#FCFAF3;overflow:hidden}.chat-sidebar-title{padding:13px 14px;border-bottom:1px solid var(--line);font-weight:600;font-size:13px}.chat-contact{width:100%;border:none;border-bottom:1px solid var(--line);background:transparent;text-align:left;padding:12px 14px;color:var(--ink);display:block}.chat-contact:hover,.chat-contact.active{background:rgba(201,161,92,.14)}.chat-contact .name{font-weight:600;font-size:13.5px}.chat-contact .id{font:11px 'IBM Plex Mono',monospace;color:#8b8069;margin-top:2px}.chat-main{border:1px solid var(--line);border-radius:12px;background:#F5EFE3;display:flex;flex-direction:column;min-width:0;overflow:hidden}.chat-head{background:#FFFDF8;border-bottom:1px solid var(--line);padding:12px 15px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.chat-head .who{font-weight:600}.chat-head .login{font:11px 'IBM Plex Mono',monospace;color:#8b8069}.chat-tools{display:flex;gap:7px;align-items:center;flex-wrap:wrap}.chat-window{flex:1;padding:18px;overflow:auto;min-height:360px;max-height:560px;background:#F5EFE3}.chat-row{display:flex;margin-bottom:10px;gap:8px;align-items:flex-end}.chat-row.mine{justify-content:flex-end}.chat-select{align-self:center;accent-color:var(--gold-deep)}.chat-bubble{max-width:min(74%,620px);padding:9px 11px;border-radius:12px 12px 12px 3px;background:#FFFDF8;border:1px solid rgba(139,107,46,.20)}.chat-row.mine .chat-bubble{background:#EAD9AE;border-radius:12px 12px 3px 12px}.chat-meta{font-size:10px;color:#766d5c;margin-bottom:4px;display:flex;gap:7px;flex-wrap:wrap}.chat-text{white-space:pre-wrap;word-break:break-word;font-size:13.5px;line-height:1.5}.chat-attachments{display:flex;flex-direction:column;gap:5px;margin-top:7px}.chat-attachment{display:flex;align-items:center;gap:7px;padding:7px 8px;border:1px solid rgba(139,107,46,.22);border-radius:7px;background:rgba(255,255,255,.6);font-size:12px;text-decoration:none}.chat-compose{background:#FFFDF8;border-top:1px solid var(--line);padding:12px;display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:end}.chat-compose textarea{min-height:46px;max-height:130px;resize:vertical;margin:0}.chat-file-preview{grid-column:1/-1;display:flex;gap:6px;flex-wrap:wrap}.chat-file-chip{font-size:11px;border:1px solid var(--line);background:#FBF6EA;border-radius:18px;padding:5px 9px}.chat-empty{height:100%;display:grid;place-items:center;color:#8b8069;text-align:center;padding:30px}@media(max-width:800px){.chat-shell{grid-template-columns:1fr;min-height:auto}.chat-sidebar{max-height:180px;overflow:auto}.chat-window{min-height:320px;max-height:480px}.chat-bubble{max-width:88%}.chat-compose{grid-template-columns:auto 1fr}.chat-compose .send-chat{grid-column:1/-1}}\n
+.share-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:12px}
+.share-option{border:1px solid var(--line);background:#fffdf8;border-radius:10px;padding:12px;text-align:left;cursor:pointer;font:inherit;color:var(--ink)}
+.share-option:hover{border-color:var(--gold-deep);background:#fbf4e4}
+.share-link-row{display:flex;gap:7px;margin-top:12px}.share-link-row input{flex:1}
+@media(max-width:520px){.share-grid{grid-template-columns:1fr}.share-link-row{display:block}.share-link-row button{margin-top:7px;width:100%}}
+
+
+.payment-status{display:inline-flex;align-items:center;justify-content:center;padding:5px 9px;border-radius:16px;font-size:11.5px;font-weight:700;white-space:nowrap}
+.payment-status.paid{background:rgba(62,107,79,.12);color:var(--good);border:1px solid rgba(62,107,79,.28)}
+.payment-status.due{background:rgba(163,64,47,.10);color:var(--danger);border:1px solid rgba(163,64,47,.25)}
+.delivery-status-select{min-width:132px;padding:7px 28px 7px 9px;border:1px solid var(--line);border-radius:8px;background:#FFFDF8;color:var(--ink);font:12px 'Jost',sans-serif}
+.delivery-status-select.delivered{color:var(--good);font-weight:700;border-color:rgba(62,107,79,.35)}
+.delivery-status-select.not-delivered{color:var(--danger);font-weight:700;border-color:rgba(163,64,47,.30)}
+
 </style>
 </head>
 <body>
 
 <div id="app">
+<div class="demo-banner" id="demoBanner" hidden>DEMO MODE — original MM Javeed design with requested changes</div>
 
   <!-- ======================= LOGIN ======================= -->
   <div id="loginScreen">
@@ -391,6 +433,7 @@ table tbody tr:last-child td{border-bottom:none;}
       <button class="nav-tab active" data-view="dashboard">Dashboard</button>
       <button class="nav-tab" data-view="newbill">New Bill</button>
       <button class="nav-tab" data-view="orders">Orders</button>
+      <button class="nav-tab" data-view="messages" id="messagesNavTab">✉ Messages <span id="staffMsgBadge" style="display:none;background:#A3402F;color:#fff;border-radius:20px;padding:2px 6px;font-size:10px;margin-left:4px;">0</span></button>
       <button class="nav-tab admin-tab" data-view="admin" id="adminNavTab" hidden>⚙ Admin</button>
     </div>
 
@@ -444,10 +487,38 @@ table tbody tr:last-child td{border-bottom:none;}
               <div class="field"><label>Contact Number</label><input type="tel" id="clientContact" placeholder="+91 XXXXXXXXXX"></div>
               <div class="field"><label>Address</label><input type="text" id="clientAddress" placeholder="City / Area"></div>
             </div>
+            <div class="custom-bill-grid" id="customFields-client"></div>
           </div>
         </div>
 
-        <div class="panel"><div class="panel-head"><h3>Order Items</h3></div>
+        <div class="panel" id="customerRelationshipPanel">
+          <div class="panel-head"><h3>Customer Relationship</h3></div>
+          <div class="panel-body">
+            <div class="form-grid3">
+              <div class="field"><label>Customer Type</label><select id="customerRelationship"></select></div>
+            </div>
+            <div class="custom-bill-grid" id="customFields-relationship"></div>
+          </div>
+        </div>
+
+        <div class="panel"><div class="panel-head"><h3>Measurements</h3><span class="mono" style="font-size:11.5px;color:#9a8f76;">all values in inches</span></div>
+          <div class="panel-body">
+            <div class="measure-block" id="bodyMeasureBlock">
+              <h4>Body Measurements</h4>
+              
+              <div class="measure-fields" id="bodyMeasureFields"></div>
+              <div class="custom-bill-grid" id="customFields-body"></div>
+            </div>
+            <div class="measure-block" id="lengthMeasureBlock">
+              <h4>Length</h4>
+              
+              <div class="measure-fields" id="lengthMeasureFields"></div>
+              <div class="custom-bill-grid" id="customFields-length"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel"><div class="panel-head"><h3>Select Garment</h3></div>
           <div class="panel-body">
             <div class="garment-grid" id="garmentGrid"></div>
             <div class="item-add-row" id="adminQuickGarmentRow" hidden style="margin-bottom:14px;padding:12px;border:1.5px dashed var(--gold-deep);border-radius:10px;background:#FCFAF3;">
@@ -471,26 +542,14 @@ table tbody tr:last-child td{border-bottom:none;}
           </div>
         </div>
 
-        <div class="panel"><div class="panel-head"><h3>Measurements</h3><span class="mono" style="font-size:11.5px;color:#9a8f76;">all values in inches</span></div>
-          <div class="panel-body">
-            <div class="measure-block" id="bodyMeasureBlock">
-              <h4>Body Measurement</h4>
-              <div class="sub">Standard measurements captured for every garment.</div>
-              <div class="measure-fields" id="bodyMeasureFields"></div>
-              <div id="customMeasureRows"></div>
-              <button class="btn ghost small" id="addCustomMeasureBtn" style="margin-top:12px;">+ Add Custom Measurement</button>
-            </div>
-            <div id="garmentMeasureBlocks"></div>
-          </div>
-        </div>
-
         <div class="panel"><div class="panel-head"><h3>Garment Material</h3><span class="mono" style="font-size:11.5px;color:#9a8f76;">what fabric, and how much</span></div>
           <div class="panel-body">
             <table id="materialTable" class="billing-table">
               <thead><tr><th>Garment</th><th>Material Name</th><th>Meters Used</th></tr></thead>
               <tbody id="materialTableBody"></tbody>
             </table>
-            <div class="empty-note" id="materialEmptyNote">Add garments in “Order Items” to log material used.</div>
+            <div class="empty-note" id="materialEmptyNote">Select garment(s) above to log material used.</div>
+            <div class="custom-bill-grid" id="customFields-material"></div>
           </div>
         </div>
 
@@ -501,6 +560,7 @@ table tbody tr:last-child td{border-bottom:none;}
               <div class="field"><label>Delivery Date</label><input type="date" id="deliveryDate"></div>
               <div class="field"><label>Tailor Name</label><input type="text" id="tailorName" placeholder="Assigned tailor"></div>
             </div>
+            <div class="custom-bill-grid" id="customFields-trial"></div>
             <div class="field" style="margin-top:6px;">
               <label>Notes</label>
               <textarea class="notes-box" id="notesBox" placeholder="1. Type a note and press Enter for the next point…"></textarea>
@@ -512,7 +572,7 @@ table tbody tr:last-child td{border-bottom:none;}
           <div class="panel-body">
             <div style="overflow-x:auto;">
             <table class="billing-table" id="billingTable">
-              <thead><tr><th>Garment</th><th>Qty</th><th>Unit Price (₹)</th><th>Discount (₹)</th><th>Amount (₹)</th></tr></thead>
+              <thead><tr><th>Garment</th><th>Qty</th><th>Unit Price (₹)</th><th>Amount (₹)</th></tr></thead>
               <tbody id="billingTableBody"></tbody>
             </table>
             </div>
@@ -520,10 +580,11 @@ table tbody tr:last-child td{border-bottom:none;}
 
             <div class="totals-box">
               <div class="totals-row"><span>Subtotal</span><span class="mono" id="subtotalDisplay">₹0.00</span></div>
-              <div class="totals-row auto"><span>Item Discount (auto)</span><span class="mono" id="itemDiscountDisplay">₹0.00</span></div>
-              <div class="totals-hint">Sum of the discounts entered per garment above — updates automatically.</div>
-              <div class="totals-row"><span>Additional Discount (₹)</span><input type="number" id="overallDiscount" min="0" value="0"></div>
-              <div class="totals-row"><span>GST (%)</span><input type="number" id="gstPercent" min="0" value="0"></div>
+              <div class="totals-row"><span>Discount (%)</span><input type="number" id="overallDiscount" min="0" value="0" step="0.01"></div>
+              <div class="totals-hint" id="discountPolicyHint">Staff can give maximum 15% discount. Admin has no discount limit.</div>
+              <div class="totals-row auto"><span>Discount Amount</span><span class="mono" id="itemDiscountDisplay">₹0.00</span></div>
+              <div class="totals-row"><span>GST</span><input type="text" id="gstPercent" value="5%" readonly></div>
+              <div class="custom-bill-grid" id="customFields-billing" style="grid-column:1/-1;"></div>
               <div class="totals-row grand"><span>Grand Total</span><span class="mono" id="grandTotalDisplay">₹0.00</span></div>
             </div>
           </div>
@@ -531,6 +592,7 @@ table tbody tr:last-child td{border-bottom:none;}
 
         <div class="panel"><div class="panel-head"><h3>Payment</h3></div>
           <div class="panel-body">
+            <div class="permission-note" id="savedBillPermissionNote" hidden></div>
             <div class="payment-grid">
               <div class="field"><label>Payment Received (₹)</label><input type="number" id="paymentReceived" min="0" value="0"></div>
               <div class="field"><label>Payment Mode</label>
@@ -540,17 +602,19 @@ table tbody tr:last-child td{border-bottom:none;}
               </div>
               <div class="field"><label>Balance Amount</label><div class="balance-display zero" id="balanceDisplay">₹0.00</div></div>
             </div>
+            <div class="custom-bill-grid" id="customFields-payment"></div>
             <div class="qr-box" id="upiQrBox" hidden>
               <img id="upiQrImage" src="" alt="UPI QR Code">
               <div class="qr-info">
                 <h4 id="upiQrName">Scan to Pay</h4>
-                <p>Ask the customer to scan this code in any UPI app to complete payment.</p>
+                <p>Ask the customer to scan this code in any UPI app to complete payment.</p><p id="upiIdPaymentText" style="font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--gold-deep);"></p>
               </div>
             </div>
             <div class="empty-note" id="upiQrEmptyNote" hidden style="padding:16px;">No UPI QR uploaded yet. Sign in as Admin to add one from the Admin panel.</div>
           </div>
         </div>
 
+        <div id="customStandaloneSections"></div>
         <div class="bill-footer-actions">
           <button class="btn ghost" id="cancelBillBtn">Cancel</button>
           <button class="btn gold" id="saveAndPrintBtn">💾 Save Bill</button>
@@ -571,11 +635,28 @@ table tbody tr:last-child td{border-bottom:none;}
       <div class="panel">
         <div class="panel-body" style="padding:0;">
           <div style="overflow-x:auto;">
-          <table><thead><tr><th>Order No.</th><th>Date</th><th>Customer</th><th>Contact</th><th>Items</th><th>Billed By</th><th>Total</th><th>Paid</th><th>Balance</th></tr></thead><tbody id="ordersTableBody"></tbody></table>
+          <table><thead><tr><th>Order No.</th><th>Date</th><th>Customer</th><th>Contact</th><th>Items</th><th>Billed By</th><th>Total</th><th>Paid</th><th>Balance</th><th>Payment Status</th><th>Delivery Status</th></tr></thead><tbody id="ordersTableBody"></tbody></table>
           </div>
           <div class="empty-note" id="ordersEmptyNote" hidden>No orders found.</div>
         </div>
       </div>
+    </div>
+
+
+    <!-- ---------------- MESSAGES ---------------- -->
+    <div class="view" id="view-messages" hidden>
+      <div class="view-header"><div><div class="eyebrow">Communication</div><h1 id="messagesPageTitle">Messages</h1></div></div>
+      <div class="panel"><div class="panel-head"><h3>Staff ↔ Admin Conversation</h3><span class="mono" style="font-size:11px;color:#9a8f76;">WhatsApp-style chat</span></div><div class="panel-body">
+        <div class="chat-shell">
+          <aside class="chat-sidebar" id="chatSidebar"><div class="chat-sidebar-title">Conversations</div><div id="chatContactList"></div></aside>
+          <div class="chat-main">
+            <div class="chat-head"><div><div class="who" id="chatWithName">Admin</div><div class="login" id="chatWithId"></div></div><div class="chat-tools" id="adminChatDeleteTools" hidden><label style="font-size:12px;"><input type="checkbox" id="selectAllChatMessages"> Select all</label><button class="btn danger small" id="deleteSelectedMessagesBtn">Delete Selected</button><button class="btn danger small" id="clearConversationBtn">Delete Conversation</button><button class="btn danger small" id="clearAllMessagesBtn">Delete All</button></div></div>
+            <div class="chat-window" id="chatWindow"></div>
+            <div class="chat-compose"><button class="btn ghost small" id="attachChatFileBtn" type="button">📎 Attach</button><textarea class="notes-box" id="chatMessageText" placeholder="Type a message..."></textarea><button class="btn gold send-chat" id="sendChatMessageBtn" type="button">Send</button><input id="chatFileInput" type="file" multiple hidden accept="image/*,video/*,application/pdf,.doc,.docx,.xls,.xlsx,.csv,.txt,.ppt,.pptx"><div class="chat-file-preview" id="chatFilePreview"></div></div>
+          </div>
+        </div>
+        <div style="font-size:11px;color:#8b8069;margin-top:9px;">Maximum 3 attachments per message, up to 10 MB each. Only Admin can delete messages.</div>
+      </div></div>
     </div>
 
     <!-- ---------------- ADMIN (owner only) ---------------- -->
@@ -583,15 +664,22 @@ table tbody tr:last-child td{border-bottom:none;}
       <div class="view-header"><div><div class="eyebrow">Owner Access</div><h1>Admin Panel</h1></div></div>
       <div class="section-stack">
 
-        <div class="panel"><div class="panel-head"><h3>My Admin Credentials</h3></div>
+        <div class="panel"><div class="panel-head"><h3>Company Details</h3></div>
           <div class="panel-body">
-            <p style="font-size:13px;color:var(--ink-soft);margin-top:0;">Change your own login ID and/or password. Your current password is required to confirm the change.</p>
+            <p style="font-size:13px;color:var(--ink-soft);margin-top:0;">These details print on the letterhead of every Store Bill and Client Bill.</p>
             <div class="form-grid3">
-              <div class="field"><label>Current Password</label><input type="password" id="adminCurrentPass" placeholder="Required to confirm"></div>
-              <div class="field"><label>New Login ID</label><input type="text" id="adminNewId" placeholder="Leave blank to keep current"></div>
-              <div class="field"><label>New Password</label><input type="password" id="adminNewPass" placeholder="Leave blank to keep current"></div>
+              <div class="field"><label>Company Name</label><input type="text" id="companyName" placeholder="MM Javeed Couture"></div>
+              <div class="field"><label>Tagline</label><input type="text" id="companyTagline" placeholder="Bespoke. Crafted for You."></div>
+              <div class="field"><label>GST Number</label><input type="text" id="companyGst" placeholder="29ABCDE1234F1Z5"></div>
             </div>
-            <button class="btn gold small" id="saveAdminCredsBtn">Update My Credentials</button>
+            <div class="form-grid2">
+              <div class="field"><label>Company Address</label><input type="text" id="companyAddress" placeholder="Shop address"></div>
+              <div class="field"><label>Phone Number</label><input type="text" id="companyPhone" placeholder="+91 XXXXXXXXXX"></div>
+            </div>
+            <div id="companyExtraRows"></div>
+            <button class="btn ghost small" id="addCompanySectionBtn" style="margin-top:6px;">+ Add Section</button>
+            <span style="font-size:11px;color:var(--ink-soft);margin-left:8px;">Added rows print on both Store & Client bills.</span>
+            <div style="margin-top:18px;"><button class="btn gold small" id="saveCompanyInfoBtn">Save Company Details</button></div>
           </div>
         </div>
 
@@ -612,22 +700,8 @@ table tbody tr:last-child td{border-bottom:none;}
           </div>
         </div>
 
-        <div class="panel"><div class="panel-head"><h3>Company Details</h3></div>
-          <div class="panel-body">
-            <p style="font-size:13px;color:var(--ink-soft);margin-top:0;">These details print on the letterhead of every Store Bill and Client Bill.</p>
-            <div class="form-grid3">
-              <div class="field"><label>Company Name</label><input type="text" id="companyName" placeholder="MM Javeed Couture"></div>
-              <div class="field"><label>Tagline</label><input type="text" id="companyTagline" placeholder="Bespoke. Crafted for You."></div>
-              <div class="field"><label>GST Number</label><input type="text" id="companyGst" placeholder="29ABCDE1234F1Z5"></div>
-            </div>
-            <div class="form-grid2">
-              <div class="field"><label>Company Address</label><input type="text" id="companyAddress" placeholder="Shop address"></div>
-              <div class="field"><label>Phone Number</label><input type="text" id="companyPhone" placeholder="+91 XXXXXXXXXX"></div>
-            </div>
-            <div id="companyExtraRows"></div>
-            <button class="btn ghost small" id="addCompanySectionBtn" style="margin-top:6px;">+ Add Section</button>
-            <div style="margin-top:18px;"><button class="btn gold small" id="saveCompanyInfoBtn">Save Company Details</button></div>
-          </div>
+        <div class="panel"><div class="panel-head"><h3>Staff Bill Edit Requests</h3></div>
+          <div class="panel-body"><p style="font-size:13px;color:var(--ink-soft);margin-top:0;">Saved staff bills are locked. Approve a request here before that staff member can edit the bill.</p><div id="editRequestList"></div></div>
         </div>
 
         <div class="panel"><div class="panel-head"><h3>Manage Sections</h3></div>
@@ -644,18 +718,6 @@ table tbody tr:last-child td{border-bottom:none;}
           </div>
         </div>
 
-        <div class="panel"><div class="panel-head"><h3>UPI QR Codes</h3></div>
-          <div class="panel-body">
-            <p style="font-size:13px;color:var(--ink-soft);margin-top:0;">Upload your UPI QR code below. It appears automatically in New Bill whenever a customer's payment mode is set to UPI. If your daily collection limit is reached, upload a new QR and set it active — the billing screen switches instantly.</p>
-            <label class="upload-drop" for="qrUploadInput">
-              <div style="font-size:14px;font-weight:600;">📤 Click to upload a QR code image</div>
-              <div style="font-size:12px;color:var(--ink-soft);margin-top:4px;">PNG or JPG, ideally square</div>
-              <input type="file" id="qrUploadInput" accept="image/*">
-            </label>
-            <div class="qr-admin-grid" id="qrAdminGrid"></div>
-            <div class="empty-note" id="qrAdminEmpty">No QR codes uploaded yet.</div>
-          </div>
-
         <div class="panel" id="databaseStoragePanel">
           <div class="panel-head">
             <h3>Database &amp; Storage</h3>
@@ -663,7 +725,7 @@ table tbody tr:last-child td{border-bottom:none;}
           </div>
           <div class="panel-body">
             <p style="font-size:13px;color:var(--ink-soft);margin-top:0;">
-              Admin-only database overview. Archive old orders before deleting them permanently.
+              Admin-only database and storage overview.
             </p>
 
             <div class="stat-grid" style="margin-bottom:20px;">
@@ -687,7 +749,15 @@ table tbody tr:last-child td{border-bottom:none;}
               PostgreSQL may keep deleted space reserved for reuse, so the physical database size may stay the same after deletion. This is normal.
             </div>
 
-            <div class="panel" style="box-shadow:none;margin-bottom:16px;">
+            
+
+            
+
+            
+          </div>
+        </div>
+
+        <div class="panel">
               <div class="panel-head"><h3 style="font-size:15px;">📊 Export Data to Excel</h3></div>
               <div class="panel-body">
                 <div class="item-add-row" style="align-items:end;">
@@ -700,7 +770,73 @@ table tbody tr:last-child td{border-bottom:none;}
               </div>
             </div>
 
-            <div class="panel" style="box-shadow:none;margin-bottom:16px;">
+        <div class="panel"><div class="panel-head"><h3>Customize Bill Sections</h3><span class="mono" style="font-size:11px;color:#9a8f76;">Admin only</span></div>
+          <div class="panel-body">
+            <p style="font-size:13px;color:var(--ink-soft);margin-top:0;">Add an additional box inside an existing bill section, or add a completely new bill section. Staff can use the fields, but only Admin can create/remove them.</p>
+            <div class="form-grid3">
+              <div class="field"><label>Add Box To</label><select id="customTargetSection"><option value="client">Client Details</option><option value="relationship">Customer Relationship</option><option value="body">Body Measurements</option><option value="length">Length</option><option value="material">Garment Material</option><option value="trial">Trial / Delivery / Notes</option><option value="billing">Billing</option><option value="payment">Payment</option></select></div>
+              <div class="field"><label>Box Name</label><input id="customBoxName" type="text" placeholder="e.g. Reference No / Arm Width"></div>
+              <div style="display:flex;align-items:end;"><button class="btn gold" id="addCustomBoxBtn" type="button" style="height:47px;">+ Add Additional Box</button></div>
+            </div>
+            <div class="dot-divider"><span class="diamond"></span></div>
+            <div class="form-grid3">
+              <div class="field"><label>New Section Name</label><input id="newCustomSectionName" type="text" placeholder="e.g. Special Instructions"></div>
+              <div class="field"><label>First Box Name</label><input id="newCustomSectionBox" type="text" placeholder="e.g. Details"></div>
+              <div style="display:flex;align-items:end;"><button class="btn gold" id="addCustomSectionBtn2" type="button" style="height:47px;">+ Add Section</button></div>
+            </div>
+            <div class="admin-custom-list" id="adminCustomBillList"></div><div class="dot-divider"><span class="diamond"></span></div>
+            <div>
+              <div style="font-weight:600;margin-bottom:6px;">Customer Relationship Options</div>
+              <div style="font-size:12px;color:var(--ink-soft);margin-bottom:10px;">Admin can add or remove dropdown options.</div>
+              <div class="form-grid2">
+                <div class="field"><label>New Option</label><input id="newRelationshipOption" type="text" placeholder="e.g. VIP"></div>
+                <div style="display:flex;align-items:end;"><button class="btn gold" id="addRelationshipOptionBtn" type="button" style="height:47px;">+ Add Option</button></div>
+              </div>
+              <div class="admin-custom-list" id="relationshipOptionsList"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel"><div class="panel-head"><h3>Bill Change History</h3><span class="mono" style="font-size:11px;color:#9a8f76;">Old Bill vs Present Bill</span></div><div class="panel-body" id="billChangeHistoryList"></div></div>
+
+        <div class="panel"><div class="panel-head"><h3>Admin Notes</h3></div>
+          <div class="panel-body"><div class="field"><label>Private Notes</label><textarea id="adminPrivateNotes" class="notes-box" placeholder="1. Type a note and press Enter for the next point…"></textarea></div><button class="btn gold small" id="saveAdminPrivateNotesBtn">Save Notes</button></div>
+        </div>
+
+        <div class="panel"><div class="panel-head"><h3>My Admin Credentials</h3></div>
+          <div class="panel-body">
+            <p style="font-size:13px;color:var(--ink-soft);margin-top:0;">Change your own login ID and/or password. Your current password is required to confirm the change.</p>
+            <div class="form-grid3">
+              <div class="field"><label>Current Password</label><input type="password" id="adminCurrentPass" placeholder="Required to confirm"></div>
+              <div class="field"><label>New Login ID</label><input type="text" id="adminNewId" placeholder="Leave blank to keep current"></div>
+              <div class="field"><label>New Password</label><input type="password" id="adminNewPass" placeholder="Leave blank to keep current"></div>
+            </div>
+            <button class="btn gold small" id="saveAdminCredsBtn">Update My Credentials</button>
+          </div>
+        </div>
+
+        <div class="panel"><div class="panel-head"><h3>UPI QR Codes</h3></div>
+          <div class="panel-body">
+            <p style="font-size:13px;color:var(--ink-soft);margin-top:0;">Upload your UPI QR code below. It appears automatically in New Bill whenever a customer's payment mode is set to UPI. If your daily collection limit is reached, upload a new QR and set it active — the billing screen switches instantly.</p>
+<div class="form-grid2" style="margin-bottom:18px;">
+  <div class="field"><label>UPI ID</label><input type="text" id="companyUpiId" placeholder="e.g. mmjaveed@upi"></div>
+  <div style="display:flex;align-items:end;"><button class="btn gold" id="saveUpiIdBtn" type="button" style="height:47px;">Save UPI ID</button></div>
+</div>
+<p style="font-size:12px;color:var(--ink-soft);margin-top:-8px;">Customers can scan the active QR or type this UPI ID manually.</p>
+            <label class="upload-drop" for="qrUploadInput">
+              <div style="font-size:14px;font-weight:600;">📤 Click to upload a QR code image</div>
+              <div style="font-size:12px;color:var(--ink-soft);margin-top:4px;">PNG or JPG, ideally square</div>
+              <input type="file" id="qrUploadInput" accept="image/*">
+            </label>
+            <div class="qr-admin-grid" id="qrAdminGrid"></div>
+            <div class="empty-note" id="qrAdminEmpty">No QR codes uploaded yet.</div>
+          </div>
+
+        
+
+        </div>
+
+        <div class="panel">
               <div class="panel-head"><h3 style="font-size:15px;">Archive Old Orders</h3></div>
               <div class="panel-body">
                 <div class="item-add-row">
@@ -715,15 +851,11 @@ table tbody tr:last-child td{border-bottom:none;}
               </div>
             </div>
 
-            <div style="border:1.5px solid rgba(163,64,47,.35);border-radius:12px;padding:18px;background:rgba(163,64,47,.05);">
+        <div class="panel"><div class="panel-head"><h3 style="color:var(--danger);">Danger Zone</h3></div><div class="panel-body"><div style="border:1.5px solid rgba(163,64,47,.35);border-radius:12px;padding:18px;background:rgba(163,64,47,.05);">
               <h3 style="font-size:15px;color:var(--danger);margin:0 0 8px;">Danger Zone</h3>
               <p style="font-size:12.5px;color:var(--ink-soft);margin:0 0 14px;">Permanently delete archived orders only after downloading a backup. This cannot be undone.</p>
               <button class="btn danger small" id="deleteArchivedBtn" type="button">🗑 Permanently Delete Archived Orders</button>
-            </div>
-          </div>
-        </div>
-
-        </div>
+            </div></div></div>
 
       </div>
     </div>
@@ -742,6 +874,8 @@ table tbody tr:last-child td{border-bottom:none;}
         <button class="btn gold small" id="modalPrintClientBtn">🧾 Print Client Bill</button>
         <button class="btn ghost small" id="modalViewBtn">👁 View</button>
         <button class="btn ghost small" id="modalEditBtn">✎ Edit</button>
+        <button class="btn gold small" id="modalRequestEditBtn" hidden>🔐 Request Edit Access</button>
+        <button class="btn ghost small" id="modalShareBtn">↗ Share Bill</button>
         <button class="btn danger small" id="modalDeleteBtn">🗑 Delete</button>
       </div>
     </div>
@@ -757,6 +891,7 @@ table tbody tr:last-child td{border-bottom:none;}
       <div class="modal-actions" style="flex-direction:column;align-items:stretch;">
         <button class="btn gold" id="postSavePrintStoreBtn">🖨 Print Store Bill</button>
         <button class="btn gold" id="postSavePrintClientBtn">🧾 Print Client Bill</button>
+        <button class="btn ghost" id="postSaveShareBtn">↗ Share Bill</button>
         <button class="btn ghost" id="postSaveDoneBtn">Done — Go to Orders</button>
         <button class="btn danger" id="postSaveDeleteBtn">🗑 Delete This Bill</button>
       </div>
@@ -771,32 +906,86 @@ table tbody tr:last-child td{border-bottom:none;}
   </div>
 </div>
 
+
+<div class="modal-overlay" id="shareBillModal" hidden>
+  <div class="modal" style="max-width:560px;">
+    <div class="modal-head"><h2>Share Bill</h2><button class="modal-close" id="shareBillClose">×</button></div>
+    <div class="modal-body">
+      <div class="share-grid">
+        <button class="share-option" id="shareWhatsAppBtn" type="button">💬 <b>WhatsApp</b><br><small>Send bill link on WhatsApp</small></button>
+        <button class="share-option" id="shareEmailBtn" type="button">✉️ <b>Email</b><br><small>Send bill link by email</small></button>
+        <button class="share-option" id="shareSystemBtn" type="button">↗ <b>Phone / System Share</b><br><small>Bluetooth, ShareMe, AirDrop and installed apps</small></button>
+        <button class="share-option" id="shareCopyBtn" type="button">🔗 <b>Copy Link</b><br><small>Copy direct customer bill link</small></button>
+      </div>
+      <div class="share-link-row"><input id="shareBillLink" readonly><button class="btn gold small" id="shareLinkCopyBtn" type="button">Copy</button></div>
+      <div style="font-size:11px;color:#8b8069;margin-top:10px;">The link opens only the customer bill page. No Admin/Staff dashboard is shown.</div>
+    </div>
+  </div>
+</div>
+
 <div id="printArea"></div>
 
 <script>
 /* ================= API HELPER ================= */
-const API_BASE = ''; // same-origin: the backend serves this page, so relative paths just work
-async function api(path, opts={}){
-  const res = await fetch(API_BASE + path, {
-    credentials: 'include',
-    headers: { 'Content-Type': 'application/json' },
-    ...opts
-  });
-  if(res.status === 204) return null;
-  let data = null;
-  try{ data = await res.json(); }catch(e){ /* empty body */ }
-  if(!res.ok){ throw new Error((data && data.error) || res.statusText || 'Request failed'); }
-  return data;
+const API_BASE = '';
+const DEMO_MODE = location.protocol === 'file:';
+const DEMO_KEY = 'mmjOwnerChangesDemo_v5';
+function demoLoad(){
+  const d={session:null,garments:["SHIRT","PANT","CORD SET","BLAZER","SHERVANI","BANDI","KURTA","TROUSER","JACKET","T-SHIRT"],sections:{dashboard:true,newbill:true,orders:true,messages:true},company:{name:"MM Javeed Couture",tagline:"Bespoke. Crafted for You.",address:"Bangalore, Karnataka",phone:"+91 XXXXXXXXXX",gst:"",extra:[]},qrs:[],orders:[],staff:[{id:2,name:"Demo Staff",loginId:"staff@mmj",role:"staff"}],accounts:{"mmjbr@123":{password:"mmjbr123",role:"admin",name:"Javeed Admin"},"staff@mmj":{password:"staff123",role:"staff",name:"Demo Staff"}}};
+  try{return {...d,...(JSON.parse(localStorage.getItem(DEMO_KEY)||'null')||{})}}catch{return d}
 }
-
+let DEMO_DB=demoLoad();function demoSave(){localStorage.setItem(DEMO_KEY,JSON.stringify(DEMO_DB))}
+async function demoApi(path,opts={}){
+  const method=(opts.method||'GET').toUpperCase();let body={};try{body=opts.body?JSON.parse(opts.body):{}}catch{}
+  if(path==='/api/auth/me'){if(!DEMO_DB.session)throw new Error('Not logged in');return DEMO_DB.session}
+  if(path==='/api/auth/login'&&method==='POST'){const a=DEMO_DB.accounts[body.id];if(!a||a.password!==body.pass)throw new Error('Incorrect User ID or Password');DEMO_DB.session={id:body.id,role:a.role,name:a.name};demoSave();return DEMO_DB.session}
+  if(path==='/api/auth/logout'){DEMO_DB.session=null;demoSave();return {ok:true}}
+  if(path==='/api/garments'&&method==='GET')return {garments:DEMO_DB.garments,extraFields:{}}
+  if(path==='/api/garments'&&method==='POST'){const n=String(body.name||'').trim().toUpperCase();if(n&&!DEMO_DB.garments.includes(n))DEMO_DB.garments.push(n);demoSave();return {garments:DEMO_DB.garments,extraFields:{}}}
+  if(path.startsWith('/api/garments/')&&method==='DELETE'){const n=decodeURIComponent(path.split('/').pop());DEMO_DB.garments=DEMO_DB.garments.filter(x=>x!==n);demoSave();return {garments:DEMO_DB.garments,extraFields:{}}}
+  if(path==='/api/sections'&&method==='GET')return DEMO_DB.sections
+  if(path==='/api/sections'&&method==='PUT'){DEMO_DB.sections[body.key]=!!body.value;demoSave();return DEMO_DB.sections}
+  if(path==='/api/company'&&method==='GET')return DEMO_DB.company
+  if(path==='/api/company'&&method==='PUT'){DEMO_DB.company=body;demoSave();return DEMO_DB.company}
+  if(path==='/api/qr'&&method==='GET')return DEMO_DB.qrs
+  if(path==='/api/qr'&&method==='POST'){DEMO_DB.qrs.push({id:Date.now(),name:'UPI QR',dataUrl:body.dataUrl,active:true});demoSave();return DEMO_DB.qrs}
+  if(path.startsWith('/api/qr/')&&path.endsWith('/activate')){const id=path.split('/')[3];DEMO_DB.qrs.forEach(q=>q.active=String(q.id)===String(id));demoSave();return DEMO_DB.qrs}
+  if(path.startsWith('/api/qr/')&&method==='DELETE'){const id=path.split('/')[3];DEMO_DB.qrs=DEMO_DB.qrs.filter(q=>String(q.id)!==String(id));demoSave();return DEMO_DB.qrs}
+  if(path==='/api/orders'&&method==='GET')return DEMO_DB.orders
+  if(path==='/api/orders'&&method==='POST'){const o={...body,id:'MMJBR'+String(1001+DEMO_DB.orders.length),customerId:'MMJBR'+String(1+DEMO_DB.orders.length).padStart(3,'0'),date:todayISO(),createdBy:DEMO_DB.session?.id||'—'};DEMO_DB.orders.unshift(o);demoSave();return o}
+  if(path.startsWith('/api/orders/')&&method==='PUT'){const id=decodeURIComponent(path.substring('/api/orders/'.length));const i=DEMO_DB.orders.findIndex(o=>o.id===id);if(i<0)throw new Error('Order not found');DEMO_DB.orders[i]={...DEMO_DB.orders[i],...body};demoSave();return DEMO_DB.orders[i]}
+  if(path.startsWith('/api/orders/')&&method==='DELETE'){const id=decodeURIComponent(path.substring('/api/orders/'.length));DEMO_DB.orders=DEMO_DB.orders.filter(o=>o.id!==id);demoSave();return {ok:true}}
+  if(path==='/api/staff'&&method==='GET')return DEMO_DB.staff
+  if(path==='/api/staff'&&method==='POST'){const s={id:Date.now(),name:body.name,loginId:body.loginId,role:'staff'};DEMO_DB.staff.push(s);DEMO_DB.accounts[body.loginId]={password:body.password,role:'staff',name:body.name};demoSave();return DEMO_DB.staff}
+  if(path.startsWith('/api/staff/')&&method==='PUT'){const id=path.split('/').pop();const s=DEMO_DB.staff.find(x=>String(x.id)===String(id));if(s){delete DEMO_DB.accounts[s.loginId];s.name=body.name;s.loginId=body.loginId;DEMO_DB.accounts[body.loginId]={password:body.password||'staff123',role:'staff',name:body.name}}demoSave();return DEMO_DB.staff}
+  if(path.startsWith('/api/staff/')&&method==='DELETE'){const id=path.split('/').pop();const s=DEMO_DB.staff.find(x=>String(x.id)===String(id));if(s)delete DEMO_DB.accounts[s.loginId];DEMO_DB.staff=DEMO_DB.staff.filter(x=>String(x.id)!==String(id));demoSave();return DEMO_DB.staff}
+  if(path==='/api/storage/stats')return {usedBytes:8.1*1024*1024,limitBytes:1024**3,usagePercent:.79,status:'Safe',reusableRowsApprox:0,customers:DEMO_DB.orders.length,orders:DEMO_DB.orders.length,archivedOrders:0,staff:DEMO_DB.staff.length}
+  if(path.startsWith('/api/auth/forgot/'))return {devOtp:'123456',phone:'+91 XXXXXXXXXX'}
+  if(path==='/api/auth/credentials'&&method==='PUT')return {id:DEMO_DB.session?.id||'mmjbr@123'}
+  throw new Error('Demo action not available: '+path)
+}
+async function api(path,opts={}){
+  if(DEMO_MODE)return demoApi(path,opts);
+  const res=await fetch(API_BASE+path,{credentials:'include',headers:{'Content-Type':'application/json'},...opts});
+  if(res.status===204)return null;let data=null;try{data=await res.json()}catch(e){}
+  if(!res.ok)throw new Error((data&&data.error)||res.statusText||'Request failed');return data
+}
 /* ================= ROLES & SESSION ================= */
 let currentRole = null; // 'admin' | 'staff' — set by the server on login, never trusted from the client alone
 let currentUserId = null;
 let wrongAttempts = 0;
+let currentUserName='';
+let editRequests=[], staffMessages=[], billHistory=[];
+let staffDirectory=[], activeChatStaffId=null, pendingChatFiles=[];
+let customBillFields={client:[],relationship:[],body:[],length:[],garment:[],material:[],trial:[],billing:[]}, customBillSections=[];
+let relationshipOptions=['New','Existing','Regular'];
+let customBillDraftValues={fields:{},sections:{}};
+let approvedEditOrderId=null;
 
 /* ================= CORE DATA (loaded from the backend after login) ================= */
 let GARMENTS = [];
-const BODY_FIELDS = ["Chest","Waist","Hip","Shoulder","Sleeve","Collar"];
+const BODY_FIELDS = ["Chest","LC","Waist","Hip","Shoulder","Sleeves","Collar","CB","AH"];
+const LENGTH_FIELDS = ["Suit","Shirt","Bandi","Mid-Thigh","Long","Shervani"];
 let GARMENT_EXTRA_FIELDS = {};
 let sectionVisibility = { dashboard:true, newbill:true, orders:true };
 let qrCodes = []; // {id, name, dataUrl, active}
@@ -806,6 +995,7 @@ let companyInfo = {
   address: "Bangalore, Karnataka",
   phone: "+91 XXXXXXXXXX",
   gst: "",
+  upiId: "",
   extra: []
 };
 
@@ -864,7 +1054,7 @@ async function doLogin(){
     loginError.style.display='none';
     wrongAttempts = 0;
     currentRole = user.role;
-    currentUserId = user.id;
+    currentUserId = user.id; window.__sessionUserName=user.name||user.id;
     await enterApp(user.id);
   } catch(err){
     wrongAttempts++;
@@ -965,14 +1155,18 @@ document.getElementById('savePassBtn').addEventListener('click', async ()=>{
 async function enterApp(idVal){
   document.getElementById('loginScreen').hidden = true;
   document.getElementById('mainApp').hidden = false;
+  document.getElementById('demoBanner').hidden = !DEMO_MODE;
 
   document.getElementById('userChipId').textContent = idVal;
+  currentUserName = DEMO_MODE ? (DEMO_DB.session?.name || idVal) : (window.__sessionUserName || idVal);
   document.getElementById('userAvatar').textContent = currentRole==='admin' ? 'AD' : 'BR';
   const roleBadge = document.getElementById('roleBadge');
   roleBadge.textContent = currentRole === 'admin' ? 'Admin' : 'Staff';
   roleBadge.className = 'role-badge ' + currentRole;
   document.getElementById('adminNavTab').hidden = currentRole !== 'admin';
+  document.getElementById('messagesNavTab').hidden = false;
   document.getElementById('adminQuickGarmentRow').hidden = currentRole !== 'admin';
+  document.getElementById('postSaveDeleteBtn').hidden = currentRole !== 'admin';
 
   await loadAppData();
 
@@ -981,18 +1175,20 @@ async function enterApp(idVal){
   renderNavForRole();
   refreshDashboard();
   renderOrdersTable();
-  if(currentRole==='admin'){ renderSectionToggles(); renderGarmentTags(); renderQrAdminGrid(); loadCompanyInfoForm(); loadStaffList(); loadDatabaseStorage(); }
+  if(currentRole==='admin'){ renderSectionToggles(); renderGarmentTags(); renderQrAdminGrid(); loadCompanyInfoForm(); loadStaffList(); loadDatabaseStorage(); renderAdminWorkflow(); }
+  renderCustomBillConfiguration(); renderMessagesView();
   switchView('dashboard');
 }
 
 async function loadAppData(){
   try{
-    const [garmentData, sections, company, qrs, orderList] = await Promise.all([
+    const [garmentData, sections, company, qrs, orderList, workflow] = await Promise.all([
       api('/api/garments'),
       api('/api/sections'),
       api('/api/company'),
       api('/api/qr'),
-      api('/api/orders')
+      api('/api/orders'),
+      api('/api/workflow/state')
     ]);
     GARMENTS = garmentData.garments;
     GARMENT_EXTRA_FIELDS = garmentData.extraFields;
@@ -1000,6 +1196,7 @@ async function loadAppData(){
     companyInfo = company;
     qrCodes = qrs;
     orders = orderList;
+    if(workflow){editRequests=workflow.requests||[];staffMessages=workflow.messages||[];billHistory=workflow.history||[];staffDirectory=workflow.staffDirectory||[];customBillFields=workflow.customFields||customBillFields;customBillSections=workflow.customSections||[];relationshipOptions=workflow.relationshipOptions||relationshipOptions;window.__adminNotes=(workflow.adminNotes&&String(workflow.adminNotes).trim())?workflow.adminNotes:'1. ';}
   } catch(err){
     toast('Could not load data from the server: ' + err.message);
   }
@@ -1025,20 +1222,26 @@ function renderNavForRole(){
   document.querySelectorAll('.nav-tab').forEach(tab=>{
     const v = tab.dataset.view;
     if(v==='admin'){ tab.hidden = currentRole!=='admin'; return; }
+    if(v==='messages'){ tab.hidden = false; return; }
     if(currentRole==='admin'){ tab.hidden = false; return; }
     tab.hidden = !sectionVisibility[v];
   });
 }
 
 function switchView(name){
-  ['dashboard','newbill','orders','admin'].forEach(v=>{
+  ['dashboard','newbill','orders','messages','admin'].forEach(v=>{
     const el = document.getElementById('view-'+v);
     if(el) el.hidden = (v!==name);
   });
   document.querySelectorAll('.nav-tab').forEach(t=> t.classList.toggle('active', t.dataset.view===name));
   if(name==='orders'){ renderOrdersTable(); }
   if(name==='dashboard'){ refreshDashboard(); }
-  if(name==='admin'){ renderSectionToggles(); renderGarmentTags(); renderQrAdminGrid(); loadCompanyInfoForm(); loadStaffList(); loadDatabaseStorage(); }
+  if(name==='admin'){
+    renderSectionToggles(); renderGarmentTags(); renderQrAdminGrid();
+    loadCompanyInfoForm(); loadStaffList(); loadDatabaseStorage();
+    refreshWorkflowState();
+  }
+  if(name==='messages'){ renderMessagesView(); }
   window.scrollTo({top:0, behavior:'smooth'});
 }
 
@@ -1165,13 +1368,10 @@ function renderMaterialTable(){
 /* ================= MEASUREMENTS ================= */
 function renderBodyMeasureFields(){
   const wrap = document.getElementById('bodyMeasureFields');
-  wrap.innerHTML = BODY_FIELDS.map(f=>`
-    <div class="field"><label>${f} <span class="unit">in</span></label><input type="number" step="0.1" class="body-measure-input" data-field="${f}" placeholder="0.0"></div>`).join('');
+  wrap.innerHTML = BODY_FIELDS.map(f=>`<div class="field"><label>${f} <span class="unit">in</span></label><input type="number" step="0.1" class="body-measure-input" data-field="${f}" placeholder="0.0"></div>`).join('');
+  const lw=document.getElementById('lengthMeasureFields');
+  lw.innerHTML=LENGTH_FIELDS.map(f=>`<div class="field"><label>${f} <span class="unit">in</span></label><input type="number" step="0.1" class="length-measure-input" data-field="${f}" placeholder="0.0"></div>`).join('');
 }
-
-document.getElementById('addCustomMeasureBtn').addEventListener('click', ()=>{
-  addCustomMeasureRow(document.getElementById('customMeasureRows'));
-});
 
 function addCustomMeasureRow(container, label, value){
   const row = document.createElement('div');
@@ -1184,25 +1384,7 @@ function addCustomMeasureRow(container, label, value){
   return row;
 }
 
-function renderGarmentMeasureBlocks(){
-  const wrap = document.getElementById('garmentMeasureBlocks');
-  const uniqueGarments = [...new Set(orderItems.map(i=>i.garment))];
-  wrap.innerHTML = '';
-  uniqueGarments.forEach(g=>{
-    const extras = GARMENT_EXTRA_FIELDS[g] || [];
-    const block = document.createElement('div');
-    block.className = 'measure-block';
-    block.dataset.garment = g;
-    block.innerHTML = `<h4>${g} Measurements</h4><div class="sub">Auto-added based on garment selected in Order Items.</div>
-      <div class="measure-fields">
-      ${extras.map(f=>`<div class="field"><label>${f} <span class="unit">in</span></label><input type="number" step="0.1" class="garment-measure-input" data-garment="${g}" data-field="${f}" placeholder="0.0"></div>`).join('')}
-      </div>
-      <div class="custom-measure-container" data-garment-custom="${g}"></div>
-      <button class="btn ghost small add-garment-custom-btn" type="button" data-garment="${g}" style="margin-top:12px;">+ Add Custom Measurement</button>`;
-    wrap.appendChild(block);
-    block.querySelector('.add-garment-custom-btn').addEventListener('click', ()=> addCustomMeasureRow(block.querySelector(`[data-garment-custom="${g}"]`)));
-  });
-}
+function renderGarmentMeasureBlocks(){ const w=document.getElementById('garmentMeasureBlocks'); if(w)w.innerHTML=''; }
 
 /* ================= NOTES AUTO-NUMBER ================= */
 const notesBox = document.getElementById('notesBox');
@@ -1225,62 +1407,82 @@ notesBox.addEventListener('keydown', function(e){
 
 /* ================= BILLING ================= */
 function renderBillingTable(){
-  const body = document.getElementById('billingTableBody');
-  const existingPrices = {};
-  body.querySelectorAll('tr').forEach(tr=>{
-    const g = tr.dataset.garment;
-    existingPrices[g] = { unit: tr.querySelector('.unit-price-input')?.value || '', disc: tr.querySelector('.discount-input')?.value || '' };
-  });
-  body.innerHTML = orderItems.map(it=>{
-    const prev = existingPrices[it.garment] || {unit:'',disc:''};
-    return `<tr data-garment="${it.garment}">
-      <td>${it.garment}</td>
-      <td class="qty-cell mono">${it.qty}</td>
-      <td><input type="number" min="0" class="unit-price-input" value="${prev.unit}" placeholder="0"></td>
-      <td><input type="number" min="0" class="discount-input" value="${prev.disc}" placeholder="0"></td>
-      <td class="amount-cell mono" data-amount>₹0.00</td>
-    </tr>`;
-  }).join('');
-  document.getElementById('billingEmptyNote').hidden = orderItems.length>0;
-  body.querySelectorAll('.unit-price-input,.discount-input').forEach(inp=>{ inp.addEventListener('input', computeTotals); });
-  computeTotals();
+  const body=document.getElementById('billingTableBody');const existing={};
+  body.querySelectorAll('tr').forEach(tr=>existing[tr.dataset.garment]={unit:tr.querySelector('.unit-price-input')?.value||''});
+  body.innerHTML=orderItems.map(it=>{const p=existing[it.garment]||{unit:''};return `<tr data-garment="${it.garment}"><td class="billing-garment-name" title="Double-click to edit">${it.garment}</td><td class="qty-cell mono">${it.qty}</td><td><input type="number" min="0" class="unit-price-input" value="${p.unit}" placeholder="0"></td><td class="amount-cell mono" data-amount>₹0.00</td></tr>`}).join('');
+  document.getElementById('billingEmptyNote').hidden=orderItems.length>0;
+  body.querySelectorAll('.unit-price-input').forEach(i=>i.addEventListener('input',computeTotals));enableBillingGarmentNameEditing();computeTotals();
 }
 
 document.getElementById('overallDiscount').addEventListener('input', computeTotals);
 document.getElementById('gstPercent').addEventListener('input', computeTotals);
 document.getElementById('paymentReceived').addEventListener('input', computeTotals);
 
-function computeTotals(){
-  const body = document.getElementById('billingTableBody');
-  let subtotalGross = 0;
-  let itemDiscountTotal = 0;
-  body.querySelectorAll('tr').forEach(tr=>{
-    const qty = parseFloat(tr.querySelector('.qty-cell').textContent) || 0;
-    const unit = parseFloat(tr.querySelector('.unit-price-input').value) || 0;
-    const disc = parseFloat(tr.querySelector('.discount-input').value) || 0;
-    const rowNet = Math.max((unit*qty) - disc, 0);
-    tr.querySelector('[data-amount]').textContent = fmtMoney(rowNet);
-    subtotalGross += unit*qty;
-    itemDiscountTotal += disc;
+
+function enableBillingGarmentNameEditing(){
+  document.querySelectorAll('#billingTableBody .billing-garment-name').forEach(cell=>{
+    if(cell.dataset.editReady==='1') return;
+    cell.dataset.editReady='1';
+
+    cell.addEventListener('dblclick',()=>{
+      if(cell.closest('tr')?.querySelector('input:disabled')) return;
+      cell.contentEditable='true';
+      cell.focus();
+      const range=document.createRange();
+      range.selectNodeContents(cell);
+      const sel=window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+    });
+
+    const finishEdit=()=>{
+      if(cell.contentEditable!=='true') return;
+      const tr=cell.closest('tr');
+      const oldName=tr.dataset.garment;
+      const newName=(cell.textContent||'').trim().toUpperCase();
+
+      if(!newName){
+        cell.textContent=oldName;
+        cell.contentEditable='false';
+        return;
+      }
+
+      const item=orderItems.find(x=>x.garment===oldName);
+      if(item) item.garment=newName;
+
+      tr.dataset.garment=newName;
+      cell.textContent=newName;
+      cell.contentEditable='false';
+
+      renderItemsTable();
+      renderMaterialTable();
+      computeTotals();
+    };
+
+    cell.addEventListener('blur',finishEdit);
+    cell.addEventListener('keydown',e=>{
+      if(e.key==='Enter'){e.preventDefault();cell.blur();}
+      if(e.key==='Escape'){
+        e.preventDefault();
+        cell.textContent=cell.closest('tr').dataset.garment;
+        cell.contentEditable='false';
+        cell.blur();
+      }
+    });
   });
-  document.getElementById('subtotalDisplay').textContent = fmtMoney(subtotalGross);
-  document.getElementById('itemDiscountDisplay').textContent = fmtMoney(itemDiscountTotal);
+}
 
-  const additionalDisc = parseFloat(document.getElementById('overallDiscount').value) || 0;
-  const gstPct = parseFloat(document.getElementById('gstPercent').value) || 0;
-  const afterDisc = Math.max(subtotalGross - itemDiscountTotal - additionalDisc, 0);
-  const gstAmt = afterDisc * (gstPct/100);
-  const grandTotal = afterDisc + gstAmt;
-  document.getElementById('grandTotalDisplay').textContent = fmtMoney(grandTotal);
-
-  const received = parseFloat(document.getElementById('paymentReceived').value) || 0;
-  const balance = grandTotal - received;
-  const balEl = document.getElementById('balanceDisplay');
-  balEl.textContent = fmtMoney(Math.max(balance,0));
-  balEl.classList.toggle('zero', balance<=0);
-  balEl.classList.toggle('due', balance>0);
-
-  return {subtotalGross, itemDiscountTotal, additionalDisc, gstPct, grandTotal, received, balance};
+function computeTotals(){
+  const body=document.getElementById('billingTableBody');let subtotalGross=0;
+  body.querySelectorAll('tr').forEach(tr=>{const qty=parseFloat(tr.querySelector('.qty-cell').textContent)||0;const unit=parseFloat(tr.querySelector('.unit-price-input').value)||0;const row=unit*qty;tr.querySelector('[data-amount]').textContent=fmtMoney(row);subtotalGross+=row;});
+  document.getElementById('subtotalDisplay').textContent=fmtMoney(subtotalGross);
+  let discountPct=parseFloat(document.getElementById('overallDiscount').value)||0;if(discountPct<0)discountPct=0;
+  const discountAmount=subtotalGross*(discountPct/100);document.getElementById('itemDiscountDisplay').textContent=fmtMoney(discountAmount);
+  const afterDisc=Math.max(subtotalGross-discountAmount,0),gstPct=5,grandTotal=afterDisc+(afterDisc*.05);
+  document.getElementById('grandTotalDisplay').textContent=fmtMoney(grandTotal);
+  const received=parseFloat(document.getElementById('paymentReceived').value)||0,balance=grandTotal-received,balEl=document.getElementById('balanceDisplay');
+  balEl.textContent=fmtMoney(Math.max(balance,0));balEl.classList.toggle('zero',balance<=0);balEl.classList.toggle('due',balance>0);
+  return {subtotalGross,itemDiscountTotal:discountAmount,additionalDisc:discountPct,discountPct,gstPct,grandTotal,received,balance};
 }
 
 /* ================= UPI QR DISPLAY IN NEW BILL ================= */
@@ -1298,11 +1500,18 @@ function updateUpiQrDisplay(){
   } else {
     box.hidden = true; emptyNote.hidden = false;
   }
+  const upiText=document.getElementById('upiIdPaymentText');
+  if(upiText) upiText.textContent=companyInfo.upiId?('UPI ID: '+companyInfo.upiId):'';
 }
 
 /* ================= SAVE & PRINT ================= */
 function resetBillForm(){
+  customBillDraftValues={fields:{},sections:{}};
   editingOrderId = null;
+  approvedEditOrderId = null;
+  setBillFormLock(false);
+  const permissionNote=document.getElementById('savedBillPermissionNote');if(permissionNote)permissionNote.hidden=true;
+  renderCustomBillConfiguration();
   document.getElementById('billModeLabel').textContent = 'Create';
   document.getElementById('billModeTitle').textContent = 'New Bill';
   document.getElementById('orderNoDisplay').textContent = 'Assigned on save';
@@ -1316,7 +1525,7 @@ function resetBillForm(){
   renderItemsTable();
   renderGarmentMeasureBlocks();
   renderBodyMeasureFields();
-  document.getElementById('customMeasureRows').innerHTML='';
+  
   document.getElementById('trialDate').value='';
   document.getElementById('deliveryDate').value='';
   document.getElementById('tailorName').value='';
@@ -1324,7 +1533,7 @@ function resetBillForm(){
   renderBillingTable();
   renderMaterialTable();
   document.getElementById('overallDiscount').value = 0;
-  document.getElementById('gstPercent').value = 0;
+  document.getElementById('gstPercent').value = '5%';
   document.getElementById('paymentReceived').value = 0;
   document.getElementById('paymentMode').value = 'Cash';
   updateUpiQrDisplay();
@@ -1337,6 +1546,7 @@ function collectBillData(){
   const totals = computeTotals();
   const body = {};
   document.querySelectorAll('.body-measure-input').forEach(inp=>{ body[inp.dataset.field] = inp.value || ''; });
+  const length={};document.querySelectorAll('.length-measure-input').forEach(inp=>{ length[inp.dataset.field]=inp.value||''; });
 
   const extra = {};
   document.querySelectorAll('.garment-measure-input').forEach(inp=>{
@@ -1346,11 +1556,6 @@ function collectBillData(){
   });
 
   const custom = [];
-  document.querySelectorAll('#customMeasureRows .custom-measure-row').forEach(row=>{
-    const label = row.querySelector('.custom-label').value.trim();
-    const val = row.querySelector('.custom-val').value;
-    if(label) custom.push({label, value: val||''});
-  });
 
   const garmentCustom = {};
   document.querySelectorAll('.custom-measure-container[data-garment-custom]').forEach(container=>{
@@ -1370,7 +1575,7 @@ function collectBillData(){
       garment: tr.dataset.garment,
       qty: parseFloat(tr.querySelector('.qty-cell').textContent)||0,
       unitPrice: parseFloat(tr.querySelector('.unit-price-input').value)||0,
-      discount: parseFloat(tr.querySelector('.discount-input').value)||0
+      discount: 0
     });
   });
 
@@ -1391,14 +1596,16 @@ function collectBillData(){
     },
     items,
     materials,
-    measurements: {body, extra, custom, garmentCustom},
+    measurements: {body, length, extra, custom, garmentCustom},
+    customFields: collectCustomBillValues(),
     trialDate: document.getElementById('trialDate').value,
     deliveryDate: document.getElementById('deliveryDate').value,
     tailorName: document.getElementById('tailorName').value.trim(),
     notes: notesBox.value,
     subtotal: totals.subtotalGross,
     itemDiscount: totals.itemDiscountTotal,
-    overallDiscount: totals.additionalDisc,
+    overallDiscount: totals.discountPct,
+    discountPercent: totals.discountPct,
     gst: totals.gstPct,
     grandTotal: totals.grandTotal,
     paymentReceived: totals.received,
@@ -1410,6 +1617,9 @@ function collectBillData(){
 document.getElementById('saveAndPrintBtn').addEventListener('click', async ()=>{
   if(orderItems.length===0){ toast('Please add at least one garment before saving.'); return; }
   const data = collectBillData();
+  if(currentRole==='staff' && data.discountPercent>15){toast('Staff discount cannot exceed 15%. Bill will not save or print.');return;}
+  if(editingOrderId && currentRole==='staff' && approvedEditOrderId!==editingOrderId){toast('This saved bill is locked. Send an edit request to Admin first.');return;}
+  const oldSnapshot=editingOrderId?JSON.parse(JSON.stringify(orders.find(x=>x.id===editingOrderId)||{})):null;
   const btn = document.getElementById('saveAndPrintBtn');
   btn.disabled = true;
   try{
@@ -1421,6 +1631,7 @@ document.getElementById('saveAndPrintBtn').addEventListener('click', async ()=>{
     }
     toast('Bill saved successfully.');
     orders = await api('/api/orders');
+    if(oldSnapshot && editingOrderId){ await refreshWorkflowState(); approvedEditOrderId=null; }
     refreshDashboard();
     renderOrdersTable();
     openPostSaveModal(order.id);
@@ -1439,13 +1650,16 @@ function openPostSaveModal(id){
 document.getElementById('postSaveClose').addEventListener('click', ()=>{ document.getElementById('postSaveModal').hidden = true; resetBillForm(); switchView('orders'); });
 document.getElementById('postSaveDoneBtn').addEventListener('click', ()=>{ document.getElementById('postSaveModal').hidden = true; resetBillForm(); switchView('orders'); });
 document.getElementById('postSavePrintStoreBtn').addEventListener('click', ()=>{
+  const d=collectBillData();if(currentRole==='staff'&&d.discountPercent>15){toast('Staff discount cannot exceed 15%. Printing blocked.');return;}
   const o = orders.find(x=>x.id===document.getElementById('postSaveModal').dataset.orderId);
   if(o) printOrder(o,'store');
 });
 document.getElementById('postSavePrintClientBtn').addEventListener('click', ()=>{
+  const d=collectBillData();if(currentRole==='staff'&&d.discountPercent>15){toast('Staff discount cannot exceed 15%. Printing blocked.');return;}
   const o = orders.find(x=>x.id===document.getElementById('postSaveModal').dataset.orderId);
   if(o) printOrder(o,'client');
 });
+document.getElementById('postSaveShareBtn').addEventListener('click',()=>{const o=orders.find(x=>x.id===document.getElementById('postSaveModal').dataset.orderId);if(o)shareBill(o);});
 document.getElementById('postSaveDeleteBtn').addEventListener('click', async ()=>{
   const id = document.getElementById('postSaveModal').dataset.orderId;
   const ok = await deleteOrder(id);
@@ -1456,9 +1670,62 @@ document.getElementById('postSaveDeleteBtn').addEventListener('click', async ()=
   }
 });
 
+
+let activeShareOrder=null;
+async function getDirectBillLink(o){
+  const r=await api('/api/share/'+encodeURIComponent(o.id),{method:'POST',body:'{}'});
+  return r.url;
+}
+async function shareBill(o){
+  try{
+    activeShareOrder=o;
+    const link=await getDirectBillLink(o);
+    document.getElementById('shareBillLink').value=link;
+    document.getElementById('shareBillModal').hidden=false;
+  }catch(e){toast('Could not create share link: '+e.message)}
+}
+document.getElementById('shareBillClose')?.addEventListener('click',()=>document.getElementById('shareBillModal').hidden=true);
+async function copyShareLink(){
+  const link=document.getElementById('shareBillLink').value;
+  try{await navigator.clipboard.writeText(link);toast('Bill link copied.')}
+  catch{document.getElementById('shareBillLink').select();document.execCommand('copy');toast('Bill link copied.')}
+}
+document.getElementById('shareCopyBtn')?.addEventListener('click',copyShareLink);
+document.getElementById('shareLinkCopyBtn')?.addEventListener('click',copyShareLink);
+document.getElementById('shareWhatsAppBtn')?.addEventListener('click',()=>{
+  const link=document.getElementById('shareBillLink').value,o=activeShareOrder;
+  const text=`${companyInfo.name||'MM Javeed Couture'} bill ${o?.id||''}: ${link}`;
+  window.open('https://wa.me/?text='+encodeURIComponent(text),'_blank','noopener');
+});
+document.getElementById('shareEmailBtn')?.addEventListener('click',()=>{
+  const link=document.getElementById('shareBillLink').value,o=activeShareOrder;
+  location.href='mailto:?subject='+encodeURIComponent(`${companyInfo.name||'MM Javeed Couture'} Bill ${o?.id||''}`)+'&body='+encodeURIComponent(`Please find your bill here:\n${link}`);
+});
+document.getElementById('shareSystemBtn')?.addEventListener('click',async()=>{
+  const link=document.getElementById('shareBillLink').value,o=activeShareOrder;
+  if(navigator.share){
+    try{await navigator.share({title:`Bill ${o?.id||''}`,text:`${companyInfo.name||'MM Javeed Couture'} customer bill`,url:link});}
+    catch(e){if(e.name!=='AbortError')toast('System share could not open.');}
+  }else{
+    await copyShareLink();
+    toast('System sharing is not supported by this browser. Link copied instead.');
+  }
+});
+
+function downloadBillHtml(o,type){
+  const billHtml=(type==='client')?buildClientBillHtml(o):buildStoreBillHtml(o);
+  const title=`${sanitizeForFilename(o.client.name)}_${o.customerId||'MMJBR'}_${type==='client'?'ClientBill':'StoreBill'}`;
+  const full=`<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${title}</title><style>${[...document.styleSheets].map(s=>{try{return [...s.cssRules].map(r=>r.cssText).join('\\n')}catch{return ''}}).join('\\n')}</style></head><body>${billHtml}</body></html>`;
+  const blob=new Blob([full],{type:'text/html'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=title+'.html';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1500);
+}
+
 /* ================= PRINT ================= */
 function pbillHeader(o, copyLabel){
-  const extraLines = (companyInfo.extra||[]).map(e=>`<div><b>${e.label}:</b> ${e.value}</div>`).join('');
+  const extraLines = (companyInfo.extra||[])
+    .filter(e=>String(e?.label||'').trim() || String(e?.value||'').trim())
+    .map(e=>`<div><b>${escapeHtml(e.label||'Additional Info')}:</b> ${escapeHtml(e.value||'—')}</div>`)
+    .join('');
   return `
     <div class="pbill-head">
       <div class="biz">
@@ -1481,134 +1748,32 @@ function pbillHeader(o, copyLabel){
 }
 
 function buildStoreBillHtml(o){
-  const itemsRows = o.items.map(it=>{
-    const amt = Math.max(it.unitPrice*it.qty - it.discount, 0);
-    return `<tr><td>${it.garment}</td><td>${it.qty}</td><td>₹${it.unitPrice}</td><td>₹${it.discount}</td><td>₹${amt.toFixed(2)}</td></tr>`;
-  }).join('');
-  const bodyRows = Object.entries(o.measurements.body||{}).filter(([k,v])=>v!=='').map(([k,v])=>`<tr><td>${k}</td><td>${v}"</td></tr>`).join('');
-  const bodyCustomRows = (o.measurements.custom||[]).map(c=>`<tr><td>${c.label}</td><td>${c.value}"</td></tr>`).join('');
-  let extraRows = '';
-  Object.entries(o.measurements.extra||{}).forEach(([garment, fields])=>{
-    Object.entries(fields||{}).filter(([k,v])=>v!=='').forEach(([k,v])=>{ extraRows += `<tr><td>${garment} — ${k}</td><td>${v}"</td></tr>`; });
-  });
-  Object.entries(o.measurements.garmentCustom||{}).forEach(([garment, list])=>{
-    (list||[]).forEach(c=>{ extraRows += `<tr><td>${garment} — ${c.label}</td><td>${c.value}"</td></tr>`; });
-  });
-  const materialRows = (o.materials||[]).filter(m=>m.material||m.meters).map(m=>`<tr><td>${m.garment}</td><td>${m.material||'—'}</td><td>${m.meters?m.meters+' m':'—'}</td></tr>`).join('');
-  const notesHtml = (o.notes||'').split('\n').filter(l=>l.trim()).map(l=>`<div>${l}</div>`).join('');
-  const itemDiscount = o.itemDiscount || 0;
-  const overallDiscount = o.overallDiscount || 0;
-  const afterDisc = Math.max(o.subtotal - itemDiscount - overallDiscount, 0);
-  const gstAmt = afterDisc*(o.gst/100);
-
-  let qrHtml = '';
-  if(o.paymentMode === 'UPI'){
-    const active = qrCodes.find(q=>q.active);
-    if(active){
-      qrHtml = `<div class="qr-print"><img src="${active.dataUrl}" alt="UPI QR"><div><b>${active.name||'Scan to Pay'}</b><div style="font-size:11.5px;color:#8B6B2E;">Scan with any UPI app to pay the balance amount.</div></div></div>`;
-    }
-  }
-
-  return `
-  <div class="pbill">
-    ${pbillHeader(o,'STORE COPY — INTERNAL')}
-    <div class="two-col">
-      <div>
-        <div><b>Client Name:</b> ${o.client.name}</div>
-        <div><b>Customer ID:</b> ${o.customerId||'—'}</div>
-        <div><b>Contact No.:</b> ${o.client.contact||'—'}</div>
-        <div><b>Address:</b> ${o.client.address||'—'}</div>
-      </div>
-      <div>
-        <div><b>Trial Date:</b> ${fmtDate(o.trialDate)}</div>
-        <div><b>Delivery Date:</b> ${fmtDate(o.deliveryDate)}</div>
-        <div><b>Tailor Name:</b> ${o.tailorName||'—'}</div>
-        <div><b>Billed By:</b> ${o.createdBy||'—'}</div>
-        <div><b>Payment Mode:</b> ${o.paymentMode}</div>
-      </div>
-    </div>
-
-    <div class="pbill-section-title">ORDER ITEMS</div>
-    <table><thead><tr><th>Garment</th><th>Qty</th><th>Unit Price</th><th>Discount</th><th>Amount</th></tr></thead><tbody>${itemsRows}</tbody></table>
-
-    <div class="pbill-section-title">MEASUREMENTS (inches)</div>
-    <div class="two-col">
-      <table><thead><tr><th colspan="2">Body Measurement</th></tr></thead><tbody>${(bodyRows+bodyCustomRows)||'<tr><td colspan="2">—</td></tr>'}</tbody></table>
-      <table><thead><tr><th colspan="2">Garment Specific</th></tr></thead><tbody>${extraRows||'<tr><td colspan="2">—</td></tr>'}</tbody></table>
-    </div>
-
-    <div class="pbill-section-title">MATERIAL USED</div>
-    <table><thead><tr><th>Garment</th><th>Material</th><th>Meters</th></tr></thead><tbody>${materialRows||'<tr><td colspan="3">—</td></tr>'}</tbody></table>
-
-    <div class="pbill-section-title">NOTES</div>
-    <div style="font-size:12.5px;line-height:1.8;">${notesHtml||'—'}</div>
-
-    <div class="totals">
-      <div><span>Subtotal</span><span>₹${o.subtotal.toFixed(2)}</span></div>
-      <div><span>Item Discount</span><span>−₹${itemDiscount.toFixed(2)}</span></div>
-      <div><span>Additional Discount</span><span>−₹${overallDiscount.toFixed(2)}</span></div>
-      <div><span>GST (${o.gst}%)</span><span>+₹${gstAmt.toFixed(2)}</span></div>
-      <div class="grand"><span>Grand Total</span><span>₹${o.grandTotal.toFixed(2)}</span></div>
-      <div><span>Payment Received</span><span>₹${o.paymentReceived.toFixed(2)}</span></div>
-      <div><span>Balance Due</span><span>₹${Math.max(o.balance,0).toFixed(2)}</span></div>
-    </div>
-    ${qrHtml}
-    <div class="thankyou">Store copy — for internal use only.</div>
-  </div>`;
+  const itemsRows=(o.items||[]).map(it=>`<tr><td>${it.garment}</td><td>${it.qty}</td><td>₹${Number(it.unitPrice||0).toFixed(2)}</td><td>₹${(Number(it.unitPrice||0)*Number(it.qty||0)).toFixed(2)}</td></tr>`).join('');
+  const bodyOrder=["Chest","LC","Waist","Hip","Shoulder","Sleeves","Collar","CB","AH"],lengthOrder=["Suit","Shirt","Bandi","Mid-Thigh","Long","Shervani"];
+  const bodyRows=bodyOrder.filter(k=>(o.measurements?.body||{})[k]!==''&&(o.measurements?.body||{})[k]!=null).map(k=>`<tr><td>${k}</td><td>${o.measurements.body[k]}"</td></tr>`).join('');
+  const lengthRows=lengthOrder.filter(k=>(o.measurements?.length||{})[k]!==''&&(o.measurements?.length||{})[k]!=null).map(k=>`<tr><td>${k}</td><td>${o.measurements.length[k]}"</td></tr>`).join('');
+  const materialRows=(o.materials||[]).filter(m=>m.material||m.meters).map(m=>`<tr><td>${m.garment}</td><td>${m.material||'—'}</td><td>${m.meters?m.meters+' m':'—'}</td></tr>`).join('');
+  const notesHtml=(o.notes||'').split('\\n').filter(l=>l.trim()).map(l=>`<div>${l}</div>`).join('');
+  const discountPct=Number(o.discountPercent??o.overallDiscount??0),discountAmt=Number(o.subtotal||0)*(discountPct/100),afterDisc=Math.max(Number(o.subtotal||0)-discountAmt,0),gstAmt=afterDisc*.05;
+  let qrHtml='';if(o.paymentMode==='UPI'){const active=qrCodes.find(q=>q.active);if(active)qrHtml=`<div class="qr-print"><img src="${active.dataUrl}" alt="UPI QR"><div><b>${active.name||'Scan to Pay'}</b>${companyInfo.upiId?`<div style="margin-top:5px;font-family:'IBM Plex Mono',monospace;"><b>UPI ID:</b> ${companyInfo.upiId}</div>`:''}</div></div>`;else if(companyInfo.upiId)qrHtml=`<div class="qr-print"><div><b>UPI ID:</b> ${companyInfo.upiId}</div></div>`}
+  return `<div class="pbill">${pbillHeader(o,'STORE COPY — INTERNAL')}
+    <div class="pbill-section-title">CLIENT DETAILS</div><div class="two-col"><div><div><b>Client Name:</b> ${o.client.name}</div><div><b>Customer ID:</b> ${o.customerId||'—'}</div><div><b>Contact No.:</b> ${o.client.contact||'—'}</div><div><b>Address:</b> ${o.client.address||'—'}</div><div><b>Customer Relationship:</b> ${o.customFields?.fields?.__customerRelationship||'New'}</div></div><div><div><b>Billed By:</b> ${o.createdBy||'—'}</div><div><b>Date:</b> ${fmtDate(o.date)}</div></div></div>
+    <div class="pbill-section-title">MEASUREMENTS (inches)</div><div class="two-col"><table><thead><tr><th colspan="2">Body Measurements</th></tr></thead><tbody>${bodyRows||'<tr><td colspan="2">—</td></tr>'}</tbody></table><table><thead><tr><th colspan="2">Length</th></tr></thead><tbody>${lengthRows||'<tr><td colspan="2">—</td></tr>'}</tbody></table></div>
+    <div class="pbill-section-title">SELECTED GARMENTS</div><table><thead><tr><th>Garment</th><th>Qty</th></tr></thead><tbody>${(o.items||[]).map(it=>`<tr><td>${it.garment}</td><td>${it.qty}</td></tr>`).join('')}</tbody></table>
+    <div class="pbill-section-title">GARMENT MATERIAL</div><table><thead><tr><th>Garment</th><th>Material</th><th>Meters Used</th></tr></thead><tbody>${materialRows||'<tr><td colspan="3">—</td></tr>'}</tbody></table>
+    <div class="pbill-section-title">TRIAL, DELIVERY & NOTES</div><div><b>Trial Date:</b> ${fmtDate(o.trialDate)} &nbsp;&nbsp; <b>Delivery Date:</b> ${fmtDate(o.deliveryDate)} &nbsp;&nbsp; <b>Tailor:</b> ${o.tailorName||'—'}</div><div style="font-size:12.5px;line-height:1.8;margin-top:8px;">${notesHtml||'—'}</div>
+    ${buildCustomBillPrintHtml(o.customFields||{})}
+    <div class="pbill-section-title">BILLING</div><table><thead><tr><th>Garment</th><th>Qty</th><th>Unit Price</th><th>Amount</th></tr></thead><tbody>${itemsRows}</tbody></table>
+    <div class="totals"><div><span>Subtotal</span><span>₹${Number(o.subtotal||0).toFixed(2)}</span></div><div><span>Discount (${discountPct}%)</span><span>−₹${discountAmt.toFixed(2)}</span></div><div><span>GST (5%)</span><span>+₹${gstAmt.toFixed(2)}</span></div><div class="grand"><span>Grand Total</span><span>₹${Number(o.grandTotal||0).toFixed(2)}</span></div><div><span>Payment Received (${o.paymentMode})</span><span>₹${Number(o.paymentReceived||0).toFixed(2)}</span></div><div><span>Balance Due</span><span>₹${Math.max(Number(o.balance||0),0).toFixed(2)}</span></div></div>${qrHtml}<div class="thankyou">Store copy — for internal use only.</div></div>`;
 }
-
 function buildClientBillHtml(o){
-  const itemsRows = o.items.map(it=>{
-    const amt = Math.max(it.unitPrice*it.qty - it.discount, 0);
-    return `<tr><td>${it.garment}</td><td>${it.qty}</td><td>₹${it.unitPrice}</td><td>₹${amt.toFixed(2)}</td></tr>`;
-  }).join('');
-  const itemDiscount = o.itemDiscount || 0;
-  const overallDiscount = o.overallDiscount || 0;
-  const afterDisc = Math.max(o.subtotal - itemDiscount - overallDiscount, 0);
-  const gstAmt = afterDisc*(o.gst/100);
-
-  let qrHtml = '';
-  if(o.paymentMode === 'UPI'){
-    const active = qrCodes.find(q=>q.active);
-    if(active){
-      qrHtml = `<div class="qr-print"><img src="${active.dataUrl}" alt="UPI QR"><div><b>${active.name||'Scan to Pay'}</b><div style="font-size:11.5px;color:#8B6B2E;">Scan with any UPI app to pay the balance amount.</div></div></div>`;
-    }
-  }
-
-  return `
-  <div class="pbill">
-    ${pbillHeader(o,'CUSTOMER COPY')}
-    <div class="two-col">
-      <div>
-        <div><b>Client Name:</b> ${o.client.name}</div>
-        <div><b>Customer ID:</b> ${o.customerId||'—'}</div>
-        <div><b>Contact No.:</b> ${o.client.contact||'—'}</div>
-        <div><b>Address:</b> ${o.client.address||'—'}</div>
-      </div>
-      <div>
-        <div><b>Trial Date:</b> ${fmtDate(o.trialDate)}</div>
-        <div><b>Delivery Date:</b> ${fmtDate(o.deliveryDate)}</div>
-        <div><b>Payment Mode:</b> ${o.paymentMode}</div>
-      </div>
-    </div>
-
-    <div class="pbill-section-title">ORDER ITEMS</div>
-    <table><thead><tr><th>Garment</th><th>Qty</th><th>Unit Price</th><th>Amount</th></tr></thead><tbody>${itemsRows}</tbody></table>
-
-    <div class="totals">
-      <div><span>Subtotal</span><span>₹${o.subtotal.toFixed(2)}</span></div>
-      <div><span>Discount</span><span>−₹${(itemDiscount+overallDiscount).toFixed(2)}</span></div>
-      <div><span>GST (${o.gst}%)</span><span>+₹${gstAmt.toFixed(2)}</span></div>
-      <div class="grand"><span>Grand Total</span><span>₹${o.grandTotal.toFixed(2)}</span></div>
-      <div><span>Payment Received (${o.paymentMode})</span><span>₹${o.paymentReceived.toFixed(2)}</span></div>
-      <div><span>Balance Due</span><span>₹${Math.max(o.balance,0).toFixed(2)}</span></div>
-    </div>
-    ${qrHtml}
-    <div class="thankyou">Thank you for choosing ${companyInfo.name||'MM Javeed Couture'} — Where Tradition Meets Perfection.</div>
-  </div>`;
+  const itemsRows=(o.items||[]).map(it=>`<tr><td>${it.garment}</td><td>${it.qty}</td><td>₹${Number(it.unitPrice||0).toFixed(2)}</td><td>₹${(Number(it.unitPrice||0)*Number(it.qty||0)).toFixed(2)}</td></tr>`).join('');
+  const discountPct=Number(o.discountPercent??o.overallDiscount??0),discountAmt=Number(o.subtotal||0)*(discountPct/100),afterDisc=Math.max(Number(o.subtotal||0)-discountAmt,0),gstAmt=afterDisc*.05;
+  let qrHtml='';if(o.paymentMode==='UPI'){const active=qrCodes.find(q=>q.active);if(active)qrHtml=`<div class="qr-print"><img src="${active.dataUrl}" alt="UPI QR"><div><b>${active.name||'Scan to Pay'}</b>${companyInfo.upiId?`<div style="margin-top:5px;font-family:'IBM Plex Mono',monospace;"><b>UPI ID:</b> ${companyInfo.upiId}</div>`:''}</div></div>`;else if(companyInfo.upiId)qrHtml=`<div class="qr-print"><div><b>UPI ID:</b> ${companyInfo.upiId}</div></div>`}
+  return `<div class="pbill">${pbillHeader(o,'CUSTOMER COPY')}<div class="two-col"><div><div><b>Client Name:</b> ${o.client.name}</div><div><b>Customer ID:</b> ${o.customerId||'—'}</div><div><b>Contact No.:</b> ${o.client.contact||'—'}</div><div><b>Address:</b> ${o.client.address||'—'}</div><div><b>Customer Relationship:</b> ${o.customFields?.fields?.__customerRelationship||'New'}</div></div><div><div><b>Trial Date:</b> ${fmtDate(o.trialDate)}</div><div><b>Delivery Date:</b> ${fmtDate(o.deliveryDate)}</div><div><b>Payment Mode:</b> ${o.paymentMode}</div></div></div>${buildCustomBillPrintHtml(o.customFields||{})}<div class="pbill-section-title">ORDER ITEMS</div><table><thead><tr><th>Garment</th><th>Qty</th><th>Unit Price</th><th>Amount</th></tr></thead><tbody>${itemsRows}</tbody></table><div class="totals"><div><span>Subtotal</span><span>₹${Number(o.subtotal||0).toFixed(2)}</span></div><div><span>Discount (${discountPct}%)</span><span>−₹${discountAmt.toFixed(2)}</span></div><div><span>GST (5%)</span><span>+₹${gstAmt.toFixed(2)}</span></div><div class="grand"><span>Grand Total</span><span>₹${Number(o.grandTotal||0).toFixed(2)}</span></div><div><span>Payment Received (${o.paymentMode})</span><span>₹${Number(o.paymentReceived||0).toFixed(2)}</span></div><div><span>Balance Due</span><span>₹${Math.max(Number(o.balance||0),0).toFixed(2)}</span></div></div>${qrHtml}<div class="thankyou">Thank you for choosing ${companyInfo.name||'MM Javeed Couture'} — Where Tradition Meets Perfection.</div></div>`;
 }
-
 function printOrder(o, type){
+  // Print only. Saved-bill download happens when Save Bill is clicked.
   const area = document.getElementById('printArea');
   area.innerHTML = (type==='client') ? buildClientBillHtml(o) : buildStoreBillHtml(o);
   // temporarily hide any open popups so they never get captured into the print/PDF output,
@@ -1635,6 +1800,7 @@ function printOrder(o, type){
 }
 
 async function deleteOrder(id){
+  if(currentRole!=='admin'){toast('Only Admin can delete bills.');return false;}
   if(!confirm('Delete this bill permanently? This cannot be undone.')) return false;
   try{
     await api('/api/orders/' + encodeURIComponent(id), { method:'DELETE' });
@@ -1651,14 +1817,24 @@ async function deleteOrder(id){
 
 /* ================= ORDERS TABLE / SEARCH ================= */
 function renderOrdersTable(filter){
-  const body = document.getElementById('ordersTableBody');
-  const q = (filter!==undefined ? filter : document.getElementById('orderSearch').value).trim().toLowerCase();
-  let list = [...orders].sort((a,b)=> b.date.localeCompare(a.date));
+  const body=document.getElementById('ordersTableBody');
+  const q=(filter!==undefined?filter:document.getElementById('orderSearch').value).trim().toLowerCase();
+  let list=[...orders].sort((a,b)=>b.date.localeCompare(a.date));
   if(q){
-    list = list.filter(o=> o.client.name.toLowerCase().includes(q) || (o.client.contact||'').toLowerCase().includes(q) || o.id.toLowerCase().includes(q));
+    list=list.filter(o=>
+      o.client.name.toLowerCase().includes(q)||
+      (o.client.contact||'').toLowerCase().includes(q)||
+      o.id.toLowerCase().includes(q)||
+      String(o.deliveryStatus||'').toLowerCase().includes(q)||
+      (Number(o.balance||0)<=0?'full amount paid':'due').includes(q)
+    );
   }
-  body.innerHTML = list.map(o=>{
-    const paid = o.grandTotal - Math.max(o.balance,0);
+
+  body.innerHTML=list.map(o=>{
+    const balance=Math.max(Number(o.balance||0),0);
+    const paid=Number(o.grandTotal||0)-balance;
+    const fullPaid=balance<=0.009;
+    const delivery=o.deliveryStatus||'Not Delivered';
     return `<tr>
       <td><a class="row-link" onclick="openOrderModal('${o.id}')">${o.id}</a></td>
       <td>${fmtDate(o.date)}</td>
@@ -1668,10 +1844,42 @@ function renderOrdersTable(filter){
       <td class="mono">${o.createdBy||'—'}</td>
       <td class="mono">${fmtMoney(o.grandTotal)}</td>
       <td class="mono">${fmtMoney(paid)}</td>
-      <td class="mono" style="color:${o.balance>0?'var(--danger)':'var(--good)'}">${fmtMoney(Math.max(o.balance,0))}</td>
+      <td class="mono" style="color:${balance>0?'var(--danger)':'var(--good)'}">${fmtMoney(balance)}</td>
+      <td><span class="payment-status ${fullPaid?'paid':'due'}">${fullPaid?'Full Amount Paid':'Due'}</span></td>
+      <td>
+        <select class="delivery-status-select ${delivery==='Delivered'?'delivered':'not-delivered'}" data-delivery-order="${o.id}">
+          <option value="Not Delivered" ${delivery==='Not Delivered'?'selected':''}>Not Delivered</option>
+          <option value="Delivered" ${delivery==='Delivered'?'selected':''}>Delivered</option>
+        </select>
+      </td>
     </tr>`;
   }).join('');
-  document.getElementById('ordersEmptyNote').hidden = list.length>0;
+
+  body.querySelectorAll('[data-delivery-order]').forEach(sel=>{
+    sel.addEventListener('change',async()=>{
+      const orderId=sel.dataset.deliveryOrder;
+      const old=orders.find(o=>o.id===orderId)?.deliveryStatus||'Not Delivered';
+      const status=sel.value;
+      sel.disabled=true;
+      try{
+        const updated=await api('/api/orders/'+encodeURIComponent(orderId)+'/delivery-status',{
+          method:'PUT',body:JSON.stringify({status})
+        });
+        const idx=orders.findIndex(o=>o.id===orderId);
+        if(idx>=0)orders[idx]=updated;
+        renderOrdersTable();
+        renderDashboard();
+        toast('Delivery status updated.');
+      }catch(err){
+        sel.value=old;
+        toast(err.message||'Could not update delivery status.');
+      }finally{
+        sel.disabled=false;
+      }
+    });
+  });
+
+  document.getElementById('ordersEmptyNote').hidden=list.length>0;
 }
 document.getElementById('orderSearch').addEventListener('input', e=> renderOrdersTable(e.target.value));
 
@@ -1687,7 +1895,12 @@ function openOrderModal(id){
     <div><b>Date:</b> ${fmtDate(o.date)}</div>
     <div><b>Items:</b> ${o.items.map(i=>`${i.garment} ×${i.qty}`).join(', ')}</div>
     <div><b>Billed By:</b> ${o.createdBy||'—'}</div>
-    <div><b>Grand Total:</b> ${fmtMoney(o.grandTotal)} &nbsp;|&nbsp; <b>Balance:</b> ${fmtMoney(Math.max(o.balance,0))}</div>`;
+    <div><b>Grand Total:</b> ${fmtMoney(o.grandTotal)} &nbsp;|&nbsp; <b>Balance:</b> ${fmtMoney(Math.max(o.balance,0))}</div>
+    <div><b>Payment Status:</b> <span style="color:${Number(o.balance||0)<=0?'var(--good)':'var(--danger)'};font-weight:700;">${Number(o.balance||0)<=0?'Full Amount Paid':'Due'}</span> &nbsp;|&nbsp; <b>Delivery:</b> ${o.deliveryStatus||'Not Delivered'}</div>`;
+  const approval=editRequests.find(r=>r.orderId===o.id&&r.staffId===currentUserId&&r.status==='approved');
+  document.getElementById('modalDeleteBtn').hidden=currentRole!=='admin';
+  document.getElementById('modalEditBtn').hidden=currentRole==='staff'&&!approval;
+  document.getElementById('modalRequestEditBtn').hidden=currentRole!=='staff'||!!approval;
   document.getElementById('orderModal').hidden = false;
 }
 document.getElementById('orderModalClose').addEventListener('click', ()=> document.getElementById('orderModal').hidden = true);
@@ -1719,69 +1932,30 @@ document.getElementById('viewBillModal').addEventListener('click', e=>{ if(e.tar
 
 document.getElementById('modalEditBtn').addEventListener('click', ()=>{
   const o = orders.find(x=>x.id===modalOrderId);
+  if(currentRole==='staff'){const a=editRequests.find(r=>r.orderId===o.id&&r.staffId===currentUserId&&r.status==='approved');if(!a){toast('Admin approval is required.');return;}approvedEditOrderId=o.id;}
   loadOrderIntoForm(o);
   document.getElementById('orderModal').hidden = true;
   switchView('newbill');
 });
 
+document.getElementById('modalRequestEditBtn').addEventListener('click',async()=>{
+  const o=orders.find(x=>x.id===modalOrderId);if(!o)return;
+  try{await api('/api/workflow/edit-requests',{method:'POST',body:JSON.stringify({orderId:o.id})});await refreshWorkflowState();document.getElementById('orderModal').hidden=true;toast('Edit request sent to Admin.');}catch(e){toast(e.message)}
+});
+document.getElementById('modalShareBtn').addEventListener('click',()=>{const o=orders.find(x=>x.id===modalOrderId);if(o)shareBill(o);});
+
 function loadOrderIntoForm(o){
-  editingOrderId = o.id;
-  document.getElementById('billModeLabel').textContent = 'Editing';
-  document.getElementById('billModeTitle').textContent = 'Edit Bill';
-  document.getElementById('orderNoDisplay').textContent = o.id;
-
-  document.getElementById('clientName').value = o.client.name;
-  document.getElementById('clientContact').value = o.client.contact;
-  document.getElementById('clientAddress').value = o.client.address;
-
-  orderItems = o.items.map(i=>({garment:i.garment, qty:i.qty}));
-  renderItemsTable();
-  renderGarmentMeasureBlocks();
-  renderBodyMeasureFields();
-
-  Object.entries(o.measurements.body||{}).forEach(([k,v])=>{
-    const inp = document.querySelector(`.body-measure-input[data-field="${k}"]`);
-    if(inp) inp.value = v;
-  });
-  Object.entries(o.measurements.extra||{}).forEach(([garment, fields])=>{
-    Object.entries(fields||{}).forEach(([k,v])=>{
-      const inp = document.querySelector(`.garment-measure-input[data-garment="${garment}"][data-field="${k}"]`);
-      if(inp) inp.value = v;
-    });
-  });
-
-  document.getElementById('customMeasureRows').innerHTML='';
-  (o.measurements.custom||[]).forEach(c=>{ addCustomMeasureRow(document.getElementById('customMeasureRows'), c.label, c.value); });
-
-  Object.entries(o.measurements.garmentCustom||{}).forEach(([garment, list])=>{
-    const container = document.querySelector(`.custom-measure-container[data-garment-custom="${garment}"]`);
-    if(!container) return;
-    (list||[]).forEach(c=> addCustomMeasureRow(container, c.label, c.value));
-  });
-
-  document.getElementById('trialDate').value = o.trialDate||'';
-  document.getElementById('deliveryDate').value = o.deliveryDate||'';
-  document.getElementById('tailorName').value = o.tailorName||'';
-  notesBox.value = o.notes || "1. ";
-
-  renderBillingTable();
-  o.items.forEach(it=>{
-    const tr = document.querySelector(`#billingTableBody tr[data-garment="${it.garment}"]`);
-    if(tr){ tr.querySelector('.unit-price-input').value = it.unitPrice; tr.querySelector('.discount-input').value = it.discount; }
-  });
-
-  renderMaterialTable();
-  (o.materials||[]).forEach(m=>{
-    const tr = document.querySelector(`#materialTableBody tr[data-garment="${m.garment}"]`);
-    if(tr){ tr.querySelector('.material-input').value = m.material||''; tr.querySelector('.meters-input').value = m.meters||''; }
-  });
-
-  document.getElementById('overallDiscount').value = o.overallDiscount;
-  document.getElementById('gstPercent').value = o.gst;
-  document.getElementById('paymentReceived').value = o.paymentReceived;
-  document.getElementById('paymentMode').value = o.paymentMode;
-  updateUpiQrDisplay();
-  computeTotals();
+  editingOrderId=o.id;
+  document.getElementById('billModeLabel').textContent='Editing';document.getElementById('billModeTitle').textContent='Edit Bill';document.getElementById('orderNoDisplay').textContent=o.id;
+  document.getElementById('clientName').value=o.client.name||'';document.getElementById('clientContact').value=o.client.contact||'';document.getElementById('clientAddress').value=o.client.address||'';
+  orderItems=(o.items||[]).map(i=>({garment:i.garment,qty:i.qty}));renderItemsTable();renderGarmentMeasureBlocks();renderBodyMeasureFields();
+  Object.entries(o.measurements?.body||{}).forEach(([k,v])=>{const i=document.querySelector(`.body-measure-input[data-field="${k}"]`);if(i)i.value=v});
+  Object.entries(o.measurements?.length||{}).forEach(([k,v])=>{const i=document.querySelector(`.length-measure-input[data-field="${k}"]`);if(i)i.value=v});
+  document.getElementById('trialDate').value=o.trialDate||'';document.getElementById('deliveryDate').value=o.deliveryDate||'';document.getElementById('tailorName').value=o.tailorName||'';notesBox.value=o.notes||'1. ';
+  renderBillingTable();(o.items||[]).forEach(it=>{const tr=document.querySelector(`#billingTableBody tr[data-garment="${CSS.escape(it.garment)}"]`);if(tr)tr.querySelector('.unit-price-input').value=it.unitPrice||0});
+  renderMaterialTable();(o.materials||[]).forEach(m=>{const tr=document.querySelector(`#materialTableBody tr[data-garment="${CSS.escape(m.garment)}"]`);if(tr){tr.querySelector('.material-input').value=m.material||'';tr.querySelector('.meters-input').value=m.meters||''}});
+  document.getElementById('overallDiscount').value=o.discountPercent??o.overallDiscount??0;document.getElementById('gstPercent').value='5%';document.getElementById('paymentReceived').value=o.paymentReceived||0;document.getElementById('paymentMode').value=o.paymentMode||'Cash';
+  loadCustomBillValues(o.customFields||{});updateUpiQrDisplay();computeTotals();applySavedBillEditLock(o);
 }
 
 /* ================= ADMIN: COMPANY DETAILS ================= */
@@ -1881,6 +2055,7 @@ function loadCompanyInfoForm(){
   document.getElementById('companyGst').value = companyInfo.gst || '';
   document.getElementById('companyAddress').value = companyInfo.address || '';
   document.getElementById('companyPhone').value = companyInfo.phone || '';
+  const upiAdmin=document.getElementById('companyUpiId'); if(upiAdmin) upiAdmin.value=companyInfo.upiId||'';
   const wrap = document.getElementById('companyExtraRows');
   wrap.innerHTML = '';
   (companyInfo.extra||[]).forEach(e=> addCompanyExtraRow(e.label, e.value));
@@ -1903,6 +2078,7 @@ document.getElementById('saveCompanyInfoBtn').addEventListener('click', async ()
     gst: document.getElementById('companyGst').value.trim(),
     address: document.getElementById('companyAddress').value.trim(),
     phone: document.getElementById('companyPhone').value.trim(),
+    upiId: companyInfo.upiId || document.getElementById('companyUpiId')?.value.trim() || '',
     extra: []
   };
   document.querySelectorAll('#companyExtraRows .custom-measure-row').forEach(row=>{
@@ -1912,7 +2088,8 @@ document.getElementById('saveCompanyInfoBtn').addEventListener('click', async ()
   });
   try{
     companyInfo = await api('/api/company', { method:'PUT', body: JSON.stringify(payload) });
-    toast('Company details saved. They will appear on every Store and Client bill.');
+    loadCompanyInfoForm();
+    toast('Company details saved. Added sections will appear on Store and Client bills.');
   } catch(err){
     toast('Could not save company details: ' + err.message);
   }
@@ -2123,6 +2300,111 @@ function renderQrAdminGrid(){
   });
 }
 
+
+/* ================= OWNER-REQUESTED WORKFLOW ================= */
+function escapeHtml(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+async function refreshWorkflowState(){if(DEMO_MODE)return;try{const w=await api('/api/workflow/state');editRequests=w.requests||[];staffMessages=w.messages||[];billHistory=w.history||[];staffDirectory=w.staffDirectory||[];customBillFields=w.customFields||customBillFields;customBillSections=w.customSections||[];relationshipOptions=w.relationshipOptions||relationshipOptions;window.__adminNotes=(w.adminNotes&&String(w.adminNotes).trim())?w.adminNotes:'1. ';renderCustomBillConfiguration();renderMessagesView();if(currentRole==='admin')renderAdminWorkflow();}catch(e){console.error(e)}}
+async function saveWorkflowConfig(){if(DEMO_MODE)return;await api('/api/workflow/config',{method:'PUT',body:JSON.stringify({customFields:customBillFields,customSections:customBillSections,relationshipOptions})});}
+function renderCustomerRelationshipOptions(){
+  const sel=document.getElementById('customerRelationship');
+  if(sel){
+    const current=sel.value||customBillDraftValues.fields.__customerRelationship||relationshipOptions[0]||'New';
+    sel.innerHTML=(relationshipOptions.length?relationshipOptions:['New','Existing','Regular']).map(x=>`<option value="${escapeHtml(x)}">${escapeHtml(x)}</option>`).join('');
+    sel.value=relationshipOptions.includes(current)?current:(relationshipOptions[0]||'New');
+    customBillDraftValues.fields.__customerRelationship=sel.value;
+    sel.onchange=()=>{customBillDraftValues.fields.__customerRelationship=sel.value;};
+  }
+  const list=document.getElementById('relationshipOptionsList');
+  if(list&&currentRole==='admin'){
+    list.innerHTML=relationshipOptions.map((x,i)=>`<div class="admin-custom-row"><div><div class="meta">Dropdown option</div>${escapeHtml(x)}</div><button class="btn danger small" type="button" data-remove-rel="${i}">Remove</button></div>`).join('');
+    list.querySelectorAll('[data-remove-rel]').forEach(b=>b.onclick=async()=>{
+      if(relationshipOptions.length<=1)return toast('Keep at least one option.');
+      relationshipOptions.splice(Number(b.dataset.removeRel),1);
+      await saveWorkflowConfig();
+      renderCustomBillConfiguration();
+    });
+  }
+}
+function renderCustomBillConfiguration(){
+  document.querySelectorAll('[data-custom-bill-field]').forEach(i=>{customBillDraftValues.fields[i.dataset.customBillField]=i.value;});
+  document.querySelectorAll('[data-custom-section-field]').forEach(i=>{customBillDraftValues.sections[i.dataset.customSectionField]=i.value;});
+  const rel=document.getElementById('customerRelationship');
+  if(rel)customBillDraftValues.fields.__customerRelationship=rel.value;
+
+  Object.keys(customBillFields).forEach(sec=>{
+    const w=document.getElementById('customFields-'+sec);
+    if(w)w.innerHTML=(customBillFields[sec]||[]).map(f=>`<div class="field"><label>${escapeHtml(f.label)}</label><input type="text" data-custom-bill-field="${f.id}" value="${escapeHtml(customBillDraftValues.fields[f.id]||'')}"></div>`).join('');
+  });
+  const st=document.getElementById('customStandaloneSections');
+  if(st)st.innerHTML=customBillSections.map(x=>`<div class="panel"><div class="panel-head"><h3>${escapeHtml(x.name)}</h3></div><div class="panel-body"><div class="custom-bill-grid">${(x.fields||[]).map(f=>`<div class="field"><label>${escapeHtml(f.label)}</label><input type="text" data-custom-section-field="${x.id}:${f.id}" value="${escapeHtml(customBillDraftValues.sections[x.id+':'+f.id]||'')}"></div>`).join('')}</div></div></div>`).join('');
+
+  document.querySelectorAll('[data-custom-bill-field]').forEach(i=>i.oninput=()=>{customBillDraftValues.fields[i.dataset.customBillField]=i.value;});
+  document.querySelectorAll('[data-custom-section-field]').forEach(i=>i.oninput=()=>{customBillDraftValues.sections[i.dataset.customSectionField]=i.value;});
+  renderCustomerRelationshipOptions();
+  renderAdminCustomList();
+}
+function collectCustomBillValues(){
+  const fields={...customBillDraftValues.fields},sections={...customBillDraftValues.sections};
+  document.querySelectorAll('[data-custom-bill-field]').forEach(i=>fields[i.dataset.customBillField]=i.value);
+  document.querySelectorAll('[data-custom-section-field]').forEach(i=>sections[i.dataset.customSectionField]=i.value);
+  fields.__customerRelationship=document.getElementById('customerRelationship')?.value||fields.__customerRelationship||'New';
+  customBillDraftValues={fields:{...fields},sections:{...sections}};
+  return {fields,sections};
+}
+function loadCustomBillValues(v){
+  customBillDraftValues={fields:{...(v?.fields||{})},sections:{...(v?.sections||{})}};
+  renderCustomBillConfiguration();
+}
+function buildCustomBillPrintHtml(v){const rows=[];Object.entries(customBillFields).forEach(([sec,fs])=>(fs||[]).forEach(f=>{const val=v?.fields?.[f.id];if(val)rows.push(`<tr><td>${escapeHtml(f.label)}</td><td>${escapeHtml(val)}</td></tr>`)}));const sections=customBillSections.map(st=>{const sr=(st.fields||[]).map(f=>{const val=v?.sections?.[`${st.id}:${f.id}`];return val?`<tr><td>${escapeHtml(f.label)}</td><td>${escapeHtml(val)}</td></tr>`:''}).join('');return sr?`<div class="pbill-section-title">${escapeHtml(st.name).toUpperCase()}</div><table><tbody>${sr}</tbody></table>`:''}).join('');return (rows.length?`<div class="pbill-section-title">ADDITIONAL DETAILS</div><table><tbody>${rows.join('')}</tbody></table>`:'')+sections}
+function renderAdminCustomList(){const w=document.getElementById('adminCustomBillList');if(!w||currentRole!=='admin')return;const rows=[];Object.entries(customBillFields).forEach(([sec,fs])=>(fs||[]).forEach(f=>rows.push(`<div class="admin-custom-row"><div><div class="meta">${sec}</div>${escapeHtml(f.label)}</div><button class="btn danger small" onclick="removeCustomBillField('${sec}','${f.id}')">Remove</button></div>`)));customBillSections.forEach(st=>rows.push(`<div class="admin-custom-row"><div><div class="meta">Custom Section</div>${escapeHtml(st.name)}</div><button class="btn danger small" onclick="removeCustomBillSection('${st.id}')">Remove</button></div>`));w.innerHTML=rows.join('')||'<div class="empty-note">No additional boxes or custom sections yet.</div>'}
+window.removeCustomBillField=async(sec,id)=>{customBillFields[sec]=(customBillFields[sec]||[]).filter(f=>f.id!==id);await saveWorkflowConfig();renderCustomBillConfiguration()};window.removeCustomBillSection=async id=>{customBillSections=customBillSections.filter(st=>st.id!==id);await saveWorkflowConfig();renderCustomBillConfiguration()};
+document.getElementById('addCustomBoxBtn')?.addEventListener('click',async()=>{if(currentRole!=='admin')return;const sec=document.getElementById('customTargetSection').value,label=document.getElementById('customBoxName').value.trim();if(!label)return toast('Enter a box name.');customBillFields[sec]=customBillFields[sec]||[];customBillFields[sec].push({id:'f'+Date.now(),label});await saveWorkflowConfig();document.getElementById('customBoxName').value='';renderCustomBillConfiguration();toast('Additional box added.')});
+document.getElementById('addRelationshipOptionBtn')?.addEventListener('click',async()=>{
+  if(currentRole!=='admin')return;
+  const input=document.getElementById('newRelationshipOption');
+  const value=input.value.trim();
+  if(!value)return toast('Enter an option.');
+  if(relationshipOptions.some(x=>x.toLowerCase()===value.toLowerCase()))return toast('Option already exists.');
+  relationshipOptions.push(value);
+  input.value='';
+  await saveWorkflowConfig();
+  renderCustomBillConfiguration();
+  toast('Customer Relationship option added.');
+});
+document.getElementById('addCustomSectionBtn2')?.addEventListener('click',async()=>{if(currentRole!=='admin')return;const name=document.getElementById('newCustomSectionName').value.trim(),box=document.getElementById('newCustomSectionBox').value.trim()||'Details';if(!name)return toast('Enter a section name.');customBillSections.push({id:'s'+Date.now(),name,fields:[{id:'f1',label:box}]});await saveWorkflowConfig();document.getElementById('newCustomSectionName').value='';document.getElementById('newCustomSectionBox').value='';renderCustomBillConfiguration();toast('New bill section added.')});
+function setBillFormLock(lock){document.querySelectorAll('#view-newbill input,#view-newbill select,#view-newbill textarea,#view-newbill button').forEach(x=>{if(x.id==='cancelBillBtn')return;x.disabled=!!lock})}
+function applySavedBillEditLock(o){const n=document.getElementById('savedBillPermissionNote');if(!editingOrderId){n.hidden=true;setBillFormLock(false);return}if(currentRole==='admin'){n.hidden=false;n.className='permission-note approved';n.textContent='Admin edit access — pricing, payment and all bill details are editable.';setBillFormLock(false);return}const approved=!!editRequests.find(r=>r.orderId===o.id&&r.staffId===currentUserId&&r.status==='approved');n.hidden=false;if(approved){approvedEditOrderId=o.id;n.className='permission-note approved';n.textContent='Admin approved this edit request. You can edit this saved bill once; it locks again after saving.';setBillFormLock(false)}else{n.className='permission-note locked';n.textContent='Saved bill locked. Staff cannot change pricing, payment or bill details until Admin approves an edit request.';setBillFormLock(true)}}
+window.approveEditRequest=async id=>{try{await api('/api/workflow/edit-requests/'+id,{method:'PUT',body:JSON.stringify({status:'approved'})});await refreshWorkflowState();toast('Staff edit request approved.')}catch(e){toast(e.message)}};window.rejectEditRequest=async id=>{try{await api('/api/workflow/edit-requests/'+id,{method:'PUT',body:JSON.stringify({status:'rejected'})});await refreshWorkflowState();toast('Edit request rejected.')}catch(e){toast(e.message)}};
+function renderAdminWorkflow(){if(currentRole!=='admin')return;const q=document.getElementById('editRequestList');if(q)q.innerHTML=editRequests.map(r=>`<div class="request-card"><div class="request-meta">${escapeHtml(r.staffName||'Staff')} (${escapeHtml(r.staffId)}) • Order ${escapeHtml(r.orderId)} • ${escapeHtml(r.when)}</div><div>Status: <b>${escapeHtml(String(r.status).toUpperCase())}</b></div>${r.status==='pending'?`<div class="modal-actions"><button class="btn gold small" onclick="approveEditRequest(${r.id})">Approve</button><button class="btn danger small" onclick="rejectEditRequest(${r.id})">Reject</button></div>`:''}</div>`).join('')||'<div class="empty-note">No staff edit requests.</div>';const h=document.getElementById('billChangeHistoryList');if(h)h.innerHTML=billHistory.map(x=>`<div class="history-card"><div class="history-meta">Order ${escapeHtml(x.orderId)} • changed by ${escapeHtml(x.changedBy)} • ${escapeHtml(x.when)}</div><div class="snapshot-grid"><div class="snapshot-box"><h4>Old Bill</h4><pre>${escapeHtml(JSON.stringify(x.oldBill,null,2))}</pre></div><div class="snapshot-box"><h4>Present Bill</h4><pre>${escapeHtml(JSON.stringify(x.newBill,null,2))}</pre></div></div></div>`).join('')||'<div class="empty-note">No edited bills yet.</div>';const notes=document.getElementById('adminPrivateNotes');if(notes&&document.activeElement!==notes){notes.value=window.__adminNotes||'1. ';if(!notes.value.trim())notes.value='1. '}renderAdminCustomList()}
+document.getElementById('saveAdminPrivateNotesBtn')?.addEventListener('click',async()=>{try{await api('/api/workflow/admin-notes',{method:'PUT',body:JSON.stringify({notes:document.getElementById('adminPrivateNotes').value})});toast('Admin notes saved.')}catch(e){toast(e.message)}});
+function formatChatTime(v){try{return new Date(v).toLocaleString('en-IN',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})}catch{return String(v||'')}}
+function humanFileSize(n){n=Number(n||0);if(n<1024)return n+' B';if(n<1048576)return(n/1024).toFixed(1)+' KB';return(n/1048576).toFixed(1)+' MB'}
+function chatStaffName(id){const d=staffDirectory.find(s=>s.id===id),m=staffMessages.find(x=>x.staffId===id);return d?.name||m?.staffName||id}
+function ensureActiveChat(){if(currentRole==='staff'){activeChatStaffId=currentUserId;return}const ids=[...new Set([...staffDirectory.map(s=>s.id),...staffMessages.map(m=>m.staffId)].filter(Boolean))];if(activeChatStaffId&&ids.includes(activeChatStaffId))return;activeChatStaffId=ids[0]||null}
+function renderChatContacts(){const side=document.getElementById('chatSidebar'),list=document.getElementById('chatContactList');if(!side||!list)return;side.hidden=currentRole!=='admin';if(currentRole!=='admin')return;const ids=[...new Set([...staffDirectory.map(s=>s.id),...staffMessages.map(m=>m.staffId)].filter(Boolean))];list.innerHTML=ids.map(id=>{const mm=staffMessages.filter(m=>m.staffId===id),last=mm[mm.length-1];return `<button class="chat-contact ${activeChatStaffId===id?'active':''}" data-chat-staff="${escapeHtml(id)}"><div class="name">${escapeHtml(chatStaffName(id))}</div><div class="id">${escapeHtml(id)}</div>${last?`<div style="font-size:11px;color:#766d5c;margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(last.text||((last.attachments||[]).length?'📎 Attachment':''))}</div>`:''}</button>`}).join('')||'<div class="empty-note">No staff accounts.</div>';list.querySelectorAll('[data-chat-staff]').forEach(b=>b.addEventListener('click',()=>{activeChatStaffId=b.dataset.chatStaff;pendingChatFiles=[];renderMessagesView()}))}
+function attachmentIcon(t){if(String(t).startsWith('image/'))return'🖼';if(String(t).startsWith('video/'))return'🎥';if(t==='application/pdf')return'📕';return'📄'}
+function renderChatWindow(){ensureActiveChat();renderChatContacts();const w=document.getElementById('chatWindow'),name=document.getElementById('chatWithName'),id=document.getElementById('chatWithId'),tools=document.getElementById('adminChatDeleteTools');if(!w)return;tools.hidden=currentRole!=='admin';if(!activeChatStaffId){name.textContent='Select a staff conversation';id.textContent='';w.innerHTML='<div class="chat-empty">Select a staff member to start a conversation.</div>';return}name.textContent=currentRole==='admin'?chatStaffName(activeChatStaffId):'Admin';id.textContent=currentRole==='admin'?activeChatStaffId:'Owner / Admin';const list=staffMessages.filter(m=>m.staffId===activeChatStaffId);w.innerHTML=list.length?list.map(m=>{const mine=String(m.senderId)===String(currentUserId),sender=m.senderRole==='admin'?'Admin':`${m.senderName||m.staffName} (${m.senderId||m.staffId})`,atts=(m.attachments||[]).map(a=>`<a class="chat-attachment" href="${a.url}" target="_blank"><span>${attachmentIcon(a.type)}</span><span>${escapeHtml(a.name)}</span><span style="margin-left:auto;color:#827662;">${humanFileSize(a.size)}</span></a>`).join('');return `<div class="chat-row ${mine?'mine':''}">${currentRole==='admin'?`<input class="chat-select" type="checkbox" data-message-select="${m.id}">`:''}<div class="chat-bubble"><div class="chat-meta"><span>${escapeHtml(sender)}</span><span>${escapeHtml(formatChatTime(m.when))}</span></div>${m.text?`<div class="chat-text">${escapeHtml(m.text)}</div>`:''}${atts?`<div class="chat-attachments">${atts}</div>`:''}</div></div>`}).join(''):'<div class="chat-empty">No messages yet.<br>Start the conversation below.</div>';w.scrollTop=w.scrollHeight}
+function renderPendingChatFiles(){const p=document.getElementById('chatFilePreview');if(!p)return;p.innerHTML=pendingChatFiles.map((f,i)=>`<span class="chat-file-chip">${attachmentIcon(f.type)} ${escapeHtml(f.name)} (${humanFileSize(f.size)}) <button type="button" data-rm-file="${i}" style="border:none;background:none;color:var(--danger);">✕</button></span>`).join('');p.querySelectorAll('[data-rm-file]').forEach(b=>b.addEventListener('click',()=>{pendingChatFiles.splice(Number(b.dataset.rmFile),1);renderPendingChatFiles()}))}
+function renderMessagesView(){document.getElementById('messagesPageTitle').textContent=currentRole==='admin'?'Staff Messages':'Message Admin';ensureActiveChat();renderChatWindow();renderPendingChatFiles()}
+document.getElementById('attachChatFileBtn')?.addEventListener('click',()=>document.getElementById('chatFileInput').click());
+document.getElementById('chatFileInput')?.addEventListener('change',e=>{for(const f of [...e.target.files]){if(pendingChatFiles.length>=3){toast('Maximum 3 attachments per message.');break}if(f.size>10*1024*1024){toast(`${f.name} is larger than 10 MB.`);continue}pendingChatFiles.push(f)}e.target.value='';renderPendingChatFiles()});
+function fileToDataUrl(f){return new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=reject;r.readAsDataURL(f)})}
+document.getElementById('sendChatMessageBtn')?.addEventListener('click',async()=>{const text=document.getElementById('chatMessageText').value.trim();ensureActiveChat();if(!activeChatStaffId)return toast('Select a staff conversation.');if(!text&&!pendingChatFiles.length)return toast('Type a message or attach a file.');try{const attachments=[];for(const f of pendingChatFiles)attachments.push({name:f.name,type:f.type,size:f.size,data:await fileToDataUrl(f)});await api('/api/workflow/messages',{method:'POST',body:JSON.stringify({message:text,staffId:activeChatStaffId,attachments})});document.getElementById('chatMessageText').value='';pendingChatFiles=[];await refreshWorkflowState();toast('Message sent.')}catch(e){toast(e.message)}});
+document.getElementById('chatMessageText')?.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();document.getElementById('sendChatMessageBtn').click()}});
+document.getElementById('selectAllChatMessages')?.addEventListener('change',e=>document.querySelectorAll('[data-message-select]').forEach(c=>c.checked=e.target.checked));
+document.getElementById('deleteSelectedMessagesBtn')?.addEventListener('click',async()=>{if(currentRole!=='admin')return;const ids=[...document.querySelectorAll('[data-message-select]:checked')].map(x=>Number(x.dataset.messageSelect));if(!ids.length)return toast('Select message(s) first.');if(!confirm(`Delete ${ids.length} selected message(s)?`))return;try{await api('/api/workflow/messages/delete-many',{method:'POST',body:JSON.stringify({ids})});document.getElementById('selectAllChatMessages').checked=false;await refreshWorkflowState();toast('Selected messages deleted.')}catch(e){toast(e.message)}});
+document.getElementById('clearConversationBtn')?.addEventListener('click',async()=>{if(currentRole!=='admin'||!activeChatStaffId)return;if(!confirm(`Delete full conversation with ${chatStaffName(activeChatStaffId)}?`))return;try{await api('/api/workflow/messages?staffId='+encodeURIComponent(activeChatStaffId),{method:'DELETE'});await refreshWorkflowState();toast('Conversation deleted.')}catch(e){toast(e.message)}});
+document.getElementById('clearAllMessagesBtn')?.addEventListener('click',async()=>{if(currentRole!=='admin')return;if(!confirm('Delete ALL messages for every staff conversation?'))return;try{await api('/api/workflow/messages',{method:'DELETE'});await refreshWorkflowState();toast('All messages deleted.')}catch(e){toast(e.message)}});
+const adminPrivateNotes=document.getElementById('adminPrivateNotes');if(adminPrivateNotes){if(!adminPrivateNotes.value)adminPrivateNotes.value='1. ';adminPrivateNotes.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();const before=this.value.slice(0,this.selectionStart),after=this.value.slice(this.selectionEnd),num=before.split('\n').length+1,ins=`\n${num}. `,p=before.length+ins.length;this.value=before+ins+after;this.selectionStart=this.selectionEnd=p}})}
+
+// Keep conversations and Admin history synchronized across devices.
+setInterval(()=>{
+  if(!currentRole || document.hidden) return;
+  const messagesOpen=!document.getElementById('view-messages')?.hidden;
+  const adminOpen=currentRole==='admin'&&!document.getElementById('view-admin')?.hidden;
+  if(messagesOpen||adminOpen) refreshWorkflowState();
+},3000);
+
 /* ================= ADMIN: EXCEL EXPORT ================= */
 document.getElementById('excelExportMode')?.addEventListener('change', e=>{
   const show=e.target.value==='custom';
@@ -2182,28 +2464,45 @@ async function loadDatabaseStorage(){
 
 document.getElementById('refreshStorageBtn')?.addEventListener('click', loadDatabaseStorage);
 
-document.getElementById('archiveOrdersBtn')?.addEventListener('click', async ()=>{
-  const before = document.getElementById('archiveBeforeDate').value;
-  if(!before){ toast('Select a date first.'); return; }
-  if(!confirm('Archive all orders before '+before+'?')) return;
+document.getElementById('archiveOrdersBtn')?.addEventListener('click',async()=>{
+  const before=document.getElementById('archiveBeforeDate')?.value||'';
+  if(!before)return toast('Select a date first.');
+  if(!confirm('Archive all orders before '+before+'?'))return;
+
+  const btn=document.getElementById('archiveOrdersBtn');
+  btn.disabled=true;
+  const oldText=btn.textContent;
+  btn.textContent='Archiving…';
+
   try{
-    const r = await api('/api/storage/archive', {method:'POST', body:JSON.stringify({before})});
-    toast((r.archived || 0)+' order(s) archived.');
+    const r=await api('/api/storage/archive',{
+      method:'POST',
+      body:JSON.stringify({before})
+    });
+    toast((r.archived||0)+' order(s) archived successfully.');
     await loadDatabaseStorage();
-    if(typeof loadOrders === 'function') await loadOrders();
-  }catch(e){ toast(e.message || 'Could not archive orders.'); }
+    orders=await api('/api/orders');
+    renderOrdersTable();
+    renderDashboard();
+  }catch(e){
+    console.error(e);
+    toast(e.message||'Could not archive old orders.');
+  }finally{
+    btn.disabled=false;
+    btn.textContent=oldText;
+  }
 });
 
-document.getElementById('downloadArchiveBtn')?.addEventListener('click', async ()=>{
-  try{
-    const data = await api('/api/storage/archive');
-    const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = 'MMJ_Order_Archive_'+todayISO()+'.json';
-    document.body.appendChild(a); a.click(); a.remove();
-    setTimeout(()=>URL.revokeObjectURL(a.href), 1000);
-  }catch(e){ toast(e.message || 'Could not download archive.'); }
+document.getElementById('downloadArchiveBtn')?.addEventListener('click',()=>{
+  // Direct server download: this works even for large archives and avoids
+  // browser-side JSON conversion problems.
+  const a=document.createElement('a');
+  a.href='/api/storage/archive/download';
+  a.download='';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  toast('Archive download started.');
 });
 
 document.getElementById('deleteArchivedBtn')?.addEventListener('click', async ()=>{
@@ -2220,5 +2519,181 @@ document.getElementById('deleteArchivedBtn')?.addEventListener('click', async ()
 
 
 </script>
+
+<script>
+(function(){
+  const selectedIds = new Set();
+  let lastNotified = Number(sessionStorage.getItem('mmjStaffMsgLastNotified') || 0);
+
+  function isAdminNow(){
+    try { return currentRole === 'admin'; }
+    catch { return false; }
+  }
+
+  function say(msg){
+    try {
+      if (typeof toast === 'function') return toast(msg);
+    } catch {}
+    alert(msg);
+  }
+
+  async function callApi(path, opts = {}){
+    if (typeof api === 'function') return api(path, opts);
+    const r = await fetch(path, {
+      credentials: 'include',
+      headers: {'Content-Type':'application/json'},
+      ...opts
+    });
+    const d = await r.json().catch(()=>({}));
+    if(!r.ok) throw new Error(d.error || 'Request failed');
+    return d;
+  }
+
+  // Keep selected checkboxes selected even when chat auto-refresh redraws the list.
+  document.addEventListener('change', e=>{
+    const cb = e.target.closest?.('[data-message-select]');
+    if(!cb) return;
+    const id = Number(cb.dataset.messageSelect);
+    if(cb.checked) selectedIds.add(id);
+    else selectedIds.delete(id);
+  });
+
+  setInterval(()=>{
+    document.querySelectorAll('[data-message-select]').forEach(cb=>{
+      cb.checked = selectedIds.has(Number(cb.dataset.messageSelect));
+    });
+  }, 250);
+
+  function replaceButton(id, handler){
+    const old = document.getElementById(id);
+    if(!old || old.dataset.mmjFixed === '1') return;
+    const btn = old.cloneNode(true);
+    btn.dataset.mmjFixed = '1';
+    old.replaceWith(btn);
+    btn.addEventListener('click', handler);
+  }
+
+  function installControls(){
+    const selectAll = document.getElementById('selectAllChatMessages');
+    if(selectAll && selectAll.dataset.mmjFixed !== '1'){
+      const fresh = selectAll.cloneNode(true);
+      fresh.dataset.mmjFixed = '1';
+      selectAll.replaceWith(fresh);
+      fresh.addEventListener('change', ()=>{
+        document.querySelectorAll('[data-message-select]').forEach(cb=>{
+          cb.checked = fresh.checked;
+          const id = Number(cb.dataset.messageSelect);
+          if(fresh.checked) selectedIds.add(id);
+          else selectedIds.delete(id);
+        });
+      });
+    }
+
+    replaceButton('deleteSelectedMessagesBtn', async ()=>{
+      if(!isAdminNow()) return say('Admin login required.');
+      const ids = [...selectedIds];
+      if(!ids.length) return say('Select message(s) first.');
+      if(!confirm('Delete '+ids.length+' selected message(s)?')) return;
+      try{
+        await callApi('/api/workflow/messages/admin-delete-v2', {
+          method:'POST',
+          body:JSON.stringify({mode:'selected', ids})
+        });
+        selectedIds.clear();
+        if(typeof refreshWorkflowState === 'function') await refreshWorkflowState();
+        say('Selected messages deleted.');
+      }catch(e){ say(e.message); }
+    });
+
+    replaceButton('clearConversationBtn', async ()=>{
+      if(!isAdminNow()) return say('Admin login required.');
+      let sid = null;
+      try { sid = activeChatStaffId; } catch {}
+      if(!sid) return say('Select a staff conversation.');
+      if(!confirm('Delete this full conversation?')) return;
+      try{
+        await callApi('/api/workflow/messages/admin-delete-v2', {
+          method:'POST',
+          body:JSON.stringify({mode:'conversation', staffId:sid})
+        });
+        selectedIds.clear();
+        if(typeof refreshWorkflowState === 'function') await refreshWorkflowState();
+        say('Conversation deleted.');
+      }catch(e){ say(e.message); }
+    });
+
+    replaceButton('clearAllMessagesBtn', async ()=>{
+      if(!isAdminNow()) return say('Admin login required.');
+      if(!confirm('Delete ALL staff/admin messages?')) return;
+      try{
+        await callApi('/api/workflow/messages/admin-delete-v2', {
+          method:'POST',
+          body:JSON.stringify({mode:'all'})
+        });
+        selectedIds.clear();
+        if(typeof refreshWorkflowState === 'function') await refreshWorkflowState();
+        say('All messages deleted.');
+      }catch(e){ say(e.message); }
+    });
+  }
+
+  function popupStaffMessage(m){
+    document.getElementById('mmjStaffMsgPopup')?.remove();
+    const box = document.createElement('div');
+    box.id = 'mmjStaffMsgPopup';
+    box.style.cssText =
+      'position:fixed;right:20px;top:82px;z-index:9999;max-width:360px;' +
+      'background:#18140F;color:#F7F2E9;border-left:4px solid #C9A15C;' +
+      'border-radius:10px;padding:13px 15px;box-shadow:0 16px 35px rgba(0,0,0,.25);cursor:pointer;';
+    const name = m.senderName || m.staffName || 'Staff';
+    const login = m.senderId || m.staffId || '';
+    const preview = m.text || ((m.attachments || []).length ? 'Attachment received' : 'New message');
+    box.innerHTML =
+      '<div style="font-weight:700;color:#E8CE9C;margin-bottom:4px;">Message from ' +
+      String(name) + ' (' + String(login) + ')</div>' +
+      '<div style="font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' +
+      String(preview) + '</div>';
+    box.onclick = ()=>{
+      try { activeChatStaffId = m.staffId; } catch {}
+      document.getElementById('messagesNavTab')?.click();
+      box.remove();
+    };
+    document.body.appendChild(box);
+    setTimeout(()=>box.remove(), 7000);
+  }
+
+  async function checkNotifications(){
+    if(!isAdminNow()) return;
+    try{
+      const w = await callApi('/api/workflow/state');
+      const incoming = (w.messages || [])
+        .filter(m=>m.senderRole === 'staff')
+        .sort((a,b)=>Number(a.id)-Number(b.id));
+      const newest = incoming[incoming.length-1];
+      const unread = incoming.filter(m=>Number(m.id) > lastNotified).length;
+
+      const badge = document.getElementById('staffMsgBadge');
+      if(badge){
+        badge.textContent = String(unread);
+        badge.style.display = unread ? 'inline-block' : 'none';
+      }
+
+      if(newest && Number(newest.id) > lastNotified){
+        popupStaffMessage(newest);
+        lastNotified = Number(newest.id);
+        sessionStorage.setItem('mmjStaffMsgLastNotified', String(lastNotified));
+      }
+    }catch{}
+  }
+
+  setInterval(installControls, 500);
+  setInterval(checkNotifications, 3000);
+  setTimeout(()=>{
+    installControls();
+    checkNotifications();
+  }, 800);
+})();
+</script>
+
 </body>
 </html>

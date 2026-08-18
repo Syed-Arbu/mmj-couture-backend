@@ -12,16 +12,6 @@ async function query(text, params = []) {
 
 async function initDb() {
   await query(`
-
-    CREATE TABLE IF NOT EXISTS user_sessions (
-      sid TEXT PRIMARY KEY,
-      sess JSONB NOT NULL,
-      expire TIMESTAMPTZ NOT NULL
-    );
-
-    CREATE INDEX IF NOT EXISTS idx_user_sessions_expire
-      ON user_sessions (expire);
-
     CREATE TABLE IF NOT EXISTS users (
       id SERIAL PRIMARY KEY,
       login_id TEXT UNIQUE NOT NULL,
@@ -58,6 +48,7 @@ async function initDb() {
       payment_received DOUBLE PRECISION DEFAULT 0,
       payment_mode TEXT,
       balance DOUBLE PRECISION DEFAULT 0,
+      delivery_status TEXT NOT NULL DEFAULT 'Not Delivered',
       created_by TEXT,
       created_at TIMESTAMPTZ DEFAULT NOW(),
       updated_at TIMESTAMPTZ DEFAULT NOW()
@@ -104,6 +95,100 @@ async function initDb() {
       key TEXT PRIMARY KEY,
       value TEXT
     );
+
+    CREATE TABLE IF NOT EXISTS user_sessions (
+      sid TEXT PRIMARY KEY, sess JSON NOT NULL, expire TIMESTAMPTZ NOT NULL
+    );
+    CREATE INDEX IF NOT EXISTS idx_user_sessions_expire ON user_sessions(expire);
+
+    CREATE TABLE IF NOT EXISTS bill_edit_requests (
+      id SERIAL PRIMARY KEY, order_no TEXT NOT NULL, staff_id TEXT NOT NULL, staff_name TEXT,
+      status TEXT NOT NULL DEFAULT 'pending', created_at TIMESTAMPTZ DEFAULT NOW(), approved_at TIMESTAMPTZ
+    );
+    CREATE TABLE IF NOT EXISTS staff_messages (
+      id SERIAL PRIMARY KEY,
+      staff_id TEXT NOT NULL,
+      staff_name TEXT,
+      message TEXT NOT NULL DEFAULT '',
+      sender_id TEXT,
+      sender_name TEXT,
+      sender_role TEXT,
+      recipient_staff_id TEXT,
+      created_at TIMESTAMPTZ DEFAULT NOW()
+    );
+    CREATE TABLE IF NOT EXISTS bill_share_links (
+      token TEXT PRIMARY KEY,
+      order_no TEXT NOT NULL,
+      created_by TEXT,
+      created_at TIMESTAMPTZ DEFAULT NOW()
+    );
+    CREATE INDEX IF NOT EXISTS idx_bill_share_order ON bill_share_links(order_no);
+
+    CREATE TABLE IF NOT EXISTS message_attachments (
+      id SERIAL PRIMARY KEY,
+      message_id INTEGER NOT NULL REFERENCES staff_messages(id) ON DELETE CASCADE,
+      file_name TEXT NOT NULL, mime_type TEXT, file_size INTEGER DEFAULT 0, file_data BYTEA NOT NULL,
+      created_at TIMESTAMPTZ DEFAULT NOW()
+    );
+    CREATE INDEX IF NOT EXISTS idx_message_attachments_message ON message_attachments(message_id);
+    CREATE TABLE IF NOT EXISTS bill_history (
+      id SERIAL PRIMARY KEY, order_no TEXT NOT NULL, changed_by TEXT, old_bill JSONB NOT NULL, new_bill JSONB NOT NULL, changed_at TIMESTAMPTZ DEFAULT NOW()
+    );
+    ALTER TABLE company_info ADD COLUMN IF NOT EXISTS upi_id TEXT;
+    ALTER TABLE orders ADD COLUMN IF NOT EXISTS delivery_status TEXT NOT NULL DEFAULT 'Not Delivered';
+
+    ALTER TABLE archived_orders ADD COLUMN IF NOT EXISTS payload JSONB NOT NULL DEFAULT '{}'::jsonb;
+
+    ALTER TABLE archived_orders ADD COLUMN IF NOT EXISTS snapshot_json TEXT NOT NULL DEFAULT '{}';
+
+    ALTER TABLE archived_orders ADD COLUMN IF NOT EXISTS original_order_id INTEGER;
+    ALTER TABLE archived_orders ADD COLUMN IF NOT EXISTS order_no TEXT;
+    ALTER TABLE archived_orders ADD COLUMN IF NOT EXISTS order_date TEXT;
+    ALTER TABLE archived_orders ADD COLUMN IF NOT EXISTS archived_at TIMESTAMPTZ DEFAULT NOW();
+
+    ALTER TABLE orders ADD COLUMN IF NOT EXISTS custom_fields_json TEXT;
+    ALTER TABLE bill_edit_requests ADD COLUMN IF NOT EXISTS used_at TIMESTAMPTZ;
+    ALTER TABLE staff_messages ADD COLUMN IF NOT EXISTS sender_id TEXT;
+    ALTER TABLE staff_messages ADD COLUMN IF NOT EXISTS sender_name TEXT;
+    ALTER TABLE staff_messages ADD COLUMN IF NOT EXISTS sender_role TEXT;
+    ALTER TABLE staff_messages ADD COLUMN IF NOT EXISTS recipient_staff_id TEXT;
+  `);
+
+  await query(`
+    UPDATE staff_messages
+    SET sender_id=COALESCE(sender_id,staff_id),
+        sender_name=COALESCE(sender_name,staff_name,staff_id),
+        sender_role=COALESCE(sender_role,'staff'),
+        recipient_staff_id=COALESCE(recipient_staff_id,staff_id)
+    WHERE sender_id IS NULL OR sender_role IS NULL OR recipient_staff_id IS NULL;
+  `);
+
+
+  await query(`
+    UPDATE archived_orders
+    SET
+      payload = CASE
+        WHEN payload IS NULL OR payload = '{}'::jsonb
+          THEN COALESCE(NULLIF(snapshot_json,''),'{}')::jsonb
+        ELSE payload
+      END,
+      snapshot_json = CASE
+        WHEN COALESCE(snapshot_json,'') = ''
+          THEN COALESCE(payload,'{}'::jsonb)::text
+        ELSE snapshot_json
+      END,
+      original_order_id = COALESCE(
+        original_order_id,
+        CASE
+          WHEN COALESCE(payload,'{}'::jsonb) ? 'order'
+           AND (COALESCE(payload,'{}'::jsonb)->'order'->>'id') ~ '^\\d+$'
+          THEN (COALESCE(payload,'{}'::jsonb)->'order'->>'id')::integer
+          ELSE NULL
+        END
+      ),
+      order_no = COALESCE(order_no, COALESCE(payload,'{}'::jsonb)->'order'->>'order_no'),
+      order_date = COALESCE(order_date, COALESCE(payload,'{}'::jsonb)->'order'->>'date'),
+      archived_at = COALESCE(archived_at, NOW());
   `);
 
   const userCount = Number((await query('SELECT COUNT(*) AS c FROM users')).rows[0].c);

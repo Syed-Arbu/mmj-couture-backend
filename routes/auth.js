@@ -13,8 +13,8 @@ router.post('/login', async (req, res) => {
     if (!user || !bcrypt.compareSync(pass, user.password_hash)) {
       return res.status(401).json({ error: 'Incorrect User ID or Password' });
     }
-    req.session.user = { id: user.login_id, role: user.role };
-    res.json({ id: user.login_id, role: user.role });
+    req.session.user = { id: user.login_id, role: user.role, name: user.name || user.login_id };
+    res.json(req.session.user);
   } catch (e) { console.error(e); res.status(500).json({ error: 'Login failed' }); }
 });
 
@@ -39,8 +39,8 @@ router.put('/credentials', async (req, res) => {
     } else {
       await db.query('UPDATE users SET login_id=$1 WHERE id=$2', [finalLoginId, user.id]);
     }
-    req.session.user = { id: finalLoginId, role: user.role };
-    res.json({ id: finalLoginId, role: user.role });
+    req.session.user = { id: finalLoginId, role: user.role, name: user.name || finalLoginId };
+    res.json(req.session.user);
   } catch (e) { console.error(e); res.status(500).json({ error: 'Could not update credentials' }); }
 });
 

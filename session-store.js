@@ -1,0 +1,3 @@
+const session=require('express-session');
+class PgSessionStore extends session.Store{constructor(db){super();this.db=db}get(sid,cb){this.db.query('SELECT sess,expire FROM user_sessions WHERE sid=$1 AND expire>NOW()',[sid]).then(r=>cb(null,r.rows[0]?.sess||null)).catch(cb)}set(sid,sess,cb=()=>{}){const exp=sess.cookie?.expires?new Date(sess.cookie.expires):new Date(Date.now()+12*3600000);this.db.query('INSERT INTO user_sessions(sid,sess,expire) VALUES($1,$2,$3) ON CONFLICT(sid) DO UPDATE SET sess=EXCLUDED.sess,expire=EXCLUDED.expire',[sid,sess,exp]).then(()=>cb()).catch(cb)}destroy(sid,cb=()=>{}){this.db.query('DELETE FROM user_sessions WHERE sid=$1',[sid]).then(()=>cb()).catch(cb)}touch(sid,sess,cb=()=>{}){this.set(sid,sess,cb)}}
+module.exports=PgSessionStore;

@@ -1,9 +1,40 @@
 const express = require('express');
 const db = require('../db');
-const { requireAdmin } = require('../middleware/auth');
+const { requireAuth } = require('../middleware/auth');
 
 const router = express.Router();
-router.use(requireAdmin);
+
+async function requireVerifiedAdmin(req,res,next){
+  try{
+    if(!req.session.user){
+      return res.status(401).json({error:'Not logged in'});
+    }
+
+    const loginId=String(req.session.user.id||'').trim();
+    const row=(await db.query(
+      "SELECT login_id,name,role FROM users WHERE login_id=$1 AND LOWER(TRIM(role))='admin'",
+      [loginId]
+    )).rows[0];
+
+    if(!row){
+      return res.status(403).json({error:'Admin access required'});
+    }
+
+    // Refresh any stale session role/name.
+    req.session.user={
+      id:row.login_id,
+      name:row.name||row.login_id,
+      role:'admin'
+    };
+
+    next();
+  }catch(e){
+    console.error('Admin verification failed:',e);
+    res.status(500).json({error:'Could not verify Admin access'});
+  }
+}
+
+router.use(requireAuth, requireVerifiedAdmin);
 
 const ONE_GB = 1024 * 1024 * 1024;
 
@@ -45,67 +76,85 @@ router.get('/stats', async (req, res) => {
   }
 });
 
-router.post('/archive', async (req, res) => {
-  const before = String((req.body || {}).before || '').trim();
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(before)) {
-    return res.status(400).json({ error: 'Please select a valid date' });
+router.post('/archive', async (req,res)=>{
+  const before=String((req.body||{}).before||'').trim();
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(before)){
+    return res.status(400).json({error:'Please select a valid date'});
   }
 
-  const client = await db.pool.connect();
-  try {
+  const client=await db.pool.connect();
+  try{
     await client.query('BEGIN');
 
-    const rows = await client.query(`
-      SELECT
-        o.*,
-        c.customer_code,
-        c.name AS customer_name,
-        c.phone AS customer_phone,
-        c.address AS customer_address
+    // Dates in this app are stored as ISO YYYY-MM-DD text.
+    // Text comparison is safe for valid ISO dates and avoids PostgreSQL cast/locking issues.
+    const rows=(await client.query(`
+      SELECT o.*,c.customer_code,c.name AS customer_name,
+             c.phone AS customer_phone,c.address AS customer_address
       FROM orders o
-      JOIN customers c ON c.id = o.customer_id
-      WHERE o.date < $1
-      ORDER BY o.date ASC, o.id ASC
-    `, [before]);
+      LEFT JOIN customers c ON c.id=o.customer_id
+      WHERE COALESCE(o.date,'') ~ '^\\d{4}-\\d{2}-\\d{2}$'
+        AND o.date < $1
+      ORDER BY o.id
+    `,[before])).rows;
 
-    for (const row of rows.rows) {
-      const payload = {
-        order: row,
-        customer: {
-          customerCode: row.customer_code,
-          name: row.customer_name,
-          phone: row.customer_phone,
-          address: row.customer_address
+    if(!rows.length){
+      await client.query('COMMIT');
+      return res.json({archived:0,before,message:'No orders found before selected date'});
+    }
+
+    for(const o of rows){
+      const payload={
+        order:{...o},
+        customer:{
+          customerCode:o.customer_code||'',
+          name:o.customer_name||'',
+          phone:o.customer_phone||'',
+          address:o.customer_address||''
         }
       };
+
+      const snapshot=JSON.stringify(payload);
       await client.query(
-        `INSERT INTO archived_orders (original_order_id, order_no, order_date, payload)
-         VALUES ($1,$2,$3,$4::jsonb)`,
-        [row.id, row.order_no, row.date, JSON.stringify(payload)]
+        `INSERT INTO archived_orders(original_order_id,order_no,order_date,payload,snapshot_json)
+         VALUES($1,$2,$3,$4::jsonb,$5)`,
+        [o.id,o.order_no,String(o.date||''),snapshot,snapshot]
       );
     }
 
-    if (rows.rowCount) {
-      await client.query('DELETE FROM orders WHERE date < $1', [before]);
-    }
+    await client.query(
+      'DELETE FROM orders WHERE id = ANY($1::int[])',
+      [rows.map(r=>Number(r.id))]
+    );
 
     await client.query('COMMIT');
-    res.json({ archived: rows.rowCount });
-  } catch (e) {
-    await client.query('ROLLBACK');
-    console.error(e);
-    res.status(500).json({ error: 'Could not archive old orders' });
-  } finally {
+    res.json({archived:rows.length,before});
+  }catch(e){
+    try{await client.query('ROLLBACK')}catch{}
+    console.error('ARCHIVE ERROR:',e);
+    res.status(500).json({
+      error:'Could not archive old orders: '+String(e.message||e)
+    });
+  }finally{
     client.release();
   }
 });
-
 router.get('/archive', async (req, res) => {
   try {
     const r = await db.query(`
-      SELECT id, original_order_id, order_no, order_date, payload, archived_at
+      SELECT
+        id,
+        original_order_id,
+        COALESCE(order_no, payload->'order'->>'order_no') AS order_no,
+        COALESCE(order_date, payload->'order'->>'date') AS order_date,
+        CASE
+          WHEN payload IS NULL OR payload='{}'::jsonb
+            THEN COALESCE(NULLIF(snapshot_json,''),'{}')::jsonb
+          ELSE payload
+        END AS payload,
+        archived_at
       FROM archived_orders
-      ORDER BY order_date ASC, id ASC
+      ORDER BY COALESCE(order_date, payload->'order'->>'date','') ASC, id ASC
     `);
     res.json({
       exportedAt: new Date().toISOString(),
@@ -115,6 +164,46 @@ router.get('/archive', async (req, res) => {
   } catch (e) {
     console.error(e);
     res.status(500).json({ error: 'Could not download archive' });
+  }
+});
+
+
+router.get('/archive/download', async (req,res)=>{
+  try{
+    const r=await db.query(`
+      SELECT
+        id,
+        original_order_id,
+        COALESCE(order_no, payload->'order'->>'order_no') AS order_no,
+        COALESCE(order_date, payload->'order'->>'date') AS order_date,
+        CASE
+          WHEN payload IS NULL OR payload='{}'::jsonb
+            THEN COALESCE(NULLIF(snapshot_json,''),'{}')::jsonb
+          ELSE payload
+        END AS payload,
+        archived_at
+      FROM archived_orders
+      ORDER BY COALESCE(order_date, payload->'order'->>'date','') ASC, id ASC
+    `);
+
+    const backup={
+      exportedAt:new Date().toISOString(),
+      total:r.rowCount,
+      orders:r.rows
+    };
+
+    const stamp=new Date().toISOString().slice(0,10);
+    const body=JSON.stringify(backup,null,2);
+
+    res.status(200);
+    res.setHeader('Content-Type','application/json; charset=utf-8');
+    res.setHeader('Content-Disposition',`attachment; filename="MMJ_Order_Archive_${stamp}.json"`);
+    res.setHeader('Content-Length',Buffer.byteLength(body));
+    res.setHeader('Cache-Control','no-store');
+    res.end(body);
+  }catch(e){
+    console.error('Download archive failed:',e);
+    res.status(500).json({error:'Could not download archive: '+String(e.message||e)});
   }
 });
 
