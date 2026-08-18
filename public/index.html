@@ -324,6 +324,41 @@ table tbody tr:last-child td{border-bottom:none;}
 .delivery-status-select.delivered{color:var(--good);font-weight:700;border-color:rgba(62,107,79,.35)}
 .delivery-status-select.not-delivered{color:var(--danger);font-weight:700;border-color:rgba(163,64,47,.30)}
 
+
+.edit-request-compact{border:1px solid var(--line);border-radius:10px;background:#FCFAF3;padding:12px 14px}
+.edit-request-compact .request-title{font-weight:700;margin-bottom:5px}
+.edit-request-compact .request-meta{font-size:12px;color:var(--ink-soft);line-height:1.7}
+.edit-request-status{display:inline-flex;padding:4px 8px;border-radius:12px;font-size:10.5px;font-weight:700;text-transform:uppercase}
+.edit-request-status.pending{background:rgba(201,161,92,.15);color:var(--gold-deep)}
+.edit-request-status.approved{background:rgba(62,107,79,.12);color:var(--good)}
+.edit-request-status.used,.edit-request-status.rejected{background:rgba(163,64,47,.09);color:var(--danger)}
+
+
+
+/* ===== WORKING 2-SECOND HOLD + DRAG REORDER ===== */
+.mmj-sortable-item{position:relative}
+.mmj-sortable-item>.mmj-reorder-hint{display:none!important}
+.mmj-sortable-item.mmj-holding{outline:2px solid var(--gold-deep);outline-offset:3px}
+.mmj-sortable-item.mmj-dragging{
+  opacity:.78;box-shadow:0 18px 40px rgba(0,0,0,.24);
+  z-index:9999;cursor:grabbing!important;user-select:none!important
+}
+.mmj-sortable-item.mmj-drop-target{outline:2px dashed var(--gold-deep);outline-offset:4px}
+.mmj-reorder-toast{
+  position:fixed;left:50%;bottom:26px;transform:translateX(-50%);
+  background:#18140F;color:#F5E7C8;border:1px solid var(--gold-deep);
+  padding:9px 14px;border-radius:20px;font-size:12px;z-index:10000;
+  box-shadow:0 8px 25px rgba(0,0,0,.22)
+}
+
+
+.password-wrap{position:relative}
+.password-wrap input{padding-right:44px!important}
+.password-eye{position:absolute;right:9px;top:50%;transform:translateY(-50%);width:31px;height:31px;border:0;background:transparent;cursor:pointer;color:var(--ink-soft);font-size:16px;border-radius:6px}
+.password-eye:hover{background:#F4ECDD;color:var(--ink)}
+.company-extra-row{display:grid;grid-template-columns:minmax(160px,.8fr) minmax(220px,1.5fr) auto;gap:10px;align-items:end;padding:12px;border:1px solid var(--line);border-radius:10px;background:#FCFAF3;margin-top:10px}
+@media(max-width:700px){.company-extra-row{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -356,7 +391,7 @@ table tbody tr:last-child td{border-bottom:none;}
         </div>
         <div class="field">
           <label>Password</label>
-          <input type="password" id="loginPass" placeholder="••••••••" autocomplete="current-password">
+          <div class="password-wrap"><input type="password" id="loginPass" placeholder="••••••••" autocomplete="current-password"><button class="password-eye" type="button" data-toggle-password="loginPass" aria-label="Show password">👁</button></div>
           <div class="field-error" id="loginError">Incorrect User ID or Password.</div>
         </div>
 
@@ -460,6 +495,10 @@ table tbody tr:last-child td{border-bottom:none;}
           </div>
         </div>
       </div>
+
+      <div class="panel" id="dashboardManageSectionsPanel" hidden><div class="panel-head"><h3>Manage Sections</h3></div>
+          <div class="panel-body" id="sectionTogglesWrap"></div>
+        </div>
 
       <div class="panel">
         <div class="panel-head"><h3>Recent Orders</h3><button class="btn ghost small" data-goto="orders">View All →</button></div>
@@ -657,6 +696,43 @@ table tbody tr:last-child td{border-bottom:none;}
         </div>
         <div style="font-size:11px;color:#8b8069;margin-top:9px;">Maximum 3 attachments per message, up to 10 MB each. Only Admin can delete messages.</div>
       </div></div>
+    
+        <div id="messagesAdminTools" hidden style="margin-top:18px;">
+          <div class="panel">
+            <div class="panel-head">
+              <h3>Staff Bill Edit Requests</h3>
+              <span class="mono" style="font-size:11px;color:#9a8f76;">compact request list</span>
+            </div>
+            <div class="panel-body">
+              <p style="font-size:12.5px;color:var(--ink-soft);margin-top:0;">Choose a request from the dropdown. Pending requests appear first. Approved, used and rejected requests stay compact instead of expanding the page.</p>
+              <div class="form-grid2">
+                <div class="field">
+                  <label>Edit Request</label>
+                  <select id="editRequestSelect"></select>
+                </div>
+                <div style="display:flex;align-items:end;gap:8px;flex-wrap:wrap;">
+                  <button class="btn danger small" id="deleteEditRequestBtn" type="button">Delete Request</button>
+                </div>
+              </div>
+              <div id="editRequestDetails" style="margin-top:12px;"></div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head"><h3>Admin Notes</h3></div>
+            <div class="panel-body">
+              <div class="field">
+                <label>Private Admin Notes</label>
+                <textarea id="adminPrivateNotes" class="notes-box" placeholder="1. Type a note and press Enter for the next point…"></textarea>
+              </div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                <button class="btn gold small" id="saveAdminPrivateNotesBtn" type="button">Save Notes</button>
+                <button class="btn danger small" id="deleteAdminPrivateNotesBtn" type="button">Delete Notes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
     </div>
 
     <!-- ---------------- ADMIN (owner only) ---------------- -->
@@ -675,10 +751,13 @@ table tbody tr:last-child td{border-bottom:none;}
             <div class="form-grid2">
               <div class="field"><label>Company Address</label><input type="text" id="companyAddress" placeholder="Shop address"></div>
               <div class="field"><label>Phone Number</label><input type="text" id="companyPhone" placeholder="+91 XXXXXXXXXX"></div>
+              <div class="field"><label>Email</label><input type="email" id="companyEmail" placeholder="e.g. contact@mmjaveed.com"></div>
+              <div class="field"><label>Land Line</label><input type="text" id="companyLandline" placeholder="e.g. 080-XXXXXXXX"></div>
+              <div class="field"><label>Instagram</label><input type="text" id="companyInstagram" placeholder="e.g. @mmjaveedcouture"></div>
             </div>
             <div id="companyExtraRows"></div>
-            <button class="btn ghost small" id="addCompanySectionBtn" style="margin-top:6px;">+ Add Section</button>
-            <span style="font-size:11px;color:var(--ink-soft);margin-left:8px;">Added rows print on both Store & Client bills.</span>
+            <button class="btn ghost small" id="addCompanySectionBtn" style="margin-top:6px;">+ Add Professional Section</button>
+            <span style="font-size:11px;color:var(--ink-soft);margin-left:8px;">Add Website, Branch, Support, CIN, Social Media or any other professional detail. It prints neatly on both bills.</span>
             <div style="margin-top:18px;"><button class="btn gold small" id="saveCompanyInfoBtn">Save Company Details</button></div>
           </div>
         </div>
@@ -694,19 +773,15 @@ table tbody tr:last-child td{border-bottom:none;}
             <div class="item-add-row" style="margin-top:16px;">
               <div class="field"><label>Staff Name</label><input type="text" id="newStaffName" placeholder="e.g. Amjad"></div>
               <div class="field"><label>Login ID</label><input type="text" id="newStaffId" placeholder="e.g. amjad@mmj"></div>
-              <div class="field"><label>Password</label><input type="password" id="newStaffPass" placeholder="Min 6 characters"></div>
+              <div class="field"><label>Password</label><div class="password-wrap"><input type="password" id="newStaffPass" placeholder="Min 6 characters"><button class="password-eye" type="button" data-toggle-password="newStaffPass" aria-label="Show password">👁</button></div></div>
               <button class="btn gold" id="addStaffBtn" style="height:47px;">+ Add Staff</button>
             </div>
           </div>
         </div>
 
-        <div class="panel"><div class="panel-head"><h3>Staff Bill Edit Requests</h3></div>
-          <div class="panel-body"><p style="font-size:13px;color:var(--ink-soft);margin-top:0;">Saved staff bills are locked. Approve a request here before that staff member can edit the bill.</p><div id="editRequestList"></div></div>
-        </div>
+        
 
-        <div class="panel"><div class="panel-head"><h3>Manage Sections</h3></div>
-          <div class="panel-body" id="sectionTogglesWrap"></div>
-        </div>
+        
 
         <div class="panel"><div class="panel-head"><h3>Manage Garment Types</h3></div>
           <div class="panel-body">
@@ -797,19 +872,17 @@ table tbody tr:last-child td{border-bottom:none;}
           </div>
         </div>
 
-        <div class="panel"><div class="panel-head"><h3>Bill Change History</h3><span class="mono" style="font-size:11px;color:#9a8f76;">Old Bill vs Present Bill</span></div><div class="panel-body" id="billChangeHistoryList"></div></div>
+        
 
-        <div class="panel"><div class="panel-head"><h3>Admin Notes</h3></div>
-          <div class="panel-body"><div class="field"><label>Private Notes</label><textarea id="adminPrivateNotes" class="notes-box" placeholder="1. Type a note and press Enter for the next point…"></textarea></div><button class="btn gold small" id="saveAdminPrivateNotesBtn">Save Notes</button></div>
-        </div>
+        
 
         <div class="panel"><div class="panel-head"><h3>My Admin Credentials</h3></div>
           <div class="panel-body">
             <p style="font-size:13px;color:var(--ink-soft);margin-top:0;">Change your own login ID and/or password. Your current password is required to confirm the change.</p>
             <div class="form-grid3">
-              <div class="field"><label>Current Password</label><input type="password" id="adminCurrentPass" placeholder="Required to confirm"></div>
+              <div class="field"><label>Current Password</label><div class="password-wrap"><input type="password" id="adminCurrentPass" placeholder="Required to confirm"><button class="password-eye" type="button" data-toggle-password="adminCurrentPass" aria-label="Show password">👁</button></div></div>
               <div class="field"><label>New Login ID</label><input type="text" id="adminNewId" placeholder="Leave blank to keep current"></div>
-              <div class="field"><label>New Password</label><input type="password" id="adminNewPass" placeholder="Leave blank to keep current"></div>
+              <div class="field"><label>New Password</label><div class="password-wrap"><input type="password" id="adminNewPass" placeholder="Leave blank to keep current"><button class="password-eye" type="button" data-toggle-password="adminNewPass" aria-label="Show password">👁</button></div></div>
             </div>
             <button class="btn gold small" id="saveAdminCredsBtn">Update My Credentials</button>
           </div>
@@ -980,6 +1053,7 @@ let staffDirectory=[], activeChatStaffId=null, pendingChatFiles=[];
 let customBillFields={client:[],relationship:[],body:[],length:[],garment:[],material:[],trial:[],billing:[]}, customBillSections=[];
 let relationshipOptions=['New','Existing','Regular'];
 let customBillDraftValues={fields:{},sections:{}};
+let uiLayoutPrefs={};
 let approvedEditOrderId=null;
 
 /* ================= CORE DATA (loaded from the backend after login) ================= */
@@ -994,6 +1068,9 @@ let companyInfo = {
   tagline: "Bespoke. Crafted for You.",
   address: "Bangalore, Karnataka",
   phone: "+91 XXXXXXXXXX",
+  email: "",
+  landline: "",
+  instagram: "",
   gst: "",
   upiId: "",
   extra: []
@@ -1167,6 +1244,8 @@ async function enterApp(idVal){
   document.getElementById('messagesNavTab').hidden = false;
   document.getElementById('adminQuickGarmentRow').hidden = currentRole !== 'admin';
   document.getElementById('postSaveDeleteBtn').hidden = currentRole !== 'admin';
+  const dashSections=document.getElementById('dashboardManageSectionsPanel'); if(dashSections)dashSections.hidden=currentRole!=='admin';
+  const msgAdminTools=document.getElementById('messagesAdminTools'); if(msgAdminTools)msgAdminTools.hidden=currentRole!=='admin';
 
   await loadAppData();
 
@@ -1196,7 +1275,7 @@ async function loadAppData(){
     companyInfo = company;
     qrCodes = qrs;
     orders = orderList;
-    if(workflow){editRequests=workflow.requests||[];staffMessages=workflow.messages||[];billHistory=workflow.history||[];staffDirectory=workflow.staffDirectory||[];customBillFields=workflow.customFields||customBillFields;customBillSections=workflow.customSections||[];relationshipOptions=workflow.relationshipOptions||relationshipOptions;window.__adminNotes=(workflow.adminNotes&&String(workflow.adminNotes).trim())?workflow.adminNotes:'1. ';}
+    if(workflow){editRequests=workflow.requests||[];staffMessages=workflow.messages||[];staffDirectory=workflow.staffDirectory||[];customBillFields=workflow.customFields||customBillFields;customBillSections=workflow.customSections||[];relationshipOptions=workflow.relationshipOptions||relationshipOptions;window.__adminNotes=workflow.adminNotes||'';uiLayoutPrefs=workflow.uiLayout||uiLayoutPrefs;setTimeout(applySavedUiLayout,0);}
   } catch(err){
     toast('Could not load data from the server: ' + err.message);
   }
@@ -1235,7 +1314,8 @@ function switchView(name){
   });
   document.querySelectorAll('.nav-tab').forEach(t=> t.classList.toggle('active', t.dataset.view===name));
   if(name==='orders'){ renderOrdersTable(); }
-  if(name==='dashboard'){ refreshDashboard(); }
+  if(name==='messages'&&currentRole==='admin'){ refreshWorkflowState(); }
+  if(name==='dashboard'){ refreshDashboard(); if(currentRole==='admin')renderSectionToggles(); }
   if(name==='admin'){
     renderSectionToggles(); renderGarmentTags(); renderQrAdminGrid();
     loadCompanyInfoForm(); loadStaffList(); loadDatabaseStorage();
@@ -1733,9 +1813,12 @@ function pbillHeader(o, copyLabel){
         <h1>${(companyInfo.name||'MM Javeed Couture').toUpperCase()}</h1>
         <div class="tagline">${companyInfo.tagline||''}</div>
         <div style="font-size:11px;color:#41392E;margin-top:6px;line-height:1.6;">
-          ${companyInfo.address?`<div>${companyInfo.address}</div>`:''}
-          ${companyInfo.phone?`<div>Ph: ${companyInfo.phone}</div>`:''}
-          ${companyInfo.gst?`<div>GSTIN: ${companyInfo.gst}</div>`:''}
+          ${companyInfo.address?`<div>${escapeHtml(companyInfo.address)}</div>`:''}
+          ${companyInfo.phone?`<div><b>Mobile:</b> ${escapeHtml(companyInfo.phone)}</div>`:''}
+          ${companyInfo.landline?`<div><b>Land Line:</b> ${escapeHtml(companyInfo.landline)}</div>`:''}
+          ${companyInfo.email?`<div><b>Email:</b> ${escapeHtml(companyInfo.email)}</div>`:''}
+          ${companyInfo.instagram?`<div><b>Instagram:</b> ${escapeHtml(companyInfo.instagram)}</div>`:''}
+          ${companyInfo.gst?`<div><b>GSTIN:</b> ${escapeHtml(companyInfo.gst)}</div>`:''}
           ${extraLines}
         </div>
       </div>
@@ -2055,19 +2138,22 @@ function loadCompanyInfoForm(){
   document.getElementById('companyGst').value = companyInfo.gst || '';
   document.getElementById('companyAddress').value = companyInfo.address || '';
   document.getElementById('companyPhone').value = companyInfo.phone || '';
+  document.getElementById('companyEmail').value = companyInfo.email || '';
+  document.getElementById('companyLandline').value = companyInfo.landline || '';
+  document.getElementById('companyInstagram').value = companyInfo.instagram || '';
   const upiAdmin=document.getElementById('companyUpiId'); if(upiAdmin) upiAdmin.value=companyInfo.upiId||'';
   const wrap = document.getElementById('companyExtraRows');
   wrap.innerHTML = '';
   (companyInfo.extra||[]).forEach(e=> addCompanyExtraRow(e.label, e.value));
 }
-function addCompanyExtraRow(label, value){
-  const wrap = document.getElementById('companyExtraRows');
-  const row = document.createElement('div');
-  row.className = 'custom-measure-row';
-  row.innerHTML = `<input type="text" class="ce-label" placeholder="Section name (e.g. Website)" value="${label||''}">
-    <input type="text" class="ce-val" placeholder="Value" value="${value||''}" style="max-width:220px;">
-    <button class="remove-x" type="button">✕</button>`;
-  row.querySelector('.remove-x').addEventListener('click', ()=> row.remove());
+function addCompanyExtraRow(label='', value=''){
+  const wrap=document.getElementById('companyExtraRows');
+  const row=document.createElement('div');
+  row.className='company-extra-row';
+  row.innerHTML=`<div class="field"><label>Section Name</label><input type="text" class="ce-label" placeholder="e.g. Website / Branch / Support" value="${escapeHtml(label)}"></div>
+    <div class="field"><label>Details</label><input type="text" class="ce-val" placeholder="Enter professional details" value="${escapeHtml(value)}"></div>
+    <button class="btn danger small remove-x" type="button">Remove</button>`;
+  row.querySelector('.remove-x').addEventListener('click',()=>row.remove());
   wrap.appendChild(row);
 }
 document.getElementById('addCompanySectionBtn').addEventListener('click', ()=> addCompanyExtraRow());
@@ -2078,10 +2164,13 @@ document.getElementById('saveCompanyInfoBtn').addEventListener('click', async ()
     gst: document.getElementById('companyGst').value.trim(),
     address: document.getElementById('companyAddress').value.trim(),
     phone: document.getElementById('companyPhone').value.trim(),
+    email: document.getElementById('companyEmail').value.trim(),
+    landline: document.getElementById('companyLandline').value.trim(),
+    instagram: document.getElementById('companyInstagram').value.trim(),
     upiId: companyInfo.upiId || document.getElementById('companyUpiId')?.value.trim() || '',
     extra: []
   };
-  document.querySelectorAll('#companyExtraRows .custom-measure-row').forEach(row=>{
+  document.querySelectorAll('#companyExtraRows .company-extra-row').forEach(row=>{
     const label = row.querySelector('.ce-label').value.trim();
     const value = row.querySelector('.ce-val').value.trim();
     if(label) payload.extra.push({label, value});
@@ -2303,7 +2392,7 @@ function renderQrAdminGrid(){
 
 /* ================= OWNER-REQUESTED WORKFLOW ================= */
 function escapeHtml(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-async function refreshWorkflowState(){if(DEMO_MODE)return;try{const w=await api('/api/workflow/state');editRequests=w.requests||[];staffMessages=w.messages||[];billHistory=w.history||[];staffDirectory=w.staffDirectory||[];customBillFields=w.customFields||customBillFields;customBillSections=w.customSections||[];relationshipOptions=w.relationshipOptions||relationshipOptions;window.__adminNotes=(w.adminNotes&&String(w.adminNotes).trim())?w.adminNotes:'1. ';renderCustomBillConfiguration();renderMessagesView();if(currentRole==='admin')renderAdminWorkflow();}catch(e){console.error(e)}}
+async function refreshWorkflowState(){if(DEMO_MODE)return;try{const w=await api('/api/workflow/state');editRequests=w.requests||[];staffMessages=w.messages||[];staffDirectory=w.staffDirectory||[];customBillFields=w.customFields||customBillFields;customBillSections=w.customSections||[];relationshipOptions=w.relationshipOptions||relationshipOptions;window.__adminNotes=w.adminNotes||'';uiLayoutPrefs=w.uiLayout||uiLayoutPrefs;setTimeout(applySavedUiLayout,0);renderCustomBillConfiguration();renderMessagesView();if(currentRole==='admin')renderAdminWorkflow();}catch(e){console.error(e)}}
 async function saveWorkflowConfig(){if(DEMO_MODE)return;await api('/api/workflow/config',{method:'PUT',body:JSON.stringify({customFields:customBillFields,customSections:customBillSections,relationshipOptions})});}
 function renderCustomerRelationshipOptions(){
   const sel=document.getElementById('customerRelationship');
@@ -2374,9 +2463,102 @@ document.getElementById('addRelationshipOptionBtn')?.addEventListener('click',as
 document.getElementById('addCustomSectionBtn2')?.addEventListener('click',async()=>{if(currentRole!=='admin')return;const name=document.getElementById('newCustomSectionName').value.trim(),box=document.getElementById('newCustomSectionBox').value.trim()||'Details';if(!name)return toast('Enter a section name.');customBillSections.push({id:'s'+Date.now(),name,fields:[{id:'f1',label:box}]});await saveWorkflowConfig();document.getElementById('newCustomSectionName').value='';document.getElementById('newCustomSectionBox').value='';renderCustomBillConfiguration();toast('New bill section added.')});
 function setBillFormLock(lock){document.querySelectorAll('#view-newbill input,#view-newbill select,#view-newbill textarea,#view-newbill button').forEach(x=>{if(x.id==='cancelBillBtn')return;x.disabled=!!lock})}
 function applySavedBillEditLock(o){const n=document.getElementById('savedBillPermissionNote');if(!editingOrderId){n.hidden=true;setBillFormLock(false);return}if(currentRole==='admin'){n.hidden=false;n.className='permission-note approved';n.textContent='Admin edit access — pricing, payment and all bill details are editable.';setBillFormLock(false);return}const approved=!!editRequests.find(r=>r.orderId===o.id&&r.staffId===currentUserId&&r.status==='approved');n.hidden=false;if(approved){approvedEditOrderId=o.id;n.className='permission-note approved';n.textContent='Admin approved this edit request. You can edit this saved bill once; it locks again after saving.';setBillFormLock(false)}else{n.className='permission-note locked';n.textContent='Saved bill locked. Staff cannot change pricing, payment or bill details until Admin approves an edit request.';setBillFormLock(true)}}
-window.approveEditRequest=async id=>{try{await api('/api/workflow/edit-requests/'+id,{method:'PUT',body:JSON.stringify({status:'approved'})});await refreshWorkflowState();toast('Staff edit request approved.')}catch(e){toast(e.message)}};window.rejectEditRequest=async id=>{try{await api('/api/workflow/edit-requests/'+id,{method:'PUT',body:JSON.stringify({status:'rejected'})});await refreshWorkflowState();toast('Edit request rejected.')}catch(e){toast(e.message)}};
-function renderAdminWorkflow(){if(currentRole!=='admin')return;const q=document.getElementById('editRequestList');if(q)q.innerHTML=editRequests.map(r=>`<div class="request-card"><div class="request-meta">${escapeHtml(r.staffName||'Staff')} (${escapeHtml(r.staffId)}) • Order ${escapeHtml(r.orderId)} • ${escapeHtml(r.when)}</div><div>Status: <b>${escapeHtml(String(r.status).toUpperCase())}</b></div>${r.status==='pending'?`<div class="modal-actions"><button class="btn gold small" onclick="approveEditRequest(${r.id})">Approve</button><button class="btn danger small" onclick="rejectEditRequest(${r.id})">Reject</button></div>`:''}</div>`).join('')||'<div class="empty-note">No staff edit requests.</div>';const h=document.getElementById('billChangeHistoryList');if(h)h.innerHTML=billHistory.map(x=>`<div class="history-card"><div class="history-meta">Order ${escapeHtml(x.orderId)} • changed by ${escapeHtml(x.changedBy)} • ${escapeHtml(x.when)}</div><div class="snapshot-grid"><div class="snapshot-box"><h4>Old Bill</h4><pre>${escapeHtml(JSON.stringify(x.oldBill,null,2))}</pre></div><div class="snapshot-box"><h4>Present Bill</h4><pre>${escapeHtml(JSON.stringify(x.newBill,null,2))}</pre></div></div></div>`).join('')||'<div class="empty-note">No edited bills yet.</div>';const notes=document.getElementById('adminPrivateNotes');if(notes&&document.activeElement!==notes){notes.value=window.__adminNotes||'1. ';if(!notes.value.trim())notes.value='1. '}renderAdminCustomList()}
-document.getElementById('saveAdminPrivateNotesBtn')?.addEventListener('click',async()=>{try{await api('/api/workflow/admin-notes',{method:'PUT',body:JSON.stringify({notes:document.getElementById('adminPrivateNotes').value})});toast('Admin notes saved.')}catch(e){toast(e.message)}});
+window.approveEditRequest=async id=>{
+  try{
+    await api('/api/workflow/edit-requests/'+id,{method:'PUT',body:JSON.stringify({status:'approved'})});
+    await refreshWorkflowState();
+    toast('Staff edit request approved.');
+  }catch(e){toast(e.message)}
+};
+window.rejectEditRequest=async id=>{
+  try{
+    await api('/api/workflow/edit-requests/'+id,{method:'PUT',body:JSON.stringify({status:'rejected'})});
+    await refreshWorkflowState();
+    toast('Edit request rejected.');
+  }catch(e){toast(e.message)}
+};
+
+function orderedEditRequests(){
+  const rank={pending:0,approved:1,used:2,rejected:3};
+  return [...editRequests].sort((a,b)=>{
+    const ra=rank[a.status]??9,rb=rank[b.status]??9;
+    if(ra!==rb)return ra-rb;
+    return Number(b.id||0)-Number(a.id||0);
+  });
+}
+function renderEditRequestDetails(){
+  const sel=document.getElementById('editRequestSelect');
+  const box=document.getElementById('editRequestDetails');
+  const del=document.getElementById('deleteEditRequestBtn');
+  if(!sel||!box)return;
+  const id=Number(sel.value||0);
+  const r=editRequests.find(x=>Number(x.id)===id);
+  if(del)del.disabled=!r;
+  if(!r){
+    box.innerHTML='<div class="empty-note">No staff edit requests.</div>';
+    return;
+  }
+  box.innerHTML=`<div class="edit-request-compact">
+    <div class="request-title">${escapeHtml(r.staffName||'Staff')} <span class="mono">(${escapeHtml(r.staffId||'')})</span></div>
+    <div class="request-meta">
+      Order: <b>${escapeHtml(r.orderId||'—')}</b><br>
+      Requested: ${escapeHtml(formatChatTime(r.when))}<br>
+      Status: <span class="edit-request-status ${escapeHtml(r.status||'pending')}">${escapeHtml(r.status||'pending')}</span>
+    </div>
+    ${r.status==='pending'?`<div class="modal-actions" style="margin-top:10px;">
+      <button class="btn gold small" onclick="approveEditRequest(${r.id})">Approve</button>
+      <button class="btn danger small" onclick="rejectEditRequest(${r.id})">Reject</button>
+    </div>`:''}
+  </div>`;
+}
+function renderEditRequestDropdown(){
+  const sel=document.getElementById('editRequestSelect');
+  if(!sel)return;
+  const previous=Number(sel.value||0);
+  const list=orderedEditRequests();
+  sel.innerHTML=list.length
+    ? list.map(r=>`<option value="${r.id}">${String(r.status||'pending').toUpperCase()} — ${escapeHtml(r.staffName||r.staffId||'Staff')} — ${escapeHtml(r.orderId||'')}</option>`).join('')
+    : '<option value="">No requests</option>';
+  if(previous&&list.some(r=>Number(r.id)===previous))sel.value=String(previous);
+  sel.onchange=renderEditRequestDetails;
+  renderEditRequestDetails();
+}
+function renderAdminWorkflow(){
+  if(currentRole!=='admin')return;
+  renderEditRequestDropdown();
+  const notes=document.getElementById('adminPrivateNotes');
+  if(notes&&document.activeElement!==notes)notes.value=window.__adminNotes||'';
+  renderAdminCustomList();
+}
+document.getElementById('deleteEditRequestBtn')?.addEventListener('click',async()=>{
+  const id=Number(document.getElementById('editRequestSelect')?.value||0);
+  if(!id)return toast('Select a request first.');
+  if(!confirm('Delete this edit request from the list?'))return;
+  try{
+    await api('/api/workflow/edit-requests/'+id,{method:'DELETE'});
+    await refreshWorkflowState();
+    toast('Edit request deleted.');
+  }catch(e){toast(e.message)}
+});
+document.getElementById('saveAdminPrivateNotesBtn')?.addEventListener('click',async()=>{
+  try{
+    const notes=document.getElementById('adminPrivateNotes').value;
+    await api('/api/workflow/admin-notes',{method:'PUT',body:JSON.stringify({notes})});
+    window.__adminNotes=notes;
+    toast('Admin notes saved.');
+  }catch(e){toast(e.message)}
+});
+document.getElementById('deleteAdminPrivateNotesBtn')?.addEventListener('click',async()=>{
+  if(!confirm('Delete all Admin Notes?'))return;
+  try{
+    await api('/api/workflow/admin-notes',{method:'DELETE'});
+    window.__adminNotes='';
+    const notes=document.getElementById('adminPrivateNotes');
+    if(notes)notes.value='';
+    toast('Admin notes deleted.');
+  }catch(e){toast(e.message)}
+});
+
 function formatChatTime(v){try{return new Date(v).toLocaleString('en-IN',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})}catch{return String(v||'')}}
 function humanFileSize(n){n=Number(n||0);if(n<1024)return n+' B';if(n<1048576)return(n/1024).toFixed(1)+' KB';return(n/1048576).toFixed(1)+' MB'}
 function chatStaffName(id){const d=staffDirectory.find(s=>s.id===id),m=staffMessages.find(x=>x.staffId===id);return d?.name||m?.staffName||id}
@@ -2395,15 +2577,31 @@ document.getElementById('selectAllChatMessages')?.addEventListener('change',e=>d
 document.getElementById('deleteSelectedMessagesBtn')?.addEventListener('click',async()=>{if(currentRole!=='admin')return;const ids=[...document.querySelectorAll('[data-message-select]:checked')].map(x=>Number(x.dataset.messageSelect));if(!ids.length)return toast('Select message(s) first.');if(!confirm(`Delete ${ids.length} selected message(s)?`))return;try{await api('/api/workflow/messages/delete-many',{method:'POST',body:JSON.stringify({ids})});document.getElementById('selectAllChatMessages').checked=false;await refreshWorkflowState();toast('Selected messages deleted.')}catch(e){toast(e.message)}});
 document.getElementById('clearConversationBtn')?.addEventListener('click',async()=>{if(currentRole!=='admin'||!activeChatStaffId)return;if(!confirm(`Delete full conversation with ${chatStaffName(activeChatStaffId)}?`))return;try{await api('/api/workflow/messages?staffId='+encodeURIComponent(activeChatStaffId),{method:'DELETE'});await refreshWorkflowState();toast('Conversation deleted.')}catch(e){toast(e.message)}});
 document.getElementById('clearAllMessagesBtn')?.addEventListener('click',async()=>{if(currentRole!=='admin')return;if(!confirm('Delete ALL messages for every staff conversation?'))return;try{await api('/api/workflow/messages',{method:'DELETE'});await refreshWorkflowState();toast('All messages deleted.')}catch(e){toast(e.message)}});
-const adminPrivateNotes=document.getElementById('adminPrivateNotes');if(adminPrivateNotes){if(!adminPrivateNotes.value)adminPrivateNotes.value='1. ';adminPrivateNotes.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();const before=this.value.slice(0,this.selectionStart),after=this.value.slice(this.selectionEnd),num=before.split('\n').length+1,ins=`\n${num}. `,p=before.length+ins.length;this.value=before+ins+after;this.selectionStart=this.selectionEnd=p}})}
-
-// Keep conversations and Admin history synchronized across devices.
-setInterval(()=>{
-  if(!currentRole || document.hidden) return;
-  const messagesOpen=!document.getElementById('view-messages')?.hidden;
-  const adminOpen=currentRole==='admin'&&!document.getElementById('view-admin')?.hidden;
-  if(messagesOpen||adminOpen) refreshWorkflowState();
-},3000);
+const adminPrivateNotes=document.getElementById('adminPrivateNotes');
+if(adminPrivateNotes){
+  adminPrivateNotes.addEventListener('keydown',function(e){
+    if(this.value==='' && e.key.length===1 && !e.ctrlKey && !e.metaKey && !e.altKey){
+      this.value='1. ';
+      this.selectionStart=this.selectionEnd=this.value.length;
+    }
+    if(e.key==='Enter'){
+      e.preventDefault();
+      if(!this.value.trim()){
+        this.value='1. ';
+        this.selectionStart=this.selectionEnd=this.value.length;
+        return;
+      }
+      const before=this.value.slice(0,this.selectionStart);
+      const after=this.value.slice(this.selectionEnd);
+      const numbers=[...before.matchAll(/(?:^|\n)(\d+)\.\s/g)].map(m=>Number(m[1]));
+      const next=(numbers.length?Math.max(...numbers):0)+1;
+      const insertion=`\n${next}. `;
+      this.value=before+insertion+after;
+      const p=before.length+insertion.length;
+      this.selectionStart=this.selectionEnd=p;
+    }
+  });
+}
 
 /* ================= ADMIN: EXCEL EXPORT ================= */
 document.getElementById('excelExportMode')?.addEventListener('change', e=>{
@@ -2693,6 +2891,190 @@ document.getElementById('deleteArchivedBtn')?.addEventListener('click', async ()
     checkNotifications();
   }, 800);
 })();
+
+
+/* ================= LONG-PRESS REORDER V2 ================= */
+(function(){
+  let active=null, timer=null, dragging=false, startX=0, startY=0, lastTarget=null;
+
+  function quickMsg(text){
+    document.querySelector('.mmj-reorder-toast')?.remove();
+    const d=document.createElement('div');
+    d.className='mmj-reorder-toast';
+    d.textContent=text;
+    document.body.appendChild(d);
+    setTimeout(()=>d.remove(),1800);
+  }
+
+  function itemKey(el){
+    if(el.id)return '#'+el.id;
+    const h=el.querySelector(':scope > .panel-head h3, :scope > h3, :scope > .label, :scope .panel-head h3');
+    return 'text:'+((h?.textContent||'box').trim().replace(/\s+/g,' '));
+  }
+
+  function containerKey(parent){
+    const view=parent.closest('.view')?.id||'global';
+    if(parent.id)return view+'#'+parent.id;
+    const cls=[...parent.classList].filter(Boolean).join('.');
+    const same=[...parent.parentElement.children].filter(x=>x.tagName===parent.tagName&&x.className===parent.className);
+    const idx=Math.max(0,same.indexOf(parent));
+    return view+'.'+cls+':'+idx;
+  }
+
+  function movableSiblings(el){
+    const p=el.parentElement;
+    if(!p)return [];
+    if(el.classList.contains('stat-card')){
+      return [...p.children].filter(x=>x.classList.contains('stat-card'));
+    }
+    if(el.classList.contains('panel')){
+      return [...p.children].filter(x=>x.classList.contains('panel'));
+    }
+    return [];
+  }
+
+  async function saveOrder(parent){
+    const items=[...parent.children].filter(x=>x.classList.contains('panel')||x.classList.contains('stat-card'));
+    if(items.length<2)return;
+    uiLayoutPrefs[containerKey(parent)]=items.map(itemKey);
+    try{
+      await api('/api/workflow/ui-layout',{
+        method:'PUT',
+        body:JSON.stringify({layout:uiLayoutPrefs})
+      });
+      quickMsg('Section order saved');
+    }catch(e){
+      console.error(e);
+      quickMsg('Could not save order');
+    }
+  }
+
+  function applyOrder(){
+    document.querySelectorAll('.view').forEach(view=>{
+      const parents=new Set();
+      view.querySelectorAll('.panel,.stat-card').forEach(el=>{
+        const siblings=movableSiblings(el);
+        if(siblings.length>=2)parents.add(el.parentElement);
+      });
+      parents.forEach(parent=>{
+        const saved=uiLayoutPrefs[containerKey(parent)];
+        if(!Array.isArray(saved)||!saved.length)return;
+        const items=[...parent.children].filter(x=>x.classList.contains('panel')||x.classList.contains('stat-card'));
+        const map=new Map(items.map(x=>[itemKey(x),x]));
+        saved.forEach(k=>{const el=map.get(k);if(el)parent.appendChild(el);});
+        items.forEach(el=>{if(!saved.includes(itemKey(el)))parent.appendChild(el);});
+      });
+    });
+  }
+
+  function decorate(){
+    document.querySelectorAll('.view .panel,.view .stat-card').forEach(el=>{
+      if(movableSiblings(el).length<2)return;
+      if(el.dataset.mmjSortableReady==='1')return;
+      el.dataset.mmjSortableReady='1';
+      el.classList.add('mmj-sortable-item');
+      const hint=document.createElement('span');
+      hint.className='mmj-reorder-hint';
+      hint.textContent='';hint.style.display='none';
+      el.appendChild(hint);
+    });
+  }
+
+  function clearTimer(){
+    if(timer){clearTimeout(timer);timer=null;}
+    if(active&&!dragging)active.classList.remove('mmj-holding');
+  }
+
+  document.addEventListener('pointerdown',e=>{
+    if(e.button!==undefined && e.button!==0)return;
+    const el=e.target.closest?.('.mmj-sortable-item');
+    if(!el)return;
+    if(e.target.closest('input,textarea,select,button,a,[contenteditable="true"]'))return;
+
+    active=el;
+    startX=e.clientX;startY=e.clientY;
+    active.classList.add('mmj-holding');
+
+    timer=setTimeout(()=>{
+      if(!active)return;
+      dragging=true;
+      active.classList.add('mmj-dragging');
+      active.style.touchAction='none';
+      document.body.style.userSelect='none';
+      quickMsg('Now drag up/down');
+    },2000);
+  },true);
+
+  document.addEventListener('pointermove',e=>{
+    if(!active)return;
+
+    if(!dragging){
+      if(Math.hypot(e.clientX-startX,e.clientY-startY)>10){
+        clearTimer();
+        active=null;
+      }
+      return;
+    }
+
+    e.preventDefault();
+    const parent=active.parentElement;
+    const under=document.elementFromPoint(e.clientX,e.clientY);
+    const candidate=under?.closest?.('.mmj-sortable-item');
+
+    if(!candidate || candidate===active || candidate.parentElement!==parent)return;
+
+    if(lastTarget&&lastTarget!==candidate)lastTarget.classList.remove('mmj-drop-target');
+    lastTarget=candidate;
+    candidate.classList.add('mmj-drop-target');
+
+    const r=candidate.getBoundingClientRect();
+    const vertical = parent.classList.contains('section-stack') || window.innerWidth<900 || candidate.classList.contains('panel');
+    const before = vertical ? e.clientY < (r.top+r.height/2) : e.clientX < (r.left+r.width/2);
+
+    parent.insertBefore(active, before ? candidate : candidate.nextSibling);
+  },{capture:true,passive:false});
+
+  async function finish(){
+    clearTimer();
+    if(!active)return;
+    const el=active, parent=el.parentElement;
+    active=null;
+
+    if(lastTarget){lastTarget.classList.remove('mmj-drop-target');lastTarget=null;}
+    el.classList.remove('mmj-holding','mmj-dragging');
+    el.style.touchAction='';
+    document.body.style.userSelect='';
+
+    if(dragging){
+      dragging=false;
+      await saveOrder(parent);
+    }
+  }
+
+  document.addEventListener('pointerup',finish,true);
+  document.addEventListener('pointercancel',finish,true);
+
+  window.applySavedUiLayout=function(){
+    applyOrder();
+    decorate();
+  };
+
+  setInterval(decorate,1200);
+  setTimeout(()=>{applyOrder();decorate();},700);
+})();
+
+
+document.addEventListener('click',e=>{
+  const btn=e.target.closest?.('[data-toggle-password]');
+  if(!btn)return;
+  const input=document.getElementById(btn.dataset.togglePassword);
+  if(!input)return;
+  const show=input.type==='password';
+  input.type=show?'text':'password';
+  btn.textContent=show?'🙈':'👁';
+  btn.setAttribute('aria-label',show?'Hide password':'Show password');
+});
+
 </script>
 
 </body>

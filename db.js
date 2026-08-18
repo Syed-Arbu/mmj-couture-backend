@@ -70,6 +70,9 @@ async function initDb() {
       tagline TEXT,
       address TEXT,
       phone TEXT,
+      email TEXT,
+      landline TEXT,
+      instagram TEXT,
       gst TEXT,
       extra_json TEXT
     );
@@ -135,6 +138,9 @@ async function initDb() {
       id SERIAL PRIMARY KEY, order_no TEXT NOT NULL, changed_by TEXT, old_bill JSONB NOT NULL, new_bill JSONB NOT NULL, changed_at TIMESTAMPTZ DEFAULT NOW()
     );
     ALTER TABLE company_info ADD COLUMN IF NOT EXISTS upi_id TEXT;
+    ALTER TABLE company_info ADD COLUMN IF NOT EXISTS email TEXT;
+    ALTER TABLE company_info ADD COLUMN IF NOT EXISTS landline TEXT;
+    ALTER TABLE company_info ADD COLUMN IF NOT EXISTS instagram TEXT;
     ALTER TABLE orders ADD COLUMN IF NOT EXISTS delivery_status TEXT NOT NULL DEFAULT 'Not Delivered';
 
     ALTER TABLE archived_orders ADD COLUMN IF NOT EXISTS payload JSONB NOT NULL DEFAULT '{}'::jsonb;

@@ -5,10 +5,10 @@ const router = express.Router();
 
 async function getInfo() {
   const row = (await db.query('SELECT * FROM company_info WHERE id=1')).rows[0];
-  return { name: row.name, tagline: row.tagline, address: row.address, phone: row.phone, gst: row.gst, upiId: row.upi_id || '', extra: JSON.parse(row.extra_json || '[]') };
+  return { name: row.name, tagline: row.tagline, address: row.address, phone: row.phone, email: row.email||'', landline: row.landline||'', instagram: row.instagram||'', gst: row.gst, upiId: row.upi_id || '', extra: JSON.parse(row.extra_json || '[]') };
 }
 router.get('/', requireAuth, async (req,res)=>{ try { res.json(await getInfo()); } catch(e){ console.error(e); res.status(500).json({error:'Could not load company info'}); } });
-router.put('/', requireAuth, requireAdmin, async (req,res)=>{ try { const b=req.body||{}; await db.query('UPDATE company_info SET name=$1, tagline=$2, address=$3, phone=$4, gst=$5, upi_id=$6, extra_json=$7 WHERE id=1',[b.name||'',b.tagline||'',b.address||'',b.phone||'',b.gst||'',b.upiId||'',JSON.stringify(b.extra||[])]); res.json(await getInfo()); } catch(e){ console.error(e); res.status(500).json({error:'Could not update company info'}); } });
+router.put('/', requireAuth, requireAdmin, async (req,res)=>{ try { const b=req.body||{}; await db.query('UPDATE company_info SET name=$1, tagline=$2, address=$3, phone=$4, email=$5, landline=$6, instagram=$7, gst=$8, upi_id=$9, extra_json=$10 WHERE id=1',[b.name||'',b.tagline||'',b.address||'',b.phone||'',b.email||'',b.landline||'',b.instagram||'',b.gst||'',b.upiId||'',JSON.stringify(b.extra||[])]); res.json(await getInfo()); } catch(e){ console.error(e); res.status(500).json({error:'Could not update company info'}); } });
 router.put('/upi-id', requireAuth, requireAdmin, async (req,res)=>{
   try{
     const upiId=String((req.body||{}).upiId||'').trim();
